@@ -1,0 +1,223 @@
+<p>
+  TODO User
+</p>
+
+<div class="user">
+  <div class="user-header">
+    Tu información personal
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="user-left">
+        <div class="userprofile-image">
+          <i class="fa fa-user fa-5x"></i>
+        </div>
+        <div class="user-actions">
+
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              {{user.username}}
+              <hr>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)='openModal(templateApps)' [routerLink]="">Aplicaciones descargadas</a>
+              <hr>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)='openModal(templateQuestions)' [routerLink]="">Preguntas realizadas</a>
+              <hr>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)='openModal(templateEvents)' [routerLink]="">Eventos guardados</a>
+            </li>
+          </ul>
+
+          <!-- Ng Templates -->
+          <!-- Applications history -->
+          <ng-template #templateApps>
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">Aplicaciones descargadas</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-row" *ngFor="let app of user.downloadedApps">
+                <div class="user-apps-history-left">
+                  <img class="user-apps-img" src="{{app.logo}}" alt="">
+                </div>
+                <div class="user-apps-history-right">
+                  Nombre: {{app.name}}
+                  <br> Categoría: {{app.category}}
+
+                  <a routerLink='/application/{{app.id}}'>
+                    <button role="button" class="btn btn-success center-block" tooltip='Ver aplicación' (click)='modalRef.hide();'> Ver </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+          <!-- Questions made -->
+          <ng-template #templateQuestions>
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">Preguntas realizadas</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-row" *ngFor="let question of user.questionsMade">
+                <div class="user-questions-responses">
+                  <strong>Respuestas:</strong>
+                  <br> {{question.responses.length}}
+                </div>
+                <div class="user-questions-question">
+                  <div class="user-question-header">
+                    <strong>Pregunta: </strong>
+                  </div>
+                  <div class="user-question-body">
+                    {{question.question}}
+                  </div>
+                  <button role="button" class="btn btn-success center-block" tooltip='Ver pregunta' (click)='openModal(templateResponses)'>
+                    Ver </button>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+          <!-- Responses per Question -->
+          <ng-template #templateResponses>
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">Respuestas obtenidas</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-row" *ngFor="let question of user.questionsMade">
+                <div class="response-container">
+                  <div class="response-question-header">
+                    <strong>Pregunta: </strong>
+                  </div>
+                  <div class="response-question-body">
+                    {{question.question}}
+                  </div>
+                  <div class="response-responses-header">
+                    <strong>Todas las respuestas: {{question.responses.length}}</strong>
+                  </div>
+                  <div *ngFor="let response of question.responses">
+                    <div class="response-responses" >
+                      <div class="response-responses-id">
+                        <strong>Respuesta {{response.id}}</strong>
+                      </div>
+                      <div class="response-responses-body">
+                        {{response.response}}
+                      </div>
+                      <div class="response-responses-user pull-right">
+                        Respondió: {{response.author}}
+                        <br> Fecha: {{response.date}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          
+
+          <!-- Saved events -->
+          <ng-template #templateEvents>
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">Eventos guardados</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-row" *ngFor="let event of user.savedEvents">
+                <div class="events-container">
+                  <div class="events-header">
+                    <h4>{{event.name}}</h4>
+                  </div>
+                  <img class="events-img" src="{{event.img}}" alt="">
+                  <div class="events-btn-more">
+                    <a href="/event/{{event.id}}">
+                      <button role="button" class="btn btn-info pull-right" (click)="modalRef.hide()">Más información</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="user-right">
+        <div class="user-info">
+          <label for="">Nombre:</label> {{user.fullName}}
+          <span>
+            <i role="button" tooltip="Editar" class="fa fa-pencil" aria-hidden="true" (click)="editInfo(template)"></i>
+          </span>
+
+          <!-- Using modal message -->
+
+          <ng-template #template>
+            <div class="modal-body text-center">
+              <p>Editar campo</p>
+              <form action="">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Ingrese" [(ngModel)]="user.fullName" name="user.fullName">
+                </div>
+              </form>
+              <button type="button" class="btn btn-default" (click)="confirm()">Guardar</button>
+            </div>
+          </ng-template>
+
+        </div>
+        <div class="user-info">
+          <label for="">Correo:</label> {{user.email}}
+          <span>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="user-info">
+          <label for="">Contrasena:</label> {{user.password}}
+          <span>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="user-info">
+          <label for="">Cumpleanios:</label> {{user.birthday}}
+          <span>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="user-info">
+          <label for="">Género:</label> {{user.genre}}
+          <span>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="user-info">
+          <label for="">Nacionalidad:</label> {{user.nationality}}
+          <span>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="user-info">
+          <label for="">Biografía:</label>
+          <span>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </span>
+          <br> {{user.bio}}
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

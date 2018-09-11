@@ -1,0 +1,24 @@
+<p>
+  TODO Ayuda
+</p>
+
+<div class="row" *ngFor='let article of helpArticles'>
+    <div class="col-md-12">
+      <div class="news-container">
+        <div class="news-header">
+          <h4>
+            <strong> {{article.title}} </strong>
+          </h4>
+        </div>
+        <div class="news-body">
+          {{article.content}}
+        </div>
+        <div class="news-read-more">
+          <a routerLink='#'>
+            <button role="button" class="btn btn-info pull-right">Leer más</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+

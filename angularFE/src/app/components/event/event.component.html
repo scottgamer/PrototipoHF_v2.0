@@ -1,0 +1,54 @@
+<p>
+  TODO Event
+</p>
+
+<div class="row">
+  <div class="simple-row" >
+    <div class="col-md-12">
+      <img class="event-big-img" src="{{event.img}}" alt="">
+    </div>
+  </div>
+  <div class="simple-row">
+    <div class="col-md-8" id="event-centered">
+      <h3>{{event.name}}</h3>
+      <h4>Fecha: {{event.date}}</h4>
+    </div>
+    <div class="col-md-4" id="event-centered">
+      <h4>Organizado por:</h4>
+
+      <img class="event-organized-by-img" src="{{event.organizerImg}}" alt="{{event.organizedBy}}">
+    </div>
+  </div>
+  <div class="simple-row">
+    <div class="col-md-8" id="event-centered">
+      <h4>Descripción</h4>
+
+      <p id="event-justified">{{event.description}}
+      </p>
+    </div>
+    <div class="col-md-4" id="event-centered">
+      <h4>Comparte el evento</h4>
+      <a href="http://www.facebook.com">
+        <img class="share-left" src="assets/images/logos/facebook-logo.png" alt="">
+      </a>
+      <a href="http://www.twitter.com">
+        <img class="share-right" src="assets/images/logos/twitter-logo.png" alt="">
+      </a>
+    </div>
+  </div>
+  <div class="simple-row">
+    <div class="col-md-12">
+      <button role="button" class="btn btn-success center-block" (click)='saveEventModal(template)'>Guardar evento</button>
+    </div>
+  </div>
+
+  <!-- Using modal message -->
+
+  <ng-template #template>
+    <div class="modal-body text-center">
+      <p>¡Evento guardado exitosamente!</p>
+      <button type="button" class="btn btn-default" (click)="confirm()">Ok</button>
+    </div>
+  </ng-template>
+
+</div>

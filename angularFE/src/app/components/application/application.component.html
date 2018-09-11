@@ -1,0 +1,215 @@
+TODO Application
+
+<div *ngIf="application">
+  <div class="row">
+    <div class="col-md-12">
+      <div id="application" class="jumbotron">
+        <!--Logo & basic info-->
+        <div class="inner-row-app">
+          <div class="col-md-4">
+            <img class="logo center-block" src="{{application.logo}}" alt="">
+          </div>
+          <div class="col-md-4">
+            <div class="info-app">
+              Nombre: {{application.name}}
+              <br> Categoría: {{application.category}}
+              <br>
+              <div class="info-rating">
+                Valoración:
+                <bar-rating [(rate)]="application.rating" [max]="5" [theme]="'default'"></bar-rating>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" id="btn-download">
+            <button type="button" class="btn btn-success center-block" tooltip="Descargar aplicación.">Descargar</button>
+          </div>
+        </div>
+
+        <!-- Screenshots & carousel -->
+
+        <div class="inner-row-app" id="screenshots">
+          <h4>Screenshots</h4>
+          <div class="col-md-12">
+            <div class="col-md-4" *ngFor='let img of application.imgs'>
+              <img src="{{img}}" alt="">
+            </div>
+          </div>
+        </div>
+
+        <div class="inner-row-app" id="screenshots-carousel">
+          <h4>Screenshots</h4>
+          <carousel>
+            <slide *ngFor='let img of application.imgs'>
+              <img src="{{img}}" alt="first slide" style="display: block; width: 100%;">
+            </slide>
+          </carousel>
+        </div>
+
+        <!-- Description -->
+        <div class="inner-row-app">
+          <div class="col-md-12">
+            <h4>Descripción</h4>
+            <div class="description">
+              <div class="">
+                {{half1}}
+              </div>
+              <div id="collapseBasic" [collapse]="!isCollapsed" class="card card-block card-header">
+                <div class="">
+                  {{half2}}
+                </div>
+              </div>
+              <button id="read-more" type="button" class="btn btn-primary center-block" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+                aria-controls="read-more" (collapsed)="collapsed()" (expanded)="expanded()">{{messageBtn}}
+              </button>
+
+              <div id="collapseEvent" class="card card-block card-header" (collapsed)="collapsed()" (expanded)="expanded()" [collapse]="isCollapsed">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rate and comment -->
+
+        <div class="inner-row-app" id="rate-comment">
+          <div class="col-md-12">
+            <h4>Califica y comenta</h4>
+            <div class="rate-comment">
+              <form action="">
+                <!-- <div id="rating">
+                Calificación:
+              </div> -->
+                <div id="rating">
+                  Calificación:
+                  <bar-rating [(rate)]="application.rating" [max]="5" [theme]="'default'"></bar-rating>
+                </div>
+                <div id="comment">
+                  Comentario:
+                  <textarea class="form-control" name="comentario" id="comentario" cols="40" rows="5" placeholder="Ingrese su comentario"></textarea>
+                </div>
+
+                <button type="button" class="btn btn-primary center-block" (click)="openModal(templateSave)">Guardar</button>
+
+                <!-- Using modal message -->
+
+                <ng-template #templateSave>
+                  <div class="modal-body text-center">
+                    <p>¡Comentario guardado exitosamente!</p>
+                    <button type="button" class="btn btn-default" (click)="confirm()">Ok</button>
+                  </div>
+                </ng-template>
+
+                <!-- <input type="submit" class="btn btn-primary center-block" id="save-comment" value="Guardar"> -->
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comments -->
+
+        <div class="inner-row-app">
+          <div class="col-md-12">
+            <h4>Comentarios</h4>
+            <!-- Commentary 1 -->
+            <div class="user-comment" *ngFor='let commentary of application.commentaries'>
+              <div class="user-image">
+                <i class="fa fa-user-circle fa-2x"></i>
+              </div>
+              <div class="user-name-rate">
+                <div>{{commentary.user}}</div>
+                <div>Calificación:
+                  <bar-rating [(rate)]="commentary.rating" [max]="5" [theme]="'default'"></bar-rating>
+                </div>
+              </div>
+              <div class="date">
+                Fecha: {{commentary.date}}
+              </div>
+              <br>
+              <div class="comment center-block">
+                {{commentary.commentary}}
+              </div>
+            </div>
+
+            <div class="more-comments">
+              <button type="button" class="btn btn-primary center-block">Ver más comentarios</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional info -->
+
+        <div class="inner-row-app">
+          <div class="col-md-12">
+            <h4>Información adicional</h4>
+            <div class="extra-info">
+              <div class="left-pane">
+                País: {{application.country}}
+                <br> Desarrollado por: {{application.developedBy}}
+                <br> Fecha liberación: {{application.releaseDate}}
+                <br> Versión android mínima: {{application.androidMin}}
+                <br>
+              </div>
+              <div class="right-pane">
+                &nbsp;
+                <br> Versión: {{application.version}}
+                <br> Plataforma: {{application.platform}}
+                <br> Web aplicación: {{application.appWebPage}}
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Section -->
+
+        <div class="inner-row-app">
+          <div class="col-md-12">
+            <h4>FAQ</h4>
+            <div class="faq">
+              <div class="question" *ngFor='let question of questions'>
+                <div class="question-header">
+                  <strong>Pregunta {{question.id}}</strong>
+                </div>
+                <div class="question-body">
+                  {{question.question}}
+                </div>
+                <div class="response" *ngFor='let resp of question.responses'>
+                  <strong>Respuesta {{resp.id}}</strong>
+                  <div class="response-body">
+                    {{resp.response}}
+                  </div>
+                </div>
+
+              </div>
+              <div class="ask-btn">
+                <button type="button" class="btn btn-primary center-block" (click)="openModal(templateAsk)">Preguntar</button>
+
+                <!-- Using modal message -->
+
+                <ng-template #templateAsk>
+                  <div class="modal-body text-center">
+                    <div class="modal-header">
+                      <h4 class="modal-title">¿Cuál es su pregunta?</h4>
+                    </div>
+                    <div class="form-group">
+                      <form action="">
+                        <textarea class="form-control" name="pregunta" id="pregunta" cols="30" rows="3" placeholder="Ingrese su pregunta..."></textarea>
+                        <br>
+                        <input type="submit" class="btn btn-primary center-block" (click)="confirmModal()" value="Guardar pregunta">
+                      </form>
+                    </div>
+
+                    <!-- <button type="button" class="btn btn-default" (click)="confirm()">Guardar pregunta</button> -->
+                  </div>
+                </ng-template>
+                <!-- <button type="button" class="btn btn-primary center-block">Preguntar</button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p>&nbsp;</p>
+
+      </div>
+    </div>
+
+  </div>

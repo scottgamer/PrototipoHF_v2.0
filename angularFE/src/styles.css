@@ -1,0 +1,684 @@
+/* You can add global styles to this file, and also import other style files */
+hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+  
+@media only screen and (min-width: 768px) {
+    /* tablets and desktop */
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0; 
+     }
+
+    .main-login{
+        margin-left: 25%;
+        margin-right: 25%;
+        padding: 5%;
+        border: solid rgb(205, 205, 205);
+    }
+    .no-account{
+        margin-left: 36%;
+    }
+
+    .main-register{
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    .register-header{
+        margin: auto;
+        text-align: center;
+    }
+
+    .register-left, .register-right{
+        padding: 5%;
+    } 
+    .register-right{
+        margin-top: 25%;
+        border-left: solid rgb(205, 205, 205);
+    }
+
+    .user{
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    .user-header{
+        padding-bottom: 2%;
+        margin: auto;
+        text-align: center;
+    }
+    .user-left{
+        padding: 5%;
+    }
+    .user-right{
+        margin: 5%;
+        border-left: solid rgb(205, 205, 205);
+        padding-left: 10%;
+    }
+    .userprofile-image{
+        padding: 5%;
+        text-align: center;
+        /* margin-left: 30%; */
+    }
+    .user-actions{
+        margin-top: 5%;
+        text-align: center;
+    }
+    .user-info{
+        padding: 1%;
+    }
+    
+    .jumbotron p{
+        font-size: 1em;
+    }
+    .jumbotron{
+        margin: 5%;
+    }
+    body{
+        font-size: 1.6em;
+    }
+    
+    #brand-image{
+        /*width: 20%;*/
+        height: 55px;
+        padding: 5px;
+    }
+    
+    #search-bar{
+        resize:both;
+    }
+    
+    .navbar-form{
+        padding-left: 20px;
+    }
+    
+    /*Second Navbar*/
+    .navbar-nav{
+        margin: 0 auto;
+        display: table;
+        table-layout: fixed;
+        float: none;
+    }
+    
+    .navbar{
+        margin: 0;
+    }
+    
+    .navbar-brand{
+        padding-top: 0px;
+    }
+
+    #button-align{
+        padding-left: 5px;
+    }
+    .row{
+        border: #cdcdcd medium solid;
+        margin:auto;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        width: 850px;
+        
+    }
+    
+    .inner-row{
+        padding-top: 10px;
+        padding-bottom: 5px;
+    }
+    
+    .inner-row-app {
+        padding-top: 0px;
+        padding-bottom: 10px;
+        /* border: solid; */
+        height: 179.8px;
+    }
+
+    #screenshots{
+        /* height: 334.8px; */
+        padding-top: 10px;
+        padding-left: 20px;
+    }
+
+    #screenshots-carousel{
+        display: none;
+    }
+
+    .container .jumbotron{
+        padding: 10px; 
+        padding-bottom: 0px;
+    }
+
+    /* Before using bar-star */
+    /* .container .jumbotron{
+        padding:15px;
+    } */
+    
+    #application{
+        margin: 0px;
+        /* margin-bottom: 0px; */
+    }
+    
+    .info{
+        /* padding-top: 25px; */
+        padding-left:5px;
+        font-size: 1.2em;
+    }
+
+    .info-app{
+        /* padding-top: 25px; */
+        padding-top: 15%;
+        /* padding-left:5px; */
+        /* font-size: 1.2em; */
+    }
+
+    #btn-download{
+        padding-top: 55px;
+    }
+    
+    .logo{
+        padding-top: -5px;
+        width: 75%;
+    }
+    
+    .col-md-12{
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .applications-header{
+        text-align: center;
+    }
+
+    .description{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    #read-more{
+        margin-top: 10px;
+    }
+    .rate-comment{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    #rating, #comment{
+        padding-bottom: 5px;
+    }
+    #save-comment{
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    textarea {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 90%;
+    }
+    .user-comment{
+        padding: 10px;
+        margin: 5px;
+        border: solid;
+    }
+    .user-image{
+        width: 5%;
+        margin: 5px;
+        float: left;
+    }
+    .user-name-rate{
+        margin-left:5px; 
+        float: left;
+    }
+    .date
+    {
+        float: right;
+        padding-right: 30%;   
+    }
+    .comment{
+        clear: left;
+        width: 90%;
+        padding: 5px;        
+    }
+    .more-comments{
+        padding: 5px;
+    }
+    .left-pane{
+        float: left;
+        padding: 5px;
+        margin-left: 5%;
+    }
+    .right-pane{
+        float: right;
+        padding: 5px;
+        margin-right: 5%;
+        /* clear: left; */
+    }
+    
+    .comment{
+        margin-top: 20px;
+    }
+    .question{
+        padding: 10px;
+        border-bottom: solid rgb(205, 205, 205);
+    }
+    .question-body, .response-body{
+        padding: 5px;
+    }
+    .ask-btn{
+        margin: 1%;
+    }
+
+    /*News Styles*/
+    .news-body{
+        padding: 1%;
+    }
+    /* .new-read-more{
+        margin-left: 80%;
+    } */
+
+    /*New Styles*/
+    .new-header{
+        text-align: center;
+    }
+    .new-container{
+        display: inline-block;
+        margin-left: 10%;
+        margin-right: 10%;
+        margin-top: 2%;
+        margin-bottom: 2%;
+        padding: 2%;
+        border: #cdcdcd solid;
+    }
+    .new-text{
+        padding: 1%;
+    }
+    .new-img-left{
+        width: 20%;
+        padding: 2%;
+        float: left;
+    }
+
+    .new-img-right{
+        width: 20%;
+        padding: 2%;
+        float: right;
+    }
+
+    /*Events Styles*/
+    .events-img{
+        width: 100%;
+        padding: 1%;
+        height: 170px;
+    }
+    .event-big-img{
+        width: 100%;
+        height: 160px;
+    }
+    .event-organized-by-img{
+        width: 30%;
+
+    }
+    .share-left{
+        width: 20%;
+    }
+
+    .share-right{
+        width: 24%;
+    }
+    /* .simple-row{
+        border: solid;
+    } */
+    #event-centered{
+        text-align: center; 
+        border-top: solid rgb(205, 205, 205);
+    }
+    #event-justified{
+        text-align: justify;
+    }
+
+    /* Modals */
+    .modal-row{
+        width: 100%;
+        border: solid rgb(205, 205, 205);
+        padding: 1%;
+        margin: 1%;
+        display: inline-block;
+    }
+    .user-apps-history-left{
+        width: 45%;
+        float: left;
+    }
+    
+    .user-apps-history-right{
+        width: 45%;
+        float: right;
+        padding-top: 2%;
+    }
+    .user-apps-img{
+        width: 70%;
+        padding-left: 30%;
+        padding-top: 2%;
+    }
+
+    /* User questions and answers */
+    .user-questions-responses{
+        width: 20%;
+        float: left;
+        padding: 2%;
+        text-align: center;
+        margin-top: 5%;
+    }
+
+    .user-questions-question{
+        width: 70%;
+        float: right;
+        padding: 2%;
+    }
+    .user-question-header, .user-question-body{
+        margin: 2%;
+    }
+    .response-container{
+        padding: 3%;
+    }
+    .response-question-header{
+        margin: 2%;
+        text-align: center;
+    }
+    .response-responses-header{
+        margin: 2%;
+    }
+    .response-responses{
+        display: inline-block;
+    }
+    .response-responses-user{
+        margin: 1%;
+    }
+    
+    .br[_ngcontent-c2]{
+        margin: 0px;
+        display: inline-block;
+    }
+    /* .info-rating{
+        display: inline-block;
+    } */
+    .info-rating{
+        margin-top: 3px;
+        border-top: solid rgb(205, 205, 205);
+        height: 40px;
+    }
+
+    .error-page{
+        padding: 5%;
+        text-align: center;
+        font-size: 1.6em;
+    }
+    .error-body{
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    /* phones */
+
+    .logo{
+        padding-top: -5px;
+        /* padding-left: 10%; */
+        width: 55%;
+    }
+
+    #screenshots{
+        display:none;
+    }
+
+    #screenshots-carousel{
+        padding-top: 10px;
+        padding-left: 20px;
+    }
+    .navbar-brand{
+        padding-top: 10px;
+        height: 70px;
+    }
+    
+    #brand-image{
+        /*width: 20%;*/
+        height: 55px;
+        padding: 5px;
+    }
+    .applications-header{
+        text-align: center;
+    }
+
+    .no-account{
+        margin-left: 36%;
+    }
+
+    .main-login{
+        padding: 5%;
+        border: solid rgb(205, 205, 205);
+    }
+
+    .register-header{
+        margin: auto;
+        text-align: center;
+    }
+
+    .register-left, .register-right{
+        padding: 5%;
+        border: solid rgb(205, 205, 205);
+    } 
+
+    .inner-row-app {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-bottom: solid rgb(141, 141, 141);
+        height: 100%;
+    }
+
+    .jumbotron{
+        padding:15px;
+    }
+
+    .info{
+        padding-top: 5px;
+        padding-left: 10%;
+        font-size: 1.2em;
+    }
+    .col-md-4{
+        /* padding-top: 10px; */
+        padding-top: 5px;
+        align-items: center;
+    }
+
+    #btn-download{
+        margin-top: 5px;
+        padding-top: 5px;
+        /* padding-left: 40px; */
+    }
+
+    #btn-more{
+        padding-bottom: 10px;
+    }
+    #save-comment{
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .user-comment{
+        padding-bottom: 5px;
+        border-bottom: solid rgb(141, 141, 141);
+        margin-bottom: 5px; 
+    }
+
+    .comment{
+        padding-bottom: 5px;
+    }
+    #comment{
+        margin-bottom: 5px;
+    }
+    .question{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .question-header{
+        padding-bottom: 5px;
+    }
+    .question-body, .response-body{
+        padding: 5px;
+    }
+
+    .user{
+        margin: 5%;
+        padding: 5%;
+        border: solid rgb(205, 205, 205);
+    }
+    .user-header{
+        padding-bottom: 2%;
+        margin: auto;
+        text-align: center;
+    }
+    .user-right{
+        padding-top: 5%;
+        border-top: solid rgb(205, 205, 205);
+    }
+    .userprofile-image{
+        margin-left: 40%;
+    }
+    .user-info{
+        padding: 2%;
+    }
+    /*News Styles*/
+    .row{
+        border: solid rgb(205, 205, 205);
+        padding: 2%;
+        margin: 2%;
+    }
+
+    /*New Styles*/
+    .new-header{
+        text-align: center;
+    }
+    .new-container{
+        display: inline-block;
+        margin-left: 10%;
+        margin-right: 10%;
+        margin-top: 2%;
+        margin-bottom: 2%;
+        padding: 2%;
+        border: #cdcdcd solid;
+    }
+    .new-text{
+        padding: 1%;
+    }
+    .new-img-left{
+        width: 25%;
+        padding: 2%;
+        float: left;
+    }
+
+    .new-img-right{
+        width: 25%;
+        padding: 2%;
+        float: right;
+    }
+    /*Events Styles*/
+    .events-img{
+        width: 100%;
+        padding: 1%;
+        height: 170px;
+    }
+    .event-big-img{
+        width: 100%;;
+    }
+    .event-organized-by-img{
+        width: 30%;
+
+    }
+    .share-left{
+        width: 20%;
+    }
+
+    .share-right{
+        width: 24%;
+    }
+    /* .simple-row{
+        border: solid;
+    } */
+    #event-centered{
+        text-align: center;
+        border-bottom: solid rgb(205, 205, 205);
+        margin-bottom: 3px;
+    }
+    #event-justified{
+        text-align: justify;   
+    }
+    h4{
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .br[_ngcontent-c2]{
+        margin: 0px;
+        display: inline-block;
+    }
+    .info-rating{
+        margin-top: 3px;
+        border-top: solid rgb(205, 205, 205);
+        height: 40px;
+    }    
+
+    .error-page{
+        padding: 5%;
+        text-align: center;
+        font-size: 1.6em;
+    }
+    .error-body{
+        width: 70%;
+    }
+    .modal-row{
+        width: 100%;
+        border: solid rgb(205, 205, 205);
+        padding: 1%;
+        margin: 1%;
+        display: inline-block;
+    }
+    .user-apps-img{
+        width: 70%;
+        padding-left: 30%;
+        padding-top: 2%;
+    }
+    .user-apps-history-right{
+        padding-top: 2%;
+        padding-bottom: 2%;
+        padding-left: 10%;
+    }
+    .user-questions-question{
+        padding: 3%;
+    }
+    .user-questions-responses{
+        display: none;
+    }
+    .response-container{
+        padding: 3%;
+    }
+    .response-responses-header{
+        margin: 2%;
+        border-top: solid rgb(205, 205, 205);
+        padding: 2%;
+    }
+    .response-responses-id{
+        padding-top: 1%;
+        border-top: solid rgb(205, 205, 205);
+        clear: both;
+    }
+    .events-img{
+        height: 105px;
+    }
+    .user-actions{
+        margin-top: 5%;
+        text-align: center;
+    }
+    
+    #collapsible-btn{
+        margin-left: 15px;
+        margin-top: 19px;
+        margin-right: 5px;
+    }
+    
+}

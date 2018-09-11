@@ -1,0 +1,98 @@
+<!--Primary Navbar-->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+
+    <!--Logo & brand name-->
+    <div class="navbar-header">
+      <a class="navbar-brand" routerLink="/">
+        <span>
+          <img id="brand-image" src="assets/images/Logo.svg">
+          <img id="brand-image" src="assets/images/LogoTitulo.svg">
+        </span>
+      </a>
+    </div>
+
+    <!-- Collapsible button -->
+    <button id="collapsible-btn" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" (click)="isCollapsed = !isCollapsed"
+      aria-expanded="false">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+
+    <!--Search bar-->
+    <form id="search-bar" class="navbar-form navbar-left" action="#">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Buscar aplicaciones..." name="search" size="40px">
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!--Login & Help Buttons-->
+
+    <div class="collapse navbar-collapse" id="myNavbar" [collapse]="isCollapsed">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a routerLink="/register">
+            <span class="glyphicon glyphicon-user"></span> Regístrate</a>
+        </li>
+        <li>
+          <a routerLink="/login">
+            <span class="glyphicon glyphicon-log-in"></span> Ingresa</a>
+        </li>
+        <li>
+          <a routerLink='/help'>
+            <span class="glyphicon glyphicon-question-sign"></span> Ayuda</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!--Secondary Navbar-->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+
+    <div class="collapse navbar-collapse" id="myNavbar" [collapse]="isCollapsed">
+      <ul class="nav navbar-nav">
+        <li class="active">
+          <a routerLink="home" (click)='reloadRoute()'>Home</a>
+        </li>
+
+        <!--dropdown-->
+        <li dropdown class="dropdown">
+          <a dropdownToggle role="button">Categorías
+            <span class="caret"></span>
+          </a>
+          <ul *dropdownMenu class="dropdown-menu">
+            <li *ngFor="let category of categories">
+              <a routerLink='/category/{{category.id}}' (click)='reloadRoute()'>{{category.name}}</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+              <a routerLink="#">Todas las categorías</a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a routerLink='/applications'>Aplicaciones</a>
+        </li>
+        <li>
+          <a routerLink="/news">Noticias</a>
+        </li>
+        <li>
+          <a routerLink="/events">Eventos</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+
+<router-outlet></router-outlet>
