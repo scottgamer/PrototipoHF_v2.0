@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
+import { ValidateService } from './services/validate.service';
+
 //import { AppBootstrapModule } from './app-bootstrap/app-bootstrap.module';
 //Bootstrap components using ngx-bootstrap
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -12,6 +14,8 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 import { BarRatingModule } from "ngx-bar-rating";
+
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -72,10 +76,12 @@ const appRoutes: Routes = [
     CollapseModule.forRoot(),
     CarouselModule.forRoot(),
     BarRatingModule,
+    FlashMessagesModule.forRoot(),
     RouterModule.forRoot(appRoutes),
   ],
   providers: [
     Title,
+    ValidateService,
   ],
   bootstrap: [AppComponent]
 })

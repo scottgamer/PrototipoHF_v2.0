@@ -8,7 +8,6 @@ import { Category } from '../app/models/category-model';
 //services
 import { CategoryService } from '../app/services/category.service';
 
-
 @Component({
   selector: 'app-root',
   providers:[CategoryService],
@@ -18,6 +17,7 @@ import { CategoryService } from '../app/services/category.service';
 export class AppComponent {
   
   categories:Category[];
+  options:Object[];
 
   //menu component
   isCollapsed = true;
@@ -31,6 +31,13 @@ export class AppComponent {
   ngOnInit() {
     this.setTitle('Catalogo de Aplicaciones para Discapacidad Visual');
     this.getCategories();
+    this.getOptions();
+  }
+
+  getOptions(){
+    this.options = [{name:'Aplicaciones', route:'/applications'},
+                    {name:'Noticias', route:'/news'},
+                    {name:'Eventos', route: '/events'}];
   }
 
   reloadRoute = function() {
