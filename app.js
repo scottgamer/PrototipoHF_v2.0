@@ -34,11 +34,23 @@ app.use(cors());
 //Body-parser middleware
 app.use(bodyParser.json());
 
+//Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
+
+//routes
 app.use('/users', users);
 
 //Index route
 app.get('/', (req, res)=>{
     res.send('Invalid endpoint');
+});
+
+//any other route typed in url
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 //Start server
