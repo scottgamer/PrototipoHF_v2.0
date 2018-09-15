@@ -2,7 +2,7 @@
   TODO User
 </p>
 
-<div class="user">
+<div class="user" *ngIf='user'>
   <div class="user-header">
     Tu información personal
   </div>
@@ -107,7 +107,7 @@
                     <strong>Todas las respuestas: {{question.responses.length}}</strong>
                   </div>
                   <div *ngFor="let response of question.responses">
-                    <div class="response-responses" >
+                    <div class="response-responses">
                       <div class="response-responses-id">
                         <strong>Respuesta {{response.id}}</strong>
                       </div>
@@ -124,7 +124,7 @@
               </div>
             </div>
           </ng-template>
-          
+
 
           <!-- Saved events -->
           <ng-template #templateEvents>
@@ -151,7 +151,6 @@
             </div>
           </ng-template>
 
-
         </div>
       </div>
     </div>
@@ -162,32 +161,18 @@
           <span>
             <i role="button" tooltip="Editar" class="fa fa-pencil" aria-hidden="true" (click)="editInfo(template)"></i>
           </span>
-
-          <!-- Using modal message -->
-
-          <ng-template #template>
-            <div class="modal-body text-center">
-              <p>Editar campo</p>
-              <form action="">
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Ingrese" [(ngModel)]="user.fullName" name="user.fullName">
-                </div>
-              </form>
-              <button type="button" class="btn btn-default" (click)="confirm()">Guardar</button>
-            </div>
-          </ng-template>
-
         </div>
         <div class="user-info">
           <label for="">Correo:</label> {{user.email}}
-          <span>
+          <!-- <span>
             <i class="fa fa-pencil" aria-hidden="true"></i>
-          </span>
+          </span> -->
         </div>
         <div class="user-info">
-          <label for="">Contrasena:</label> {{user.password}}
+          <label for="">Contraseña:</label> *********
+          <!-- {{user.password}} -->
           <span>
-            <i class="fa fa-pencil" aria-hidden="true"></i>
+            <i role='button' tooltip='Editar' class="fa fa-pencil" aria-hidden="true"></i>
           </span>
         </div>
         <div class="user-info">
@@ -215,6 +200,44 @@
           </span>
           <br> {{user.bio}}
         </div>
+
+        <!-- Using modal message -->
+
+        <ng-template #template>
+          <div class="modal-body text-center">
+            <p>Editar información</p>
+            <form (submit)='saveUserData()'>
+              <div class="form-group">
+                <label for="fullName">Nombre: </label>
+                <input type="text" class="form-control" placeholder="Ingrese" [(ngModel)]="user.fullName" name="user.fullName">
+              </div>
+              <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password"  class="form-control" placeholder="Ingrese" [(ngModel)]="user.password" name="user.password">
+              </div>
+              <div class="form-group">
+                <label for="birthday">Cumpleaños</label>
+                <input type="text" class="form-control" placeholder="Ingrese" [(ngModel)]="user.birthday" name="user.birthday">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Ingrese" [(ngModel)]="user.fullName" name="user.fullName">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Ingrese" [(ngModel)]="user.fullName" name="user.fullName">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Ingrese" [(ngModel)]="user.fullName" name="user.fullName">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Ingrese" [(ngModel)]="user.fullName" name="user.fullName">
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-success center-block" (click)='modalRef.hide()'>
+              </div>
+            </form>
+            <!-- <button type="button" class="btn btn-default" (click)="confirm()">Guardar</button> -->
+          </div>
+        </ng-template>
 
       </div>
 

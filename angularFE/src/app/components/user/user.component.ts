@@ -1,27 +1,25 @@
-import { Component, OnInit, Output, TemplateRef, Input } from '@angular/core';
+import { Component, OnInit, Output, TemplateRef } from '@angular/core';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
-//dynamic routing using ids in url
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-
 //classes
- import { User } from '../../models/user-model';
+import { User } from '../../models/user-model';
 
- //services
- import { UserService } from '../../services/user.service';
+//services
+import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
-  providers:[UserService],
+  providers: [UserService],
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
 
-  @Input() user:User;
+  user: User;
 
   modalRef: BsModalRef;
 
@@ -30,29 +28,49 @@ export class UserComponent implements OnInit {
     'iure quo repellendus itaque adipisci voluptatibus odio quod,' +
     ' repellat corrupti quae perspiciatis accusamus.';
 
-  userActions: string [];
+  userActions: string[];
 
   constructor(private modalService: BsModalService,
-              private userService:UserService,
-              private activatedRoute:ActivatedRoute,
-              private location:Location) {}
+    private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit() {
-    this.getUserData();  
+    this.getProfile();
     this.getUserActions();
   }
 
-  getUserData():void{
-    const id = +this.activatedRoute.snapshot.paramMap.get('id');
-    this.userService.getUser(id).subscribe(user => this.user = user);
+  getProfile() {
+    this.authService.getProfile().subscribe(profile => {
+      this.user = profile.user;
+      console.log(this.user);
+    },
+      err => {
+        console.log(err);
+        return false;
+      });
   }
 
-  getUserActions():void{
+  getUserActions(): void {
     this.userActions = [
       'Aplicaciones descargadas',
       'Preguntas realizadas',
       'Eventos guardados'
     ];
+  }
+
+  saveUserData() {
+    const user = {
+      fullName: this.user.fullName,
+      email:this.user.email,
+      password:this.user.password
+    };
+
+    this.authService.updateUser(user).subscribe(data=>{
+      if(data){
+        console.log('Data sent');
+        return true;
+      } 
+    });
   }
 
   editInfo(template: TemplateRef<any>) {

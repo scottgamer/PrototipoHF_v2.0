@@ -2,8 +2,10 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { ValidateService } from './services/validate.service';
+import { AuthService } from './services/auth.service';
 
 //import { AppBootstrapModule } from './app-bootstrap/app-bootstrap.module';
 //Bootstrap components using ngx-bootstrap
@@ -14,7 +16,6 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 import { BarRatingModule } from "ngx-bar-rating";
-
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { AppComponent } from './app.component';
@@ -43,7 +44,7 @@ const appRoutes: Routes = [
   {path:'application/:id', component:ApplicationComponent},
   {path:'login', component:LoginComponent},
   {path:'register', component:RegisterComponent},
-  {path:'user/:id', component:UserComponent},
+  {path:'user', component:UserComponent},
   {path:'category/:id', component:CategoryComponent},
   {path:'help', component:HelpComponent},
   { path: '**', component: PageNotFoundComponent },
@@ -68,6 +69,7 @@ const appRoutes: Routes = [
     HelpComponent,
   ],
   imports: [
+    HttpModule,
     BrowserModule,
     FormsModule,
     BsDropdownModule.forRoot(),
@@ -82,6 +84,7 @@ const appRoutes: Routes = [
   providers: [
     Title,
     ValidateService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
