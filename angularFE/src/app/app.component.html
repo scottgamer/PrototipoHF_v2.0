@@ -13,7 +13,7 @@
     </div>
 
     <!-- Collapsible button -->
-    <button id="collapsible-btn" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" (click)="isCollapsed = !isCollapsed"
+    <button id="collapsible-btn" type="button" tooltip="Mostrar/ocultar menú" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" (click)="isCollapsed = !isCollapsed"
       aria-expanded="false">
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
@@ -36,21 +36,21 @@
 
     <div class="collapse navbar-collapse" id="myNavbar" [collapse]="isCollapsed">
       <ul class="nav navbar-nav navbar-right">
-        <li [routerLinkActive]="['active']">
+        <li  [routerLinkActive]="['active']" *ngIf="!logged()">
           <a routerLink="/register">
-            <span class="glyphicon glyphicon-user"></span> Regístrate</a>
+            <span class="fa fa-user-plus"></span> Regístrate</a>
         </li>
-        <li [routerLinkActive]="['active']">
+        <li [routerLinkActive]="['active']" *ngIf="!logged()">
           <a routerLink="/login">
             <span class="glyphicon glyphicon-log-in"></span> Ingresa</a>
         </li>
-        <li [routerLinkActive]="['active']">
+        <li [routerLinkActive]="['active']" *ngIf="logged()">
           <a routerLink="/user">
-            <span class="glyphicon glyphicon-log-in"></span> Perfil</a>
+            <span class="glyphicon glyphicon-user"></span> Perfil</a>
         </li>
-        <li>
+        <li *ngIf="logged()">
           <a href="#" (click)='onLogout()'>
-            <span class="glyphicon glyphicon-log-in"></span> Cerrar</a>
+            <span class="glyphicon glyphicon-log-out"></span> Cerrar</a>
         </li>
         <li [routerLinkActive]="['active']">
           <a routerLink='/help'>

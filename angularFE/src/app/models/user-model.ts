@@ -4,7 +4,7 @@ import { Response } from './responses-model';
 import { Event } from './event-model';
 
 export class User {
-    id: number;
+    _id: number;
     username:string;
     fullName: string;
     email: string;

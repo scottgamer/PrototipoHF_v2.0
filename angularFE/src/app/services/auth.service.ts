@@ -26,10 +26,10 @@ export class AuthService {
   }
 
   updateUser(user){
-    console.log(user);
+    let userId = user.id;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.put('http://localhost:3000/users/update/5b9bffa4f0c0f908ac893ce2', user, { headers: headers }).map(res => res.json());
+    return this.http.put('http://localhost:3000/users/update/' + userId, user, { headers: headers }).map(res => res.json());
   }
 
   storeUserData(token, user){
@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   loggedIn(){
-    return tokenNotExpired();
+    return tokenNotExpired('id_token');
   }
 
   logout(){

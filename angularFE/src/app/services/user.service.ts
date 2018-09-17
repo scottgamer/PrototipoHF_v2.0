@@ -13,7 +13,7 @@ export class UserService {
   constructor() { }
 
   getUser(id:number): Observable<User>{
-    return of(USERS.find(user => user.id === id));
+    return of(USERS.find(user => user._id === id));
   }
 
 }

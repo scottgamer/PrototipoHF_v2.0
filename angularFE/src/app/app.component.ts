@@ -33,7 +33,7 @@ export class AppComponent {
                       private categoryService:CategoryService,
                       private validateService: ValidateService,
                       private flashMessagesService: FlashMessagesService,
-                      private authService: AuthService,
+                      public authService: AuthService,
                       private router: Router) { 
     this.isCollapsed = true;
   }
@@ -42,6 +42,13 @@ export class AppComponent {
     this.setTitle('Catalogo de Aplicaciones para Discapacidad Visual');
     this.getCategories();
     this.getOptions();
+    this.logged();
+  }
+
+  logged(){
+    let logged = false;
+    logged = this.authService.loggedIn();
+    return logged;
   }
 
   onLogout(){

@@ -42,7 +42,6 @@ export class UserComponent implements OnInit {
   getProfile() {
     this.authService.getProfile().subscribe(profile => {
       this.user = profile.user;
-      console.log(this.user);
     },
       err => {
         console.log(err);
@@ -60,9 +59,13 @@ export class UserComponent implements OnInit {
 
   saveUserData() {
     const user = {
+      id: this.user._id,
       fullName: this.user.fullName,
-      email:this.user.email,
-      password:this.user.password
+      password:this.user.password,
+      birthday:this.user.birthday,
+      genre:this.user.genre,
+      nationality:this.user.nationality,
+      bio:this.user.bio
     };
 
     this.authService.updateUser(user).subscribe(data=>{
