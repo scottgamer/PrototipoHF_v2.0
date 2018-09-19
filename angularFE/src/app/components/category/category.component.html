@@ -1,20 +1,25 @@
 <!-- Low vision -->
-<p *ngIf="category.id === 1; else othercategory">
-  La categoria seleccionada es {{category.name}}
-</p>
-
-<!-- Blindness -->
-<ng-template #othercategory>
-  La categoria seleccionada es {{category.name}}
-
-  <div class="applications-header">
-    <h4>{{category.name}}</h4>
+<div *ngIf='category'>
+  <div class="applications-header" *ngIf="category._id === '5ba11e036343f715c0e786bf'; else othercategory">
+    <h4>{{category.name}}: Subcategorías</h4>
   </div>
+  <div class="row" *ngFor='let child of category.children'>
+    <div class="inner-row">
+      <div class="col-md-10">
+        <h4>{{child.name}}</h4>
+      </div>
+      <div class="col-md-2" id="btn-more">
+        <a routerLink='{{child.url}}/{{child.url}}'>
+          <button type="button" class="btn btn-info" tooltip="Ver más aplicaciones.">
+            ver más
+          </button>
+        </a>
+      </div>
+    </div>
 
-  <div class="row">
     <!--Applications-->
     <div class="inner-row">
-      <div class="col-md-4" *ngFor='let application of category.applications'>
+      <div class="col-md-4" *ngFor='let application of applications'>
         <div class="jumbotron">
           <a routerLink="/application/{{application.id}}">
             <!-- <a role="button" (click)='onSelect(application)'> -->
@@ -36,5 +41,43 @@
         </div>
       </div>
     </div>
+
   </div>
-</ng-template>
+
+
+
+
+  <!-- Blindness -->
+  <ng-template #othercategory>
+    <div class="applications-header">
+      <h4>{{category.name}}: Aplicaciones</h4>
+    </div>
+
+    <div class="row">
+      <!--Applications-->
+      <div class="inner-row">
+        <div class="col-md-4" *ngFor='let application of category.applications'>
+          <div class="jumbotron">
+            <a routerLink="/application/{{application.id}}">
+              <!-- <a role="button" (click)='onSelect(application)'> -->
+              <img class="logo center-block" src="{{application.logo}}" alt="">
+            </a>
+            <br>
+            <div class="info">
+              <small>Nombre: {{application.name}}</small>
+              <br>
+              <small>Categoría: {{application.category}}</small>
+              <br>
+              <div class="info-rating">
+                <small>Valoración:
+                  <bar-rating [(rate)]="application.rating" [max]="5" [theme]="'default'"></bar-rating>
+                </small>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

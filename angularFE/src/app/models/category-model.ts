@@ -1,8 +1,9 @@
-import { Application } from "./application-model";
-
 export class Category {
-    id: number;
-    name: string;
-    subcategory: string;
-    applications:Application[];
+    _id:number;
+    name:string;
+    url:string;
+    children:[{
+        name:string;
+        url:string;
+    }];
 }

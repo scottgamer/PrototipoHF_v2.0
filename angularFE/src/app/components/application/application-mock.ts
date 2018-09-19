@@ -2,7 +2,7 @@ import { Application } from '../../models/application-model';
 
 export const APPLICATIONS: Application[] = [
     {
-        id: 1,
+        _id: '1',
         name: 'Aplicacion demo 1',
         logo: 'assets/images/logos/app1.webp',
         imgs: ['assets/images/carousel/app1/img1.webp', 'assets/images/carousel/app1/img2.webp', 'assets/images/carousel/app1/img3.webp'],
@@ -38,7 +38,7 @@ export const APPLICATIONS: Application[] = [
         downloadedTimes:1
     },
     {
-        id: 2,
+        _id: '2',
         name: 'Aplicacion demo 2',
         logo: 'assets/images/logos/app2.webp',
         imgs: ['assets/images/carousel/app2/img1.webp', 'assets/images/carousel/app2/img2.webp', 'assets/images/carousel/app2/img3.webp'],
@@ -71,7 +71,7 @@ export const APPLICATIONS: Application[] = [
         downloadedTimes:1
     },
     {
-        id: 3,
+        _id: '3',
         name: 'Aplicacion demo 3',
         logo: 'assets/images/logos/app3.webp',
         imgs: ['assets/images/carousel/app3/img1.webp', 'assets/images/carousel/app3/img2.webp', 'assets/images/carousel/app3/img3.webp'],

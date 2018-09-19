@@ -75,47 +75,12 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
 //Update user data
 router.put('/update/:_id', (req, res, next) => {
     let id = req.params._id;
-    let query = {_id:id};
+    let query = {_id:id}; 
 
-    User.findOne(query, (err, user) => {
-        if (err) {
-            console.log(err);
-            res.status(500).send();
-        } else {
-            if (!user) {
-                res.status(404).send();
-            } else {
-                if (req.body.fullName) {
-                    user.fullName = req.body.fullName;
-                }
-                if (req.body.password) {
-                    user.password = req.body.password;
-                }
-                if (req.body.birthday) {
-                    user.birthday = req.body.birthday;
-                }
-                if (req.body.genre) {
-                    user.genre = req.body.genre;
-                }
-                if (req.body.nationality) {
-                    user.nationality = req.body.nationality;
-                }
-                if (req.body.bio) {
-                    user.bio= req.body.bio;
-                }
-
-                user.save((err, updatedUser) => {
-                    if (err) {
-                        console.log(err);
-                        res.status(500).send();
-                    } else {
-                        res.send(updatedUser);
-                    }
-                });
-            }
-        }
-
-    }); 
+    User.updateUser(query, req, res, err=>{
+        if(err) throw err;
+        res.send('Success');
+    });
 });
 
 module.exports = router;

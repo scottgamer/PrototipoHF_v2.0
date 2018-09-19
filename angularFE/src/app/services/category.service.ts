@@ -1,24 +1,34 @@
 import { Injectable } from '@angular/core';
-
-//import classes
-import { Category } from '../models/category-model';
-import { CATEGORIES } from '../components/category/category-mock';
-
-import { Observable} from 'rxjs';
-import { of } from 'rxjs/observable/of';
+import { Http, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class CategoryService {
 
-  constructor() { }
+  constructor(private http:Http) { }
 
-  getCategories(): Observable<Category[]>{
-    console.log('Categories service loaded');
-    return of(CATEGORIES);
+  getCategories(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/categories/getall', { headers: headers }).map(res => res.json());
   }
 
-  getCategory(id:number): Observable<Category>{
-    return of(CATEGORIES.find(category => category.id===id));
+  getCategory(id){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/categories/getone/' + id, { headers: headers }).map(res => res.json());
   }
 
+/*   getAppsByCategory(id){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/applications/getappsbycategory/' + id, { headers: headers }).map(res => res.json());
+  } */
+
+
+  getAppsByCategory(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/applications/getappsbycategory/5ba11dee6343f715c0e786be', { headers: headers }).map(res => res.json());
+  }
 }

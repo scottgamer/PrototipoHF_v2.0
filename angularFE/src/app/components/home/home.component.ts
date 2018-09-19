@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   applications: Application[];
   categories: Category[];
 
-  sections:{section: string, id:number, route:string}[];
+  sections:{section: string, id:string, route:string}[];
 
   lorem: string = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem adipisci quod nemo ' +
     'vitae cumque sit, iusto porro! Eligendi nesciunt et amet numquam dolore voluptatem a ' +
@@ -46,11 +46,10 @@ export class HomeComponent implements OnInit {
   }
 
   getSections():void{
-    this.sections = [ {section: 'Aplicaciones más descargadas', id: 4, route: '/applications'},
-                      {section: 'Últimas subidas', id: 3, route: '/applications'},
-                      {section: 'Baja Visión', id: 1, route: '/category'},
-                      {section: 'Ceguera', id:2, route: '/category'}];
-
+    this.sections = [ {section: 'Aplicaciones más descargadas', id: '4', route: '/applications'},
+                      {section: 'Últimas subidas', id: '2', route: '/applications'},
+                      {section: 'Baja Visión', id: '5ba11e036343f715c0e786bf', route: '/category'},
+                      {section: 'Ceguera', id:'5ba11dee6343f715c0e786be', route: '/category'}];
   }
 
   getCategories():void{

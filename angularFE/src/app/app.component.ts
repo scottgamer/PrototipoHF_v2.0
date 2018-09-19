@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   
-  categories:Category[];
+  categories:Category;
   options:Object[];
 
   //menu component
@@ -64,6 +64,8 @@ export class AppComponent {
                     {name:'Eventos', route: '/events'}];
   }
 
+  //no longer necessary
+  //until evaluation
   reloadRoute = function() {
     this.location.reload();
  }
@@ -71,7 +73,6 @@ export class AppComponent {
   getCategories(): void {
     this.categoryService.getCategories()
         .subscribe(categories => this.categories = categories);
-    console.log('Categories service loaded');
   }
 
   public setTitle(newTitle: string) {

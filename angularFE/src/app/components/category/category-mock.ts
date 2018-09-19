@@ -1,6 +1,6 @@
 import { Category } from "../../models/category-model";
 
-export const CATEGORIES: Category[] = [
+/* export const CATEGORIES: Category[] = [
     {
         id: 1,
         name: 'Baja Visión',
@@ -165,4 +165,4 @@ export const CATEGORIES: Category[] = [
         ]
 
     }
-];
+]; */

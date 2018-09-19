@@ -19,10 +19,10 @@ export class ApplicationService {
     return of(APPLICATIONS);
   }
 
-  getApplication(id: number): Observable<Application> {
+  getApplication(id): Observable<Application> {
     // TODO: send the message _after_ fetching the hero
     // this.messageService.add(`HeroService: fetched hero id=${id}`);
-    return of(APPLICATIONS.find(application => application.id === id));
+    return of(APPLICATIONS.find(application => application._id === id));
   }
 
 }

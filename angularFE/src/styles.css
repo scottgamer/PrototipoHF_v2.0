@@ -412,6 +412,9 @@ hr{
     .error-body{
         width: 70%;
     }
+    .response{
+        margin-left: 3%;
+    }
 }
 
 @media only screen and (max-width: 768px) {

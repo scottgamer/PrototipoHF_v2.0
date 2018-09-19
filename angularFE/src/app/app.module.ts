@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
+import { CategoryService } from './services/category.service';
 
 //import { AppBootstrapModule } from './app-bootstrap/app-bootstrap.module';
 //Bootstrap components using ngx-bootstrap
@@ -45,7 +46,7 @@ const appRoutes: Routes = [
   {path:'login', component:LoginComponent},
   {path:'register', component:RegisterComponent},
   {path:'user', component:UserComponent},
-  {path:'category/:id', component:CategoryComponent},
+  {path:'category/:_id', component:CategoryComponent},
   {path:'help', component:HelpComponent},
   { path: '**', component: PageNotFoundComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -84,7 +85,8 @@ const appRoutes: Routes = [
   providers: [
     Title,
     ValidateService,
-    AuthService
+    AuthService,
+    CategoryService
   ],
   bootstrap: [AppComponent]
 })

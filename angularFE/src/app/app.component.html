@@ -80,7 +80,7 @@
           </a>
           <ul *dropdownMenu class="dropdown-menu">
             <li *ngFor="let category of categories">
-              <a routerLink='/category/{{category.id}}' (click)='reloadRoute()'>{{category.name}}</a>
+              <a routerLink='/category/{{category._id}}'>{{category.name}}</a>
             </li>
             <li role="separator" class="divider"></li>
             <li>

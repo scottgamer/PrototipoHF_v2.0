@@ -1,64 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const config = require('../config/database');
-
-//commentary schema
-const CommentarySchema = mongoose.Schema({
-    user: String,
-    commentary: String,
-    date: String,
-    rating: Number
-});
-
-//response schema
-const ResponseSchema = mongoose.Schema({
-    response: String,
-    date: String,
-    author: String,
-});
-
-//question schema
-const QuestionSchema = mongoose.Schema({
-    question: String,
-    date: String,
-    author: String,
-    responses: [ResponseSchema]
-});
-
-//event schema
-const EventSchema = mongoose.Schema({
-    name: String,
-    date: String,
-    organizedBy: String,
-    organizerImg: String,
-    description: String,
-    img: String,
-});
-
-//application schema
-const ApplicationSchema = mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    logo: {
-        type: String,
-        required: true
-    },
-    imgs: [String],
-    category: String,
-    description: String,
-    rating: Number,
-    country: String,
-    developedBy: String,
-    version: Number,
-    releaseDate: String,
-    platform: String,
-    androidMin: String,
-    appWebPage: String,
-    commentaries: [CommentarySchema],
-    downloadedTimes: Number
-});
 
 //user schema
 const UserSchema = mongoose.Schema({
@@ -79,17 +20,29 @@ const UserSchema = mongoose.Schema({
     genre: String,
     nationality: String,
     bio: String,
-    downloadedApps: [ApplicationSchema],
-    questionsMade: [QuestionSchema],
-    responsesMade: [ResponseSchema],
-    savedEvents: [EventSchema]
+    downloadedApps: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Application'
+    }],
+    questionsMade: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Question'
+    }],
+    responsesMade: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Response'
+    }],
+    savedEvents: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Event'
+    }]
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
 //functions
 
-module.exports.addUser = function (newUser, callback) {
+module.exports.addUser = (newUser, callback) => {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err;
@@ -99,7 +52,7 @@ module.exports.addUser = function (newUser, callback) {
     });
 };
 
-module.exports.updateUserPassword = function (newUser, callback) {
+module.exports.updateUserPassword = (newUser, callback) => {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err;
@@ -118,17 +71,14 @@ module.exports.getUserByUsername = (username, callback) => {
     User.findOne(query, callback);
 };
 
-module.exports.comparePassword = (candidatePassword, hash, callback)=> {
+module.exports.comparePassword = (candidatePassword, hash, callback) => {
     bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
         if (err) throw err;
         callback(null, isMatch);
     })
 };
 
-module.exports.updateUser = (callback) => {
-    let id = req.params._id;
-    let query = {_id:id};
-
+module.exports.updateUser = (query, req, res, callback) => {
     User.findOne(query, (err, user) => {
         if (err) {
             console.log(err);
@@ -139,6 +89,21 @@ module.exports.updateUser = (callback) => {
             } else {
                 if (req.body.fullName) {
                     user.fullName = req.body.fullName;
+                }
+                if (req.body.password) {
+                    user.password = req.body.password;
+                }
+                if (req.body.birthday) {
+                    user.birthday = req.body.birthday;
+                }
+                if (req.body.genre) {
+                    user.genre = req.body.genre;
+                }
+                if (req.body.nationality) {
+                    user.nationality = req.body.nationality;
+                }
+                if (req.body.bio) {
+                    user.bio = req.body.bio;
                 }
 
                 user.save((err, updatedUser) => {
@@ -151,7 +116,5 @@ module.exports.updateUser = (callback) => {
                 });
             }
         }
-
     });
-
 };
