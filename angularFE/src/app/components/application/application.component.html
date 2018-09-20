@@ -1,6 +1,6 @@
 TODO Application
 
-<div *ngIf="application">
+<div *ngIf="application && category">
   <div class="row">
     <div class="col-md-12">
       <div id="application" class="jumbotron">
@@ -12,7 +12,7 @@ TODO Application
           <div class="col-md-4">
             <div class="info-app">
               Nombre: {{application.name}}
-              <br> Categoría: {{application.category}}
+              <br> Categoría: {{category.name}}
               <br>
               <div class="info-rating">
                 Valoración:
@@ -51,7 +51,8 @@ TODO Application
             <h4>Descripción</h4>
             <div class="description">
               <div class="">
-                {{half1}}
+                <!-- {{half1}} -->
+                {{application.description}}
               </div>
               <div id="collapseBasic" [collapse]="!isCollapsed" class="card card-block card-header">
                 <div class="">

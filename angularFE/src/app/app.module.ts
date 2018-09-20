@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+// import { HttpClientModule } from '@angular/common/http';
 
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
 import { CategoryService } from './services/category.service';
+import { ApplicationService } from './services/application.service';
 
 //import { AppBootstrapModule } from './app-bootstrap/app-bootstrap.module';
 //Bootstrap components using ngx-bootstrap
@@ -42,7 +44,7 @@ const appRoutes: Routes = [
   {path:'new/:id', component:NewComponent},
   {path:'events', component:EventsComponent},
   {path:'event/:id', component:EventComponent},
-  {path:'application/:id', component:ApplicationComponent},
+  {path:'application/:_id', component:ApplicationComponent},
   {path:'login', component:LoginComponent},
   {path:'register', component:RegisterComponent},
   {path:'user', component:UserComponent},
@@ -70,8 +72,8 @@ const appRoutes: Routes = [
     HelpComponent,
   ],
   imports: [
-    HttpModule,
     BrowserModule,
+    HttpModule,
     FormsModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
@@ -86,7 +88,8 @@ const appRoutes: Routes = [
     Title,
     ValidateService,
     AuthService,
-    CategoryService
+    CategoryService,
+    ApplicationService,
   ],
   bootstrap: [AppComponent]
 })

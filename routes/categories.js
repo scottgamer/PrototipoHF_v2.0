@@ -15,7 +15,7 @@ router.get('/getall', (req, res, next) => {
 router.get('/getone/:_id', (req, res) => {
     Category.getCategoryById(req.params._id, (err, category) => {
         if (err) {
-            res.send(404);
+            res.send(status);
             throw err;
         } 
         res.json(category);

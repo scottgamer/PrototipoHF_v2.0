@@ -8,9 +8,12 @@ const ApplicationSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    logo:String,
+    logo: String,
     imgs: [String],
-    category: String,
+    category: {
+        type: mongoose.Schema.Types.String,
+        ref:'Category'
+    },
     description: String,
     rating: Number,
     country: String,
@@ -25,10 +28,14 @@ const ApplicationSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Commentary'
         }],
-    downloadedTimes: Number
+    downloadedTimes: Number,
+    create_date: {
+        type: Date,
+        default: Date.now
+    },
 });
 
-const Application = module.exports = mongoose.model('Application', ApplicationSchema); 
+const Application = module.exports = mongoose.model('Application', ApplicationSchema);
 
 
 //functions
@@ -42,6 +49,14 @@ module.exports.getApplications = (callback, limit) => {
 };
 
 module.exports.getApplicationsByCategoryId = (categoryId, callback) => {
-    const query = {category:categoryId};
+    const query = { category: categoryId };
     Application.find(query, callback);
-} 
+}
+
+module.exports.getApplicationById = (appId, callback) => {
+    const query = { _id: appId };
+    Application.findOne(query, callback);
+}
+module.exports.getLatestApplications = (callback) => {
+    Application.findOne().sort({ create_date: -1 }).exec(callback);
+}

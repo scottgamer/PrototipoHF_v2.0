@@ -16,7 +16,7 @@ router.post('/add', (req, res, next) => {
         rating: req.body.rating,
         country: req.body.country,
         developedBy: req.body.developedBy,
-        version:req.body.version,
+        version: req.body.version,
         releaseDate: req.body.releaseDate,
         platform: req.body.platform,
         androidMin: req.body.androidMin,
@@ -25,11 +25,11 @@ router.post('/add', (req, res, next) => {
         downloadedTimes: null,
     });
 
-    Application.addApplication(newApplication, (err, app)=>{
+    Application.addApplication(newApplication, (err, app) => {
         if (err) res.json({ success: false, msg: 'Failed to add new application' });
         else res.json({ success: true, msg: 'Application added' });
     });
-    
+
 });
 
 //get all applications
@@ -40,17 +40,42 @@ router.get('/getapps', (req, res, next) => {
     });
 });
 
-router.get('/getappsbycategory/:_id',(req, res, next)=>{
+//get all applications by category
+router.get('/getappsbycategory/:_id', (req, res, next) => {
     let categoryId = req.params._id;
-    Application.getApplicationsByCategoryId((categoryId), (err, apps)=>{
+    Application.getApplicationsByCategoryId(categoryId, (err, apps)=>{
         if(err) {
-            res.send(404);
+            res.send(status);
             console.log(err);
             throw err;
         }
         res.json(apps);
     });
-
 });
 
-module.exports=router;
+//get application by id
+router.get('/getone/:_id', (req, res, next) => {
+    let appId = req.params._id;
+    Application.getApplicationById(appId, (err, app) => {
+        if (err) {
+            res.send(status);
+            console.log(err);
+            throw err;
+        }
+        res.json(app);
+    });
+});
+
+//get latest applications
+router.get('/getlatest', (req, res, next) => {
+    Application.getLatestApplications((err, apps) => {
+        if (err) {
+            res.send(status);
+            console.log(err);
+            throw err;
+        }
+        res.json(apps);
+    });
+});
+
+module.exports = router;

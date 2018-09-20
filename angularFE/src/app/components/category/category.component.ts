@@ -5,9 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 //classes
 import { Category } from '../../models/category-model';
+import { Application } from '../../models/application-model';
 //services
 import { CategoryService } from '../../services/category.service';
-import { Application } from '../../models/application-model';
+import { ApplicationService } from '../../services/application.service';
+
 
 @Component({
   selector: 'app-category',
@@ -17,11 +19,12 @@ import { Application } from '../../models/application-model';
 })
 export class CategoryComponent implements OnInit {
 
-  //@Input() category: Category;
   category: Category;
   applications: Application[];
+  categoryId:any;
 
   constructor(private categoryService: CategoryService,
+    private appService:ApplicationService,
     private activatedRoute: ActivatedRoute,
     private location: Location) {
 
@@ -29,44 +32,29 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      // console.log(params);
       if (params['_id']) {
-        this.getCategory(params['_id']);
-        /* console.log('apps loaded');
-        this.getAppsByCategory(params['_id']); */
+        this.categoryId = params['_id'];
+        this.getCategory(this.categoryId);
+        this.getAppsByCategory(this.categoryId);
       }
     });
-    this.getAppsByCategory();
-
-    console.log('estas son las aplicaciones: ' + this.applications);
+    console.log(this.category);
   }
 
   getCategory(id): void {
     this.categoryService.getCategory(id)
       .subscribe(category => {
         this.category = category;
-        console.log(this.category);
       });
   }
 
-  getAppsByCategory(): void{
-    this.categoryService.getAppsByCategory()
+  getAppsByCategory(id): void{
+    this.appService.getAppsByCategory(id)
       .subscribe(application => {
         this.applications = application;
-        console.log('using service: ' + this.applications)
+        console.log('applications loaded');
+        console.log(this.applications);
       });
-  }
-
-  /* getCategories() {
-    this.categoryService.getCategories().
-      subscribe(
-        category => {
-          this.category = category;
-        },
-        err => {
-          if (err) console.log(err);
-          return false;
-        });
-  } */
+  } 
 
 }

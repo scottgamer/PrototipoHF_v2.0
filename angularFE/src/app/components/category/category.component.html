@@ -21,7 +21,7 @@
     <div class="inner-row">
       <div class="col-md-4" *ngFor='let application of applications'>
         <div class="jumbotron">
-          <a routerLink="/application/{{application.id}}">
+          <a routerLink="/application/{{application._id}}">
             <!-- <a role="button" (click)='onSelect(application)'> -->
             <img class="logo center-block" src="{{application.logo}}" alt="">
           </a>
@@ -29,7 +29,7 @@
           <div class="info">
             <small>Nombre: {{application.name}}</small>
             <br>
-            <small>Categoría: {{application.category}}</small>
+            <small>Categoría: {{child.name}}</small>
             <br>
             <div class="info-rating">
               <small>Valoración:
@@ -45,8 +45,6 @@
   </div>
 
 
-
-
   <!-- Blindness -->
   <ng-template #othercategory>
     <div class="applications-header">
@@ -56,9 +54,9 @@
     <div class="row">
       <!--Applications-->
       <div class="inner-row">
-        <div class="col-md-4" *ngFor='let application of category.applications'>
+        <div class="col-md-4" *ngFor='let application of applications'>
           <div class="jumbotron">
-            <a routerLink="/application/{{application.id}}">
+            <a routerLink="/application/{{application._id}}">
               <!-- <a role="button" (click)='onSelect(application)'> -->
               <img class="logo center-block" src="{{application.logo}}" alt="">
             </a>
@@ -66,7 +64,7 @@
             <div class="info">
               <small>Nombre: {{application.name}}</small>
               <br>
-              <small>Categoría: {{application.category}}</small>
+              <small>Categoría: {{category.name}}</small>
               <br>
               <div class="info-rating">
                 <small>Valoración:

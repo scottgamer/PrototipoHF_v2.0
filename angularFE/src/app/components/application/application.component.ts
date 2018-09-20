@@ -11,9 +11,11 @@ import { Location } from '@angular/common';
 
 //services
 import { ApplicationService } from '../../services/application.service';
+import { CategoryService } from '../../services/category.service';
 
 //classes
 import { Application } from '../../models/application-model';
+import { Category } from '../../models/category-model';
 import { Question } from '../../models/questions-model';
 import { Response } from '../../models/responses-model';
 
@@ -25,7 +27,10 @@ import { Response } from '../../models/responses-model';
 })
 export class ApplicationComponent implements OnInit {
 
-  @Input() application: Application; 
+  application: Application;
+  category: Category;
+  appId: any;
+  categoryId: any;
 
   questions: Question[];
 
@@ -42,24 +47,39 @@ export class ApplicationComponent implements OnInit {
   message: string;
 
   constructor(private modalService: BsModalService,
-              private barRatingModule: BarRatingModule,
-              private route: ActivatedRoute,
-              private applicationService: ApplicationService,
-              private location: Location) {
-    
+    private barRatingModule: BarRatingModule,
+    private route: ActivatedRoute,
+    private applicationService: ApplicationService,
+    private categoryService: CategoryService,
+    private location: Location) {
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      if (params['_id']) {
+        this.appId = params['_id'];
+        this.getApplication(this.appId);
+      }
+    });
+
     this.messageBtn = 'Leer más';
-    this.getApplication();
-    this.getHalfString();
-    this.loadQuestions();
+
   }
 
-  getApplication(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+  getApplication(id): void {
     this.applicationService.getApplication(id)
-      .subscribe(application => this.application = application);
+      .subscribe((app: Application) => {
+        this.application = app;
+        this.categoryId = this.application.category;
+        this.getCategory(this.categoryId);
+      });
+  }
+
+  getCategory(id): void {
+    this.categoryService.getCategory(id)
+      .subscribe(category => {
+      this.category = category;
+      });
   }
 
   loadQuestions(): void {
@@ -74,7 +94,7 @@ export class ApplicationComponent implements OnInit {
           response: this.lorem,
           date: '10/30/2018',
           author: 'User456'
-        }, 
+        },
         {
           id: 2,
           response: this.lorem,
@@ -94,7 +114,7 @@ export class ApplicationComponent implements OnInit {
   getHalfString(): void {
     let descript = this.application.description;
     let size = descript.length / 2;
-    this.half1 = descript.substr(0, size+1);
+    this.half1 = descript.substr(0, size + 1);
     this.half2 = descript.substr(size + 1);
   }
 
@@ -111,12 +131,10 @@ export class ApplicationComponent implements OnInit {
   }
 
   confirm(template: TemplateRef<any>): void {
-    //this.message = 'Confirmed!';
     this.modalRef.hide();
   }
 
   confirmModal(): void {
-    //this.message = 'Confirmed!';
     alert('Pregunta guardada!');
     this.modalRef.hide();
   }
