@@ -25,7 +25,7 @@ const ApplicationSchema = mongoose.Schema({
     appWebPage: String,
     commentaries: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.String,
             ref: 'Commentary'
         }],
     downloadedTimes: Number,
@@ -60,3 +60,15 @@ module.exports.getApplicationById = (appId, callback) => {
 module.exports.getLatestApplications = (callback) => {
     Application.findOne().sort({ create_date: -1 }).exec(callback);
 }
+
+module.exports.postNewCommentaryById = (appId, commentId, callback) => {
+    const query = { _id: appId };
+    const comment = { $push: { commentaries: commentId  } };
+    Application.findOneAndUpdate(query, comment, callback);
+}
+
+/* db.students.update(
+    { _id: 1 },
+    { $push: { scores: 89 } } )*/
+ 
+

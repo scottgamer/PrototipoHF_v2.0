@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 //services
 import { ApplicationService } from '../../services/application.service';
 import { CategoryService } from '../../services/category.service';
+import { AuthService } from '../../services/auth.service';
 
 //classes
 import { Application } from '../../models/application-model';
@@ -31,6 +32,7 @@ export class ApplicationComponent implements OnInit {
   category: Category;
   appId: any;
   categoryId: any;
+  userId:any;
 
   questions: Question[];
 
@@ -51,6 +53,7 @@ export class ApplicationComponent implements OnInit {
     private route: ActivatedRoute,
     private applicationService: ApplicationService,
     private categoryService: CategoryService,
+    private authService:AuthService,
     private location: Location) {
   }
 
@@ -62,6 +65,8 @@ export class ApplicationComponent implements OnInit {
       }
     });
 
+    this.getUserId();
+    console.log(this.userId);
     this.messageBtn = 'Leer más';
 
   }
@@ -81,6 +86,19 @@ export class ApplicationComponent implements OnInit {
       this.category = category;
       });
   }
+
+  getUserId(){
+     this.userId = this.authService.getUserId();
+  }
+
+  /* postCommentAndRating(){
+    let 
+    this.categoryService.postCommentAndRating().subscribe(data=>{
+      if(data){
+        console.log('Commentary sent');
+        return true;
+      } );
+  } */
 
   loadQuestions(): void {
     this.questions = [{

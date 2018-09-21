@@ -37,7 +37,23 @@ export class ApplicationService {
   getAppsByCategory(id): Observable<Application[]> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/applications/getappsbycategory/'+id, { headers: headers }).map(res => res.json());
+    return this.http.get('http://localhost:3000/applications/getappsbycategory/' + id, { headers: headers }).map(res => res.json());
+  }
+
+  postCommentAndRating(comment) {
+    let commentId = comment.id;
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http
+      .post('http://localhost:3000/applications/newcommentary/5ba4103584d78f2ee8acf523', comment, { headers: headers })
+      .map(res => res.json());
+  }
+
+  updateUser(user) {
+    let userId = user.id;
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('http://localhost:3000/users/update/' + userId, user, { headers: headers }).map(res => res.json());
   }
 
 }

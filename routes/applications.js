@@ -3,6 +3,7 @@ const router = express.Router();
 
 //load application model
 const Application = require('../models/application');
+const Commentary = require('../models/commentary');
 
 //add new application
 router.post('/add', (req, res, next) => {
@@ -21,12 +22,12 @@ router.post('/add', (req, res, next) => {
         platform: req.body.platform,
         androidMin: req.body.androidMin,
         appWebPage: req.body.appWebPage,
-        commentaries: null,
-        downloadedTimes: null,
+        commentaries: [],
+        downloadedTimes: req.body.downloadedTimes,
     });
 
     Application.addApplication(newApplication, (err, app) => {
-        if (err) res.json({ success: false, msg: 'Failed to add new application' });
+        if (err) res.json({ success: false, msg: 'Failed to add new application ' + err });
         else res.json({ success: true, msg: 'Application added' });
     });
 
@@ -43,8 +44,8 @@ router.get('/getapps', (req, res, next) => {
 //get all applications by category
 router.get('/getappsbycategory/:_id', (req, res, next) => {
     let categoryId = req.params._id;
-    Application.getApplicationsByCategoryId(categoryId, (err, apps)=>{
-        if(err) {
+    Application.getApplicationsByCategoryId(categoryId, (err, apps) => {
+        if (err) {
             res.send(status);
             console.log(err);
             throw err;
@@ -76,6 +77,30 @@ router.get('/getlatest', (req, res, next) => {
         }
         res.json(apps);
     });
+});
+
+//post new commentary
+router.post('/newcommentary/:_id', (req, res, next) => {
+    let appId = req.params._id;
+    let commentary = new Commentary({
+        user: req.body.user,
+        commentary: req.body.commentary,
+        rating: req.body.rating
+    });
+    Commentary.addCommentary(commentary, (err, success) => {
+        if (err) res.json({ success: false, msg: '0 ' + err });
+        else {
+            Commentary.getLatestCommentary((err, comment) => {
+                if (err) res.json({ success: false, msg: '1 ' + err });
+                let commentId = comment._id;
+                Application.postNewCommentaryById(appId, commentId, (err, app) => {
+                    if (err) res.json({ success: false, msg: '2 ' + err });
+                    res.json({ success: true, msg: 'Commentary added' });
+                });
+            });
+        }
+    });
+
 });
 
 module.exports = router;

@@ -21,19 +21,19 @@ const UserSchema = mongoose.Schema({
     nationality: String,
     bio: String,
     downloadedApps: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.String,
         ref: 'Application'
     }],
     questionsMade: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.String,
         ref: 'Question'
     }],
     responsesMade: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.String,
         ref: 'Response'
     }],
     savedEvents: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.String,
         ref: 'Event'
     }]
 });

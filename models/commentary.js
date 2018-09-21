@@ -1,13 +1,28 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const config = require('../config/database');
 
 //commentary schema
 const CommentarySchema = mongoose.Schema({
-    user: String,
+    user: {
+        type: mongoose.Schema.Types.String,
+        ref: 'User'
+    },
     commentary: String,
-    date: String,
+    date: {
+        type: Date,
+        default: Date.now
+    },
     rating: Number
 });
 
 const Commentary = module.exports = mongoose.model('Commentary', CommentarySchema); 
+
+module.exports.addCommentary = (newCommentary, callback) => {
+    newCommentary.save(callback);
+};
+
+module.exports.getLatestCommentary = (callback) => {
+    Commentary.findOne().sort({ create_date: -1 }).exec(callback);
+}
+
+
+

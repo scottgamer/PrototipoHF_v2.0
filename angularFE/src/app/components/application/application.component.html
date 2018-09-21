@@ -75,13 +75,11 @@ TODO Application
           <div class="col-md-12">
             <h4>Califica y comenta</h4>
             <div class="rate-comment">
-              <form action="">
-                <!-- <div id="rating">
-                Calificación:
-              </div> -->
+              <form (submit)='onRateAndComment()'>
+                <input type="hidden" name="application._id">
                 <div id="rating">
                   Calificación:
-                  <bar-rating [(rate)]="application.rating" [max]="5" [theme]="'default'"></bar-rating>
+                  <bar-rating [(rate)]="application.rating" [max]="5" [theme]="'default'" name="application.rating"></bar-rating>
                 </div>
                 <div id="comment">
                   Comentario:
