@@ -25,14 +25,14 @@ export class AuthService {
 
   }
 
-  updateUser(user){
+  updateUser(user) {
     let userId = user.id;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.put('http://localhost:3000/users/update/' + userId, user, { headers: headers }).map(res => res.json());
   }
 
-  storeUserData(token, user){
+  storeUserData(token, user) {
     localStorage.setItem('id_token', token);
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('userId', user.id);
@@ -40,17 +40,17 @@ export class AuthService {
     this.user = user;
   }
 
-  loggedIn(){
+  loggedIn() {
     return tokenNotExpired('id_token');
   }
 
-  logout(){
+  logout() {
     this.authToken = null;
     this.user = null;
     localStorage.clear();
   }
 
-  getProfile(){
+  getProfile() {
     let headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
@@ -59,13 +59,19 @@ export class AuthService {
 
   }
 
-  loadToken(){
+  loadToken() {
     const token = localStorage.getItem('id_token');
     this.authToken = token;
   }
 
-  getUserId(){
+  getUserId() {
     const userId = localStorage.getItem('userId');
     return userId;
+  }
+
+  getUserDownloadedApp(appId) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/users/getuserapp/' + appId, { headers: headers }).map(res => res.json());
   }
 }

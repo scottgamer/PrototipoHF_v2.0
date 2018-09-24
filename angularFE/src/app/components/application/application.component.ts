@@ -1,4 +1,5 @@
 import { Component, OnInit, TemplateRef, Input } from '@angular/core';
+import { Observable } from "rxjs/Rx"
 
 //modules
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -18,6 +19,7 @@ import { AuthService } from '../../services/auth.service';
 import { Application } from '../../models/application-model';
 import { Category } from '../../models/category-model';
 import { Question } from '../../models/questions-model';
+import { Commentary } from '../../models/commentaries-model';
 import { Response } from '../../models/responses-model';
 
 @Component({
@@ -30,9 +32,13 @@ export class ApplicationComponent implements OnInit {
 
   application: Application;
   category: Category;
+  comment: Commentary;
+  commentariesArray = [];
+  commentsAndUsersArray = [];
+  usersArray = [];
   appId: any;
   categoryId: any;
-  userId:any;
+  userId: any;
 
   questions: Question[];
 
@@ -53,11 +59,15 @@ export class ApplicationComponent implements OnInit {
     private route: ActivatedRoute,
     private applicationService: ApplicationService,
     private categoryService: CategoryService,
-    private authService:AuthService,
+    private authService: AuthService,
     private location: Location) {
   }
 
   ngOnInit() {
+    //this.application = this.applicationService.getApplication('5ba18b8aee19d83fdc44a714');
+    console.log(this.application);
+    this.initCommentObject();
+
     this.route.params.subscribe(params => {
       if (params['_id']) {
         this.appId = params['_id'];
@@ -66,9 +76,15 @@ export class ApplicationComponent implements OnInit {
     });
 
     this.getUserId();
-    console.log(this.userId);
     this.messageBtn = 'Leer más';
+  }
 
+  initCommentObject() {
+    this.comment = {
+      user: '',
+      commentary: '',
+      rating: 0
+    };
   }
 
   getApplication(id): void {
@@ -77,27 +93,48 @@ export class ApplicationComponent implements OnInit {
         this.application = app;
         this.categoryId = this.application.category;
         this.getCategory(this.categoryId);
+        this.getComments(this.application);
       });
   }
 
   getCategory(id): void {
     this.categoryService.getCategory(id)
       .subscribe(category => {
-      this.category = category;
+        this.category = category;
       });
   }
 
-  getUserId(){
-     this.userId = this.authService.getUserId();
+  getUserId() {
+    this.userId = this.authService.getUserId();
   }
 
-  /* postCommentAndRating(){
-    let 
-    this.categoryService.postCommentAndRating().subscribe(data=>{
-      if(data){
-        console.log('Commentary sent');
-        return true;
-      } );
+  onRateAndComment() {
+    const comment = {
+      user: this.userId,
+      commentary: this.comment.commentary,
+      rating: this.comment.rating,
+    };
+    this.applicationService.postCommentAndRating(this.appId, comment).subscribe(data => {
+      if (!data) console.log('err');
+      return true;
+    });
+  }
+
+  getComments(app: Application) {
+    let commentariesSize = app.commentaries.length;
+    for (let i = 0; i < commentariesSize; i++) {
+      let commentId = app.commentaries[i];
+      this.applicationService.getComment(commentId).subscribe(comment => this.commentariesArray.push(comment));
+    }
+    this.commentariesArray;
+    //this.getUsers(this.commentariesArray);
+  }
+
+  //TODO GET USERS
+  /* getUsers() {
+    console.log(this.commentariesArray.length);
+    let userId = "5b9fc81b04c8273d8483320f";
+    this.applicationService.getUser(userId).subscribe(user => console.log(user));
   } */
 
   loadQuestions(): void {
@@ -129,12 +166,12 @@ export class ApplicationComponent implements OnInit {
     }];
   }
 
-  getHalfString(): void {
+  /* getHalfString(): void {
     let descript = this.application.description;
     let size = descript.length / 2;
     this.half1 = descript.substr(0, size + 1);
     this.half2 = descript.substr(size + 1);
-  }
+  } */
 
   collapsed(): void {
     this.messageBtn = 'Leer menos';

@@ -52,7 +52,7 @@ module.exports.addUser = (newUser, callback) => {
     });
 };
 
-module.exports.updateUserPassword = (newUser, callback) => {
+/* module.exports.updateUserPassword = (newUser, callback) => {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err;
@@ -60,7 +60,7 @@ module.exports.updateUserPassword = (newUser, callback) => {
             newUser.save(callback);
         })
     });
-};
+}; */
 
 module.exports.getUserById = (id, callback) => {
     User.findById(id, callback);
@@ -118,3 +118,10 @@ module.exports.updateUser = (query, req, res, callback) => {
         }
     });
 };
+
+module.exports.addAppToDownloadedList = (userId, appId, callback) => {
+    const query = { _id: userId };
+    const app = { $push: { downloadedApps: appId } };
+    User.findOneAndUpdate(query, app, callback);
+};
+

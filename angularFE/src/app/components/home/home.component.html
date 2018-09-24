@@ -17,7 +17,7 @@
   <div class="inner-row">
     <div class="col-md-4" *ngFor='let application of applications'>
       <div class="jumbotron">
-        <a routerLink="/application/{{application.id}}">
+        <a routerLink="/application/{{application._id}}">
           <!-- <a role="button" (click)='onSelect(application)'> -->
           <img class="logo center-block" src="{{application.logo}}" alt="">
         </a>

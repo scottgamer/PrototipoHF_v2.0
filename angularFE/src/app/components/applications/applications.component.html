@@ -15,7 +15,7 @@
   <div class="inner-row">
     <div class="col-md-4" *ngFor='let application of applications'>
       <div class="jumbotron">
-        <a routerLink="/application/{{application.id}}">
+        <a routerLink="/application/{{application._id}}">
           <!-- <a role="button" (click)='onSelect(application)'> -->
           <img class="logo center-block" src="{{application.logo}}" alt="">
         </a>
@@ -36,28 +36,4 @@
     </div>
   </div>
 
-  <!-- More applications -->
-  <div class="inner-row">
-    <div class="col-md-4" *ngFor='let application of applications'>
-      <div class="jumbotron">
-        <a routerLink="/application/{{application.id}}">
-          <!-- <a role="button" (click)='onSelect(application)'> -->
-          <img class="logo center-block" src="{{application.logo}}" alt="">
-        </a>
-        <br>
-        <div class="info">
-          <small>Nombre: {{application.name}}</small>
-          <br>
-          <small>Categoría: {{application.category}}</small>
-          <br>
-          <div class="info-rating">
-            <small>Valoración:
-              <bar-rating [(rate)]="application.rating" [max]="5" [theme]="'default'"></bar-rating>
-            </small>
-          </div>
-          <br>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

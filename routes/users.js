@@ -6,6 +6,7 @@ const config = require('../config/database');
 
 //load user model
 const User = require('../models/user');
+const Application = require('../models/application');
 
 //Register
 router.post('/register', (req, res, next) => {
@@ -18,10 +19,10 @@ router.post('/register', (req, res, next) => {
         genre: null,
         nationality: null,
         bio: null,
-        downloadedApps: null,
-        questionsMade: null,
-        responsesMade: null,
-        savedEvents: null
+        downloadedApps: [],
+        questionsMade: [],
+        responsesMade: [],
+        savedEvents: []
     });
 
     User.addUser(newUser, (err, user) => {
@@ -82,5 +83,25 @@ router.put('/update/:_id', (req, res, next) => {
         res.send('Success');
     });
 });
+
+//Add application to user downloaded apps
+router.put('/adddownloadedapplication/:_id',(req, res, next)=>{
+    let appId = req.params._id;
+    let userId = req.body.user;
+    User.addAppToDownloadedList(userId, appId, (err, user)=>{
+        if (err) throw err;
+        res.send('Success');
+    });
+});
+
+//Get downloaded apps
+router.get('/getuserapp/:_id', (req, res, next)=>{
+    let appId = req.params._id;
+    Application.getApplicationById(appId, (err, app)=>{
+        if(err) throw err;
+        res.json(app); 
+    });
+});
+
 
 module.exports = router;

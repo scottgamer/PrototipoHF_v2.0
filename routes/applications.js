@@ -4,6 +4,7 @@ const router = express.Router();
 //load application model
 const Application = require('../models/application');
 const Commentary = require('../models/commentary');
+const User = require('../models/user');
 
 //add new application
 router.post('/add', (req, res, next) => {
@@ -82,6 +83,7 @@ router.get('/getlatest', (req, res, next) => {
 //post new commentary
 router.post('/newcommentary/:_id', (req, res, next) => {
     let appId = req.params._id;
+    
     let commentary = new Commentary({
         user: req.body.user,
         commentary: req.body.commentary,
@@ -101,6 +103,24 @@ router.post('/newcommentary/:_id', (req, res, next) => {
         }
     });
 
+});
+
+//get commentaries by id
+router.get('/getcomment/:_id', (req, res, next) => {
+    let commentId = req.params._id;
+    Commentary.getCommentaryById(commentId, (err, comment) => {
+        if (err) res.json({ success: false, msg: '0 ' + err });
+        res.json(comment);
+    });
+});
+
+//get users by id
+router.get('/getuser/:_id', (req, res, next) => {
+    let userId = req.params._id;
+    User.getUserById(userId, (err, user) => {
+        if (err) res.json({ success: false, msg: '0 ' + err });
+        res.json(user);
+    });
 });
 
 module.exports = router;

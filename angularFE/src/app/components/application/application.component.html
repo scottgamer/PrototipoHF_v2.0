@@ -76,29 +76,29 @@ TODO Application
             <h4>Califica y comenta</h4>
             <div class="rate-comment">
               <form (submit)='onRateAndComment()'>
-                <input type="hidden" name="application._id">
                 <div id="rating">
                   Calificación:
                   <bar-rating [(rate)]="application.rating" [max]="5" [theme]="'default'" name="application.rating"></bar-rating>
                 </div>
                 <div id="comment">
                   Comentario:
-                  <textarea class="form-control" name="comentario" id="comentario" cols="40" rows="5" placeholder="Ingrese su comentario"></textarea>
+                  <textarea class="form-control" [(ngModel)]="comment.commentary" name="comentario" cols="40" rows="5" placeholder="Ingrese su comentario"></textarea>
                 </div>
 
-                <button type="button" class="btn btn-primary center-block" (click)="openModal(templateSave)">Guardar</button>
-
-                <!-- Using modal message -->
-
-                <ng-template #templateSave>
-                  <div class="modal-body text-center">
-                    <p>¡Comentario guardado exitosamente!</p>
-                    <button type="button" class="btn btn-default" (click)="confirm()">Ok</button>
-                  </div>
-                </ng-template>
-
+                <!-- <button type="button" class="btn btn-primary center-block" (click)="openModal(templateSave)">Guardar</button> -->
+                <input type="submit" class="btn btn-primary center-block" value="Guardar" (click)="openModal(templateSave)">
                 <!-- <input type="submit" class="btn btn-primary center-block" id="save-comment" value="Guardar"> -->
               </form>
+
+              <!-- Using modal message -->
+
+              <ng-template #templateSave>
+                <div class="modal-body text-center">
+                  <p>¡Comentario guardado exitosamente!</p>
+                  <button type="button" class="btn btn-default" (click)="confirm()">Ok</button>
+                </div>
+              </ng-template>
+
             </div>
           </div>
         </div>
@@ -109,7 +109,7 @@ TODO Application
           <div class="col-md-12">
             <h4>Comentarios</h4>
             <!-- Commentary 1 -->
-            <div class="user-comment" *ngFor='let commentary of application.commentaries'>
+            <div class="user-comment" *ngFor='let commentary of commentariesArray'>
               <div class="user-image">
                 <i class="fa fa-user-circle fa-2x"></i>
               </div>
@@ -120,7 +120,7 @@ TODO Application
                 </div>
               </div>
               <div class="date">
-                Fecha: {{commentary.date}}
+                Fecha: {{commentary.date | date}}
               </div>
               <br>
               <div class="comment center-block">
@@ -128,9 +128,9 @@ TODO Application
               </div>
             </div>
 
-            <div class="more-comments">
+            <!-- <div class="more-comments">
               <button type="button" class="btn btn-primary center-block">Ver más comentarios</button>
-            </div>
+            </div> -->
           </div>
         </div>
 

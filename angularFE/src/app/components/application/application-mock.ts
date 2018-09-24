@@ -26,13 +26,11 @@ export const APPLICATIONS: Application[] = [
         commentaries: [{
             user: 'Usuario123',
             commentary: 'Comentario de prueba',
-            date: '8/30/2018',
             rating: 2,
         },
         {
             user: 'Usuario567',
             commentary: 'Comentario de prueba',
-            date: '10/30/2018',
             rating: 5,
         }],
         downloadedTimes:1
@@ -59,13 +57,11 @@ export const APPLICATIONS: Application[] = [
         commentaries: [{
             user: 'Usuario123',
             commentary: this.lorem,
-            date: '8/30/2018',
             rating: 2,
         },
         {
             user: 'Usuario567',
             commentary: this.lorem,
-            date: '10/30/2018',
             rating: 5,
         }],
         downloadedTimes:1
@@ -95,13 +91,11 @@ export const APPLICATIONS: Application[] = [
         commentaries: [{
             user: 'Usuario123',
             commentary: this.lorem,
-            date: '8/30/2018',
             rating: 2,
         },
         {
             user: 'Usuario567',
             commentary: this.lorem,
-            date: '10/30/2018',
             rating: 5,
         }],
         downloadedTimes:1

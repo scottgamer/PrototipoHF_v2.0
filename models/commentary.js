@@ -21,7 +21,11 @@ module.exports.addCommentary = (newCommentary, callback) => {
 };
 
 module.exports.getLatestCommentary = (callback) => {
-    Commentary.findOne().sort({ create_date: -1 }).exec(callback);
+    Commentary.findOne().sort({ date: -1 }).exec(callback);
+}
+
+module.exports.getCommentaryById = (commentId, callback) => {
+    Commentary.findById(commentId, callback);
 }
 
 

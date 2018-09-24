@@ -16,16 +16,11 @@ export class ApplicationService {
 
   constructor(private http: Http) { }
 
-  //returns an Observable<Application[]> that emits a single 
-  //value, the array of mock heroes.
   getApplications(): Observable<Application[]> {
-    console.log('Application service loaded');
-    return of(APPLICATIONS);
+   let headers = new Headers();
+   headers.append('Content-Type', 'application/json');
+   return this.http.get('http://localhost:3000/applications/getapps', {headers:headers}).map(res=>res.json());
   }
-
-  /*   getApplication(id): Observable<Application> {
-      return of(APPLICATIONS.find(application => application._id === id));
-    } */
 
   getApplication(id) {
     let headers = new Headers();
@@ -40,12 +35,11 @@ export class ApplicationService {
     return this.http.get('http://localhost:3000/applications/getappsbycategory/' + id, { headers: headers }).map(res => res.json());
   }
 
-  postCommentAndRating(comment) {
-    let commentId = comment.id;
+  postCommentAndRating(appId, comment) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http
-      .post('http://localhost:3000/applications/newcommentary/5ba4103584d78f2ee8acf523', comment, { headers: headers })
+      .post('http://localhost:3000/applications/newcommentary/' + appId, comment, { headers: headers })
       .map(res => res.json());
   }
 
@@ -55,5 +49,18 @@ export class ApplicationService {
     headers.append('Content-Type', 'application/json');
     return this.http.put('http://localhost:3000/users/update/' + userId, user, { headers: headers }).map(res => res.json());
   }
+
+  getComment(commentId) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/applications/getcomment/' + commentId, { headers: headers }).map(res => res.json());
+  }
+
+  getUser(userId) {
+    let headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    return this.http.get('http://localhost:3000/applications/getuser/' + userId).map(res => res.json());
+  }
+
 
 }
