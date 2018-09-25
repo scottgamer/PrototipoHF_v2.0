@@ -1,5 +1,5 @@
 export class Event{
-    id:number;
+    _id:string;
     name:string;
     date:string;
     organizedBy:string;

@@ -1,26 +1,29 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 //import classes
 import { Event } from '../models/event-model';
 import { EVENTS } from '../components/events/events-mock';
 
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class EventService {
 
-  constructor() { }
+  constructor(private http: Http) { }
 
   getEvents(): Observable<Event[]> {
-    console.log('Event service loaded');
-    return of(EVENTS);
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/events/getall', { headers: headers }).map(res => res.json());
+
   }
 
-  getEvent(id: number): Observable<Event> {
-    // TODO: send the message _after_ fetching the hero
-    // this.messageService.add(`HeroService: fetched hero id=${id}`);
-    return of(EVENTS.find(event => event.id === id));
+  getEvent(id): Observable<Event> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/events/getone/' + id, { headers: headers }).map(res => res.json());
   }
-
 }

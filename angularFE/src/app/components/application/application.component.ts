@@ -64,14 +64,13 @@ export class ApplicationComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.application = this.applicationService.getApplication('5ba18b8aee19d83fdc44a714');
-    console.log(this.application);
     this.initCommentObject();
 
     this.route.params.subscribe(params => {
       if (params['_id']) {
         this.appId = params['_id'];
         this.getApplication(this.appId);
+        console.log(this.application);
       }
     });
 
@@ -136,6 +135,24 @@ export class ApplicationComponent implements OnInit {
     let userId = "5b9fc81b04c8273d8483320f";
     this.applicationService.getUser(userId).subscribe(user => console.log(user));
   } */
+
+  onClickAddToUserHistory() {
+    let appId = this.appId;
+    let userId = {
+      user: this.userId
+    };
+    console.log(userId);
+    this.authService.addApplicationToUserHistory(appId, userId)
+      .subscribe(
+        data => {
+          console.log('success ' + data);
+          return true;
+        },
+        err => {
+          console.log(err);
+          return false;
+        });
+  }
 
   loadQuestions(): void {
     this.questions = [{

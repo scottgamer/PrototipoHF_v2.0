@@ -50,7 +50,7 @@
                   Nombre: {{app.name}}
                   <br> Categoría: {{app.category}}
 
-                  <a routerLink='/application/{{app.id}}'>
+                  <a routerLink='/application/{{app._id}}'>
                     <button role="button" class="btn btn-success center-block" tooltip='Ver aplicación' (click)='modalRef.hide();'> Ver </button>
                   </a>
                 </div>
@@ -135,7 +135,8 @@
               </button>
             </div>
             <div class="modal-body">
-              <div class="modal-row" *ngFor="let event of user.savedEvents">
+              <div *ngIf='savedEvents'></div>
+              <div class="modal-row" *ngFor="let event of savedEvents">
                 <div class="events-container">
                   <div class="events-header">
                     <h4>{{event.name}}</h4>

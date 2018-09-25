@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { CollapseModule} from 'ngx-bootstrap/collapse';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 //classes
 import { Category } from '../app/models/category-model';
@@ -16,25 +16,25 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  providers:[CategoryService],
+  providers: [CategoryService],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
-  categories:Category;
-  options:Object[];
+
+  categories: Category;
+  options: Object[];
 
   //menu component
   isCollapsed = true;
 
-  public constructor( private titleService: Title, 
-                      private collapse:CollapseModule,
-                      private categoryService:CategoryService,
-                      private validateService: ValidateService,
-                      private flashMessagesService: FlashMessagesService,
-                      public authService: AuthService,
-                      private router: Router) { 
+  public constructor(private titleService: Title,
+    private collapse: CollapseModule,
+    private categoryService: CategoryService,
+    private validateService: ValidateService,
+    private flashMessagesService: FlashMessagesService,
+    public authService: AuthService,
+    private router: Router) {
     this.isCollapsed = true;
   }
 
@@ -45,34 +45,41 @@ export class AppComponent {
     this.logged();
   }
 
-  logged(){
+  logged() {
     let logged = false;
     logged = this.authService.loggedIn();
     return logged;
   }
 
-  onLogout(){
+  onLogout() {
     this.authService.logout();
-    this.flashMessagesService.show('Acabas de cerrar sesión', {cssClass:'alert-success', timeout:3000});
+    this.flashMessagesService.show('Acabas de cerrar sesión', { cssClass: 'alert-success', timeout: 3000 });
     this.router.navigate(['/login']);
     return false;
   }
 
-  getOptions(){
-    this.options = [{name:'Aplicaciones', route:'/applications'},
-                    {name:'Noticias', route:'/news'},
-                    {name:'Eventos', route: '/events'}];
+  getOptions() {
+    this.options = [{ name: 'Aplicaciones', route: '/applications' },
+    { name: 'Noticias', route: '/news' },
+    { name: 'Eventos', route: '/events' }];
   }
 
   //no longer necessary
   //until evaluation
-  reloadRoute = function() {
+  reloadRoute = function () {
     this.location.reload();
- }
+  }
 
   getCategories(): void {
     this.categoryService.getCategories()
-        .subscribe(categories => this.categories = categories);
+      .subscribe(categories => {
+        this.categories = categories;
+        return true;
+      },
+        err => {
+          console.log(err);
+          return false;
+        });
   }
 
   public setTitle(newTitle: string) {

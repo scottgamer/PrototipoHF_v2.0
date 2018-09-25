@@ -2,6 +2,7 @@
   TODO Eventos
 </p>
 
+
 <!-- Event 1 -->
 <div class="row" *ngFor='let event of events'>
   <div class="col-md-12">
@@ -11,7 +12,7 @@
       </div>
       <img class="events-img" src="{{event.img}}" alt="">
       <div class="events-btn-more">
-        <a routerLink="/event/{{event.id}}"> <button role="button" class="btn btn-info pull-right">Más información</button></a>
+        <a routerLink="/event/{{event._id}}"> <button role="button" class="btn btn-info pull-right">Más información</button></a>
       </div>
     </div>
   </div>

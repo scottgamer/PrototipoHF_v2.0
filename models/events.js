@@ -9,4 +9,18 @@ const EventSchema = mongoose.Schema({
     img: String,
 });
 
-const Event = module.exports = mongoose.model('Event', EventSchema);
+const Events = module.exports = mongoose.model('Event', EventSchema);
+
+//functions
+
+module.exports.addEvent = (newEvent, callback) => {
+    newEvent.save(callback);
+};
+
+module.exports.getEventById = (id, callback) => {
+    Events.findById(id, callback);
+};
+
+module.exports.getEvents = (callback, limit) => {
+    Events.find(callback).limit(limit);
+};

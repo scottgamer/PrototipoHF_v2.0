@@ -1,16 +1,16 @@
 import { Component, OnInit, Output, TemplateRef } from '@angular/core';
-import { Observable } from "rxjs/Rx"
+import { Router } from '@angular/router';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 //classes
 import { User } from '../../models/user-model';
+import { Application } from '../../models/application-model';
+import { Event } from '../../models/event-model'; 
 
 //services
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { Application } from '../../models/application-model';
 
 @Component({
   selector: 'app-user',
@@ -20,8 +20,8 @@ import { Application } from '../../models/application-model';
 export class UserComponent implements OnInit {
 
   user: User;
-  //user$: Observable<User>;
-  downloadedApps: Application[];
+  downloadedApps: Application[] = [];
+  savedEvents: Event[] = [];
 
   modalRef: BsModalRef;
 
@@ -35,21 +35,36 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.getProfile();
     this.getUserActions();
-    //console.log(this.user);
   }
 
   getProfile() {
     this.authService.getProfile().subscribe(profile => {
       this.user = profile.user;
-      let downloadsSize = this.user.downloadedApps.length;
-      console.log(downloadsSize);
-      //this.getDownloadedApps(this.user);
-      console.log(this.user);
+      this.getDownloadedApps(this.user);
+      this.getSavedEvents(this.user);
     },
       err => {
         console.log(err);
         return false;
       });
+  }
+
+  getDownloadedApps(user) {
+    for (let i = 0; i < user.downloadedApps.length; i++) {
+      let appId = user.downloadedApps[i];
+      this.authService.getUserDownloadedApp(appId).subscribe(app => {
+        this.downloadedApps.push(app);
+      });
+    }
+  }
+
+  getSavedEvents(user) {
+    for (let i = 0; i < user.savedEvents.length; i++) {
+      let eventId = user.savedEvents[i];
+      this.authService.getUserSavedEvent(eventId).subscribe(event => {
+        this.savedEvents.push(event);
+      });
+    }
   }
 
   getUserActions(): void {
@@ -58,19 +73,6 @@ export class UserComponent implements OnInit {
       'Preguntas realizadas',
       'Eventos guardados'
     ];
-  }
-
-  getDownloadedApps(user) {
-    for(let i=0; i<user.downloadedApps.legth; i++){
-      let appId = this.user.downloadedApps[i];
-      console.log(appId);
-      this.authService.getUserDownloadedApp(appId).subscribe(app => {
-        this.downloadedApps.push(app);
-        console.log(this.downloadedApps);
-      });
-    } 
-    
-    
   }
 
   saveUserData() {

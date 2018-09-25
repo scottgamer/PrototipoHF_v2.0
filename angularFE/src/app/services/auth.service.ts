@@ -72,6 +72,31 @@ export class AuthService {
   getUserDownloadedApp(appId) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/users/getuserapp/' + appId, { headers: headers }).map(res => res.json());
+    return this.http.get('http://localhost:3000/users/getuserapp/' + appId, { headers: headers })
+      .map(res => res.json());
+  }
+
+  addApplicationToUserHistory(appId, user) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http
+      .put('http://localhost:3000/users/adddownloadedapplication/' + appId, user, { headers: headers })
+      .map(res => res.json());
+
+  }
+
+  getUserSavedEvent(eventId) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/users/getuserevent/' + eventId, { headers: headers })
+      .map(res => res.json());
+  }
+
+  addEventToUserHistory(eventId, user) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('http://localhost:3000/users/addsavedevent/' + eventId, user, { headers: headers })
+      .map(res => res.json());
+
   }
 }

@@ -26,6 +26,7 @@ mongoose.connection.on('error', (err)=>{
 const users = require('./routes/users');
 const applications = require('./routes/applications');
 const categories = require('./routes/categories');
+const events = require('./routes/events');
 
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -46,6 +47,7 @@ require('./config/passport')(passport);
 app.use('/users', users);
 app.use('/applications',applications);
 app.use('/categories', categories);
+app.use('/events', events);
 
 //Index route
 app.get('/', (req, res)=>{

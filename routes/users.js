@@ -7,6 +7,7 @@ const config = require('../config/database');
 //load user model
 const User = require('../models/user');
 const Application = require('../models/application');
+const Events = require('../models/events');
 
 //Register
 router.post('/register', (req, res, next) => {
@@ -76,32 +77,50 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
 //Update user data
 router.put('/update/:_id', (req, res, next) => {
     let id = req.params._id;
-    let query = {_id:id}; 
+    let query = { _id: id };
 
-    User.updateUser(query, req, res, err=>{
-        if(err) throw err;
+    User.updateUser(query, req, res, err => {
+        if (err) throw err;
         res.send('Success');
     });
 });
 
 //Add application to user downloaded apps
-router.put('/adddownloadedapplication/:_id',(req, res, next)=>{
+router.put('/adddownloadedapplication/:_id', (req, res, next) => {
     let appId = req.params._id;
     let userId = req.body.user;
-    User.addAppToDownloadedList(userId, appId, (err, user)=>{
+    User.addAppToDownloadedList(userId, appId, (err, user) => {
         if (err) throw err;
         res.send('Success');
     });
 });
 
 //Get downloaded apps
-router.get('/getuserapp/:_id', (req, res, next)=>{
+router.get('/getuserapp/:_id', (req, res, next) => {
     let appId = req.params._id;
-    Application.getApplicationById(appId, (err, app)=>{
-        if(err) throw err;
-        res.json(app); 
+    Application.getApplicationById(appId, (err, app) => {
+        if (err) throw err;
+        res.json(app);
     });
 });
 
+//Add event to saved events list
+router.put('/addsavedevent/:_id', (req, res, next) => {
+    let eventId = req.params._id;
+    let userId = req.body.user;
+    User.addEventToEventList(userId, eventId, (err, user) => {
+        if (err) res.json({ success: false, msg: 'err ' + err });
+        res.send('Success');
+    });
+});
+
+//Get saved events
+router.get('/getuserevent/:_id', (req, res, next) => {
+    let eventId = req.params._id;
+    Events.getEventById(eventId, (err, event) => {
+        if (err) throw err;
+        res.json(event);
+    });
+});
 
 module.exports = router;

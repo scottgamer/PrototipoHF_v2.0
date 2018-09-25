@@ -14,10 +14,7 @@ router.get('/getall', (req, res, next) => {
 
 router.get('/getone/:_id', (req, res) => {
     Category.getCategoryById(req.params._id, (err, category) => {
-        if (err) {
-            res.send(err);
-            throw err;
-        } 
+        if (err) res.json({ success: false, msg: '0 ' + err });
         res.json(category);
     });
 });

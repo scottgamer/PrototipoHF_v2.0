@@ -125,3 +125,8 @@ module.exports.addAppToDownloadedList = (userId, appId, callback) => {
     User.findOneAndUpdate(query, app, callback);
 };
 
+module.exports.addEventToEventList = (userId, eventId, callback) => {
+    const query = { _id: userId };
+    const event = { $push: { savedEvents: eventId } };
+    User.findOneAndUpdate(query, event, callback);
+};

@@ -21,8 +21,19 @@ TODO Application
             </div>
           </div>
           <div class="col-md-4" id="btn-download">
-            <button type="button" class="btn btn-success center-block" tooltip="Descargar aplicación.">Descargar</button>
+            <button type="button" class="btn btn-success center-block" tooltip="Descargar aplicación." (click)='onClickAddToUserHistory()'
+              (click)='openModal(templateDownload)'>Descargar</button>
           </div>
+
+          <!-- Using modal message -->
+
+          <ng-template #templateDownload>
+            <div class="modal-body text-center">
+              <p>¡Aplicación descargada!</p>
+              <button type="button" class="btn btn-default" (click)="confirm()">Ok</button>
+            </div>
+          </ng-template>
+
         </div>
 
         <!-- Screenshots & carousel -->
@@ -84,10 +95,7 @@ TODO Application
                   Comentario:
                   <textarea class="form-control" [(ngModel)]="comment.commentary" name="comentario" cols="40" rows="5" placeholder="Ingrese su comentario"></textarea>
                 </div>
-
-                <!-- <button type="button" class="btn btn-primary center-block" (click)="openModal(templateSave)">Guardar</button> -->
                 <input type="submit" class="btn btn-primary center-block" value="Guardar" (click)="openModal(templateSave)">
-                <!-- <input type="submit" class="btn btn-primary center-block" id="save-comment" value="Guardar"> -->
               </form>
 
               <!-- Using modal message -->

@@ -43,7 +43,7 @@ const appRoutes: Routes = [
   {path:'news', component:NewsComponent},
   {path:'new/:id', component:NewComponent},
   {path:'events', component:EventsComponent},
-  {path:'event/:id', component:EventComponent},
+  {path:'event/:_id', component:EventComponent},
   {path:'application/:_id', component:ApplicationComponent},
   {path:'login', component:LoginComponent},
   {path:'register', component:RegisterComponent},

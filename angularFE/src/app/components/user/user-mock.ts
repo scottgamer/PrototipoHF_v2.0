@@ -119,7 +119,7 @@ export const USERS: User[] = [
         ],
         savedEvents: [
             {
-                id: 1,
+                _id: '1',
                 name: 'Evento 1',
                 date: '09/03/2018',
                 organizedBy: 'Institución 1',
@@ -128,7 +128,7 @@ export const USERS: User[] = [
                 img: 'assets/images/events/event1.PNG',
             },
             {
-                id: 2,
+                _id: '2',
                 name: 'Evento 2',
                 date: '09/04/2018',
                 organizedBy: 'Institución 2',

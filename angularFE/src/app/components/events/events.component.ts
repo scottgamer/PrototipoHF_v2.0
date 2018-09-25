@@ -23,7 +23,7 @@ export class EventsComponent implements OnInit {
 
   getEvents(): void {
     this.eventService.getEvents()
-        .subscribe(events => this.events = events);
+        .subscribe(events => {this.events = events; console.log(this.events);});
   }
 
 

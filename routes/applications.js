@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-//load application model
 const Application = require('../models/application');
 const Commentary = require('../models/commentary');
 const User = require('../models/user');
@@ -46,11 +45,7 @@ router.get('/getapps', (req, res, next) => {
 router.get('/getappsbycategory/:_id', (req, res, next) => {
     let categoryId = req.params._id;
     Application.getApplicationsByCategoryId(categoryId, (err, apps) => {
-        if (err) {
-            res.send(status);
-            console.log(err);
-            throw err;
-        }
+        if (err) res.json({ success: false, msg: '0 ' + err });
         res.json(apps);
     });
 });
@@ -59,11 +54,7 @@ router.get('/getappsbycategory/:_id', (req, res, next) => {
 router.get('/getone/:_id', (req, res, next) => {
     let appId = req.params._id;
     Application.getApplicationById(appId, (err, app) => {
-        if (err) {
-            res.send(status);
-            console.log(err);
-            throw err;
-        }
+        if (err) res.json({ success: false, msg: '0 ' + err });
         res.json(app);
     });
 });
@@ -71,11 +62,7 @@ router.get('/getone/:_id', (req, res, next) => {
 //get latest applications
 router.get('/getlatest', (req, res, next) => {
     Application.getLatestApplications((err, apps) => {
-        if (err) {
-            res.send(status);
-            console.log(err);
-            throw err;
-        }
+        if (err) res.json({ success: false, msg: '0 ' + err });
         res.json(apps);
     });
 });
