@@ -67,22 +67,26 @@
               </button>
             </div>
             <div class="modal-body">
-              <div class="modal-row" *ngFor="let question of user.questionsMade">
-                <div class="user-questions-responses">
-                  <strong>Respuestas:</strong>
-                  <br> {{question.responses.length}}
-                </div>
-                <div class="user-questions-question">
-                  <div class="user-question-header">
-                    <strong>Pregunta: </strong>
+              <div *ngIf='questionsMade'>
+                <div class="modal-row" *ngFor="let question of questionsMade">
+                  <div class="user-questions-responses">
+                    <strong>Respuestas:</strong>
+                    <br> {{question.responses.length}}
                   </div>
-                  <div class="user-question-body">
-                    {{question.question}}
+                  <div class="user-questions-question">
+                    <div class="user-question-header">
+                      <strong>Pregunta: </strong>
+                    </div>
+                    <div class="user-question-body">
+                      {{question.question}}
+                    </div>
+                    <button role="button" class="btn btn-success center-block" tooltip='Ver pregunta' (click)='openModal(templateResponses)'>
+                      Ver </button>
                   </div>
-                  <button role="button" class="btn btn-success center-block" tooltip='Ver pregunta' (click)='openModal(templateResponses)'>
-                    Ver </button>
                 </div>
+
               </div>
+
             </div>
           </ng-template>
 

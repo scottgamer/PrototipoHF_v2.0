@@ -134,3 +134,9 @@ module.exports.addEventToEventList = (userId, eventId, callback) => {
     const event = { $push: { savedEvents: eventId } };
     User.findOneAndUpdate(query, event, callback);
 };
+
+module.exports.addQuestionToQuestionList = (userId, questionId, callback) => {
+    const query = { _id: userId };
+    const question = { $push: { questionsMade: questionId } };
+    User.findOneAndUpdate(query, question, callback);
+};

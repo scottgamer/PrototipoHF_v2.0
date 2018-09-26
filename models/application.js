@@ -71,6 +71,11 @@ module.exports.postNewCommentaryById = (appId, commentId, callback) => {
     Application.findOneAndUpdate(query, comment, callback);
 }
 
+module.exports.postNewQuestionById = (appId, questionId, callback) => {
+    const query = { _id: appId };
+    const question = { $push: { questions: questionId  } };
+    Application.findOneAndUpdate(query, question, callback);
+}
 /* db.students.update(
     { _id: 1 },
     { $push: { scores: 89 } } )*/

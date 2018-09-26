@@ -92,6 +92,13 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  getUserQuestionsMade(questionId) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/users/getuserquestion/' + questionId, { headers: headers })
+      .map(res => res.json());
+  }
+
   addEventToUserHistory(eventId, user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

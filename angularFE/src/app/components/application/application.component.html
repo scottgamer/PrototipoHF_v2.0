@@ -203,12 +203,19 @@ TODO Application
                   <strong>Pregunta</strong>
                 </div>
                 <div class="question-body">
-                  {{question.question}} | Publicada: {{question.date | date}}
+                  <div class="faq-row">
+                    <div class="faq-row-left">
+                      {{question.question}} | Publicada: {{question.date | date}}
+                    </div>
+                    <div class="faq-row-right">
+                      <button role="button" class="btn btn-primary center-block">Responder</button>
+                    </div>
+                  </div>
                 </div>
                 <div class="response" *ngFor='let response of question.responses'>
                   <strong>Respuesta </strong>
                   <div class="response-body">
-                    {{response}}
+                    {{response.response}}
                   </div>
                 </div>
               </div>

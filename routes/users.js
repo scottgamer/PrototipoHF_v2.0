@@ -8,6 +8,7 @@ const config = require('../config/database');
 const User = require('../models/user');
 const Application = require('../models/application');
 const Events = require('../models/events');
+const Question = require('../models/question');
 
 //Register
 router.post('/register', (req, res, next) => {
@@ -129,6 +130,15 @@ router.get('/getuserevent/:_id', (req, res, next) => {
     Events.getEventById(eventId, (err, event) => {
         if (err) throw err;
         res.json(event);
+    });
+});
+
+//Get questions made
+router.get('/getuserquestion/:_id', (req, res, next) => {
+    let questionId = req.params._id;
+    Question.getQuestionById(questionId, (err, question) => {
+        if (err) throw err;
+        res.json(question);
     });
 });
 

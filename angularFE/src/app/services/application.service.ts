@@ -10,7 +10,7 @@ import { map } from '../../../node_modules/rxjs/operator/map';
 @Injectable()
 export class ApplicationService {
 
-  constructor(private http: Http) { 
+  constructor(private http: Http) {
   }
 
   getApplications(): Observable<Application[]> {
@@ -66,10 +66,18 @@ export class ApplicationService {
       .map(res => res.json());
   }
 
-  getQuestions(id) {
+  getQuestions(appId) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/questions/getquestions/byappid/' + id, { headers: headers })
+    return this.http.get('http://localhost:3000/questions/getquestions/byappid/' + appId, { headers: headers })
+      .map(res => res.json());
+  }
+
+  postResponse(questionId, response) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http
+      .put('http://localhost:3000/questions/putresponsetoquestionbyid/' + questionId, response)
       .map(res => res.json());
   }
 

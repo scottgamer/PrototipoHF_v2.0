@@ -7,10 +7,11 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 //classes
 import { User } from '../../models/user-model';
 import { Application } from '../../models/application-model';
-import { Event } from '../../models/event-model'; 
+import { Event } from '../../models/event-model';
 
 //services
 import { AuthService } from '../../services/auth.service';
+import { Question } from '../../models/questions-model';
 
 @Component({
   selector: 'app-user',
@@ -22,6 +23,7 @@ export class UserComponent implements OnInit {
   user: User;
   downloadedApps: Application[] = [];
   savedEvents: Event[] = [];
+  questionsMade: Question[] = [];
 
   modalRef: BsModalRef;
 
@@ -42,6 +44,7 @@ export class UserComponent implements OnInit {
       this.user = profile.user;
       this.getDownloadedApps(this.user);
       this.getSavedEvents(this.user);
+      this.getQuestionsMade(this.user);
     },
       err => {
         console.log(err);
@@ -53,10 +56,9 @@ export class UserComponent implements OnInit {
     for (let i = 0; i < user.downloadedApps.length; i++) {
       let appId = user.downloadedApps[i];
       this.authService.getUserDownloadedApp(appId)
-      .subscribe(app => {
-        this.downloadedApps.push(app);
-        console.log(this.downloadedApps);
-      });
+        .subscribe(app => {
+          this.downloadedApps.push(app);
+        });
     }
   }
 
@@ -65,6 +67,16 @@ export class UserComponent implements OnInit {
       let eventId = user.savedEvents[i];
       this.authService.getUserSavedEvent(eventId).subscribe(event => {
         this.savedEvents.push(event);
+      });
+    }
+  }
+
+  getQuestionsMade(user) {
+    for (let i = 0; i < user.questionsMade.length; i++) {
+      let questionId = user.questionsMade[i];
+      this.authService.getUserQuestionsMade(questionId).subscribe(question => {
+        this.questionsMade.push(question);
+        console.log(this.questionsMade);
       });
     }
   }

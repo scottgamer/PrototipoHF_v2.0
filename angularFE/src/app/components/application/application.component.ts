@@ -107,14 +107,6 @@ export class ApplicationComponent implements OnInit {
       });
   }
 
-  getQuestions(id) {
-    this.applicationService.getQuestions(id)
-      .subscribe(questions => {
-        this.questions = questions;
-        console.log(this.questions);
-      }, err => { throw err; });
-  }
-
   getCategory(id): void {
     this.categoryService.getCategory(id)
       .subscribe(category => {
@@ -141,6 +133,13 @@ export class ApplicationComponent implements OnInit {
           throw err;
         });
     });
+  }
+
+  getQuestions(appId) {
+    this.applicationService.getQuestions(appId)
+      .subscribe(questions => {
+        this.questions = questions;
+      }, err => { throw err; });
   }
 
   getUserId() {

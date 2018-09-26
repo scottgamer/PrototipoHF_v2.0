@@ -427,6 +427,19 @@ hr{
         text-align: center;
         background-color: rgb(205, 205, 205);
     }
+    .faq-row{
+        overflow: auto;
+    }
+    .faq-row-left{
+        width: 80%;
+        margin: 0%;
+        float: left;
+    }
+    .faq-row-right{
+        width: 20%;
+        margin: 0%;
+        float: right;
+    }
 }
 /****************************************************************************************************************************/
 @media only screen and (max-width: 768px) {

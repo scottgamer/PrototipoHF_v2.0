@@ -10,13 +10,20 @@ const QuestionSchema = mongoose.Schema({
         type: mongoose.Schema.Types.String,
         ref: 'User'
     },
-    application:{
+    application: {
         type: mongoose.Schema.Types.String,
         ref: 'Application'
     },
     responses: [{
-        type: mongoose.Schema.Types.String,
-        ref: 'Response'
+        response: String,
+        user: {
+            type: mongoose.Schema.Types.String,
+            ref: 'User'
+        },
+        date: {
+            type:Date,
+            default: Date.now
+        }
     }]
 });
 
@@ -28,10 +35,19 @@ module.exports.addQuestion = (newQuestion, callback) => {
     newQuestion.save(callback);
 };
 
-module.exports.getQuestionById = (query, callback) => {
-    Question.find(query, callback);
+module.exports.getQuestionById = (id, callback) => {
+    Question.findById(id, callback);
 };
 
-module.exports.getQuestions = (callback, limit) => {
-    Questions.find(callback).limit(limit);
+module.exports.getQuestions = (query, callback, limit) => {
+    Question.find(query, callback).limit(limit);
+}; 
+
+module.exports.addResponse = (questionId, query, callback)=>{
+    Question.updateOne(questionId, query, callback);
+}
+
+module.exports.getLatestQuestion = (callback)=>{
+    Question.findOne().sort({ date: -1 }).exec(callback);
 };
+
