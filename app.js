@@ -27,6 +27,8 @@ const users = require('./routes/users');
 const applications = require('./routes/applications');
 const categories = require('./routes/categories');
 const events = require('./routes/events');
+const news = require('./routes/news');
+const questions = require('./routes/questions');
 
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -48,6 +50,8 @@ app.use('/users', users);
 app.use('/applications',applications);
 app.use('/categories', categories);
 app.use('/events', events);
+app.use('/news', news);
+app.use('/questions', questions);
 
 //Index route
 app.get('/', (req, res)=>{

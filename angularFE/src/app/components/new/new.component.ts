@@ -11,29 +11,37 @@ import { NewsService } from '../../services/news.service';
 
 @Component({
   selector: 'app-new',
-  providers:[NewsService],
+  providers: [NewsService],
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.css']
 })
 export class NewComponent implements OnInit {
 
-  @Input() new: New;
+  news: New;
+  newId: string;
 
-  constructor(private newsService:NewsService,
-              private route:ActivatedRoute,
-              private location:Location) { }
+  constructor(private newsService: NewsService,
+    private route: ActivatedRoute,
+    private location: Location) { }
 
   ngOnInit() {
-    this.getNew();
+    this.route.params.subscribe(params => {
+      if (params['_id']) {
+        this.newId = params['_id'];
+        this.getNew(this.newId);
+      }
+    });
   }
 
-  getNew(): void {
-    // static image of the route information
-    const id = +this.route.snapshot.paramMap.get('id');
+  getNew(id): void {
     this.newsService.getNew(id)
-      .subscribe(neew => this.new = neew);
+      .subscribe(news => {
+        this.news = news;
+      },
+        err => { throw err }
+      );
   }
 
-  
+
 
 }

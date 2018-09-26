@@ -38,7 +38,6 @@ export class CategoryComponent implements OnInit {
         this.getAppsByCategory(this.categoryId);
       }
     });
-    console.log(this.category);
   }
 
   getCategory(id): void {
@@ -48,12 +47,11 @@ export class CategoryComponent implements OnInit {
       });
   }
 
+
   getAppsByCategory(id): void{
     this.appService.getAppsByCategory(id)
       .subscribe(application => {
         this.applications = application;
-        console.log('applications loaded');
-        console.log(this.applications);
       });
   } 
 

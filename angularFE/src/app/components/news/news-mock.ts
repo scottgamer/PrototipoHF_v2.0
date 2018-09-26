@@ -2,7 +2,7 @@ import { New } from "../../models/new-model";
 
 export const NEWS: New[] = [
     {
-        id: 1,
+        _id: '2',
         title: 'Picasso brilla en la oscuridad',
         body: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut culpa, ratione, dignissimos in officiis vero reprehenderit eveniet
         voluptatum eligendi, nulla perspiciatis aspernatur consequatur architecto autem eos facilis ea tempore cupiditate.`,
@@ -12,7 +12,7 @@ export const NEWS: New[] = [
         ]
     },
     {
-        id: 2,
+        _id: '2',
         title: 'Noticia 2',
         body: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut culpa, ratione, dignissimos in officiis vero reprehenderit eveniet
         voluptatum eligendi, nulla perspiciatis aspernatur consequatur architecto autem eos facilis ea tempore cupiditate.`,

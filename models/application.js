@@ -28,6 +28,10 @@ const ApplicationSchema = mongoose.Schema({
             type: mongoose.Schema.Types.String,
             ref: 'Commentary'
         }],
+    questions: [{
+        type: mongoose.Schema.Types.String,
+        ref: 'Question'
+    }],
     downloadedTimes: Number,
     create_date: {
         type: Date,

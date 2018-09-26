@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { BarRatingModule } from "ngx-bar-rating";
 //classes
 import { Application } from '../../models/application-model';
+import { Category } from '../../models/category-model';
 //services
 import { ApplicationService } from '../../services/application.service';
 import { CategoryService } from '../../services/category.service';
@@ -17,7 +18,8 @@ import { CategoryService } from '../../services/category.service';
 export class ApplicationsComponent implements OnInit {
 
   applications: Application[];
-  categories: any[];
+  categoryIdArray: string[] = [];
+  categories: Category[] = [];
 
   constructor(private appService: ApplicationService,
     private categoryService: CategoryService,
@@ -30,19 +32,26 @@ export class ApplicationsComponent implements OnInit {
 
   getApplications(): void {
     this.appService.getApplications()
-      .subscribe(applications => { this.applications = applications; console.log(this.applications) });
+      .subscribe(applications => {
+        this.applications = applications;
+        this.getCategory(this.applications);
+      }, err=>{
+        throw err;
+      });
   }
 
-  getCategory(): void {
-    for (let i = 0; i < this.applications.length; i++) {
-      let category = this.applications[i].category;
-      console.log(category);
+  getCategory(applications): void {
+    for (let i = 0; i < applications.length; i++) {
+      this.categoryIdArray[i] = applications[i].category;
+      this.categoryService.getCategory(this.categoryIdArray[i])
+        .subscribe(category => {
+          this.categories.push(category);
+          applications[i].category = this.categories[i].name;
+        },
+          err => {
+            throw err;
+          });
     }
-
-    /* this.categoryService.getCategory(id)
-      .subscribe(category => {
-        this.category = category;
-      }); */
   }
 
 }

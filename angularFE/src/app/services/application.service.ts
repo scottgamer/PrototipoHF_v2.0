@@ -1,32 +1,28 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 //import classes
 import { Application } from '../models/application-model';
-import { APPLICATIONS } from '../components/application/application-mock';
-
-import { Observable } from 'rxjs';
-import { of } from 'rxjs/observable/of';
-
-import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
-//import { HttpClient, HttpHeaders } from '@angular/common/http';
-import 'rxjs/add/operator/map';
+import { map } from '../../../node_modules/rxjs/operator/map';
 
 @Injectable()
 export class ApplicationService {
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) { 
+  }
 
   getApplications(): Observable<Application[]> {
-   let headers = new Headers();
-   headers.append('Content-Type', 'application/json');
-   return this.http.get('http://localhost:3000/applications/getapps', {headers:headers}).map(res=>res.json());
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://192.168.100.107:3000/applications/getapps', { headers: headers }).map(res => res.json());
   }
 
   getApplication(id) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get('http://localhost:3000/applications/getone/' + id, { headers: headers }).map(res => res.json());
-    //return this.http.get('http://localhost:3000/applications/getone/' + id, { headers: headers });
   }
 
   getAppsByCategory(id): Observable<Application[]> {
@@ -47,7 +43,8 @@ export class ApplicationService {
     let userId = user.id;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.put('http://localhost:3000/users/update/' + userId, user, { headers: headers }).map(res => res.json());
+    return this.http.put('http://localhost:3000/users/update/' + userId, user, { headers: headers })
+      .map(res => res.json());
   }
 
   getComment(commentId) {
@@ -62,5 +59,18 @@ export class ApplicationService {
     return this.http.get('http://localhost:3000/applications/getuser/' + userId).map(res => res.json());
   }
 
+  postQuestion(question) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/questions/add', question, { headers: headers })
+      .map(res => res.json());
+  }
+
+  getQuestions(id) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/questions/getquestions/byappid/' + id, { headers: headers })
+      .map(res => res.json());
+  }
 
 }

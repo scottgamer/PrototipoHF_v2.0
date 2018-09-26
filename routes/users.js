@@ -74,6 +74,15 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
     res.json({ user: req.user });
 });
 
+//Get user by id
+router.get('/getone/:_id', (req, res, next)=>{
+    let userId = req.params._id;
+    User.getUserById(userId, (err, user) => {
+        if (err) res.json({success:false, msg:'0 ' + err});
+        res.json(user);
+    });
+});
+
 //Update user data
 router.put('/update/:_id', (req, res, next) => {
     let id = req.params._id;

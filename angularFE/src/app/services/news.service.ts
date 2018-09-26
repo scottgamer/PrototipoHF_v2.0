@@ -1,24 +1,27 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import { Observable} from 'rxjs';
 
 //import classes
 import { New } from '../models/new-model';
-import { NEWS } from '../components/news/news-mock';
 
-import { Observable} from 'rxjs';
-import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class NewsService {
 
-  constructor() { }
+  constructor(private http:Http) { }
 
   getNews(): Observable<New[]> {
-    console.log('News service loaded');
-    return of(NEWS);
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/news/getall', { headers: headers }).map(res => res.json());
+
   }
 
-  getNew(id: number): Observable<New> {
-    return of(NEWS.find(neew => neew.id === id));
+  getNew(id): Observable<New> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/news/getone/' + id, { headers: headers }).map(res => res.json());
   }
 
 }

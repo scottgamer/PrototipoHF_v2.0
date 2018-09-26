@@ -21,6 +21,7 @@ import { Category } from '../../models/category-model';
 import { Question } from '../../models/questions-model';
 import { Commentary } from '../../models/commentaries-model';
 import { Response } from '../../models/responses-model';
+import { User } from '../../models/user-model';
 
 @Component({
   selector: 'app-application',
@@ -33,14 +34,14 @@ export class ApplicationComponent implements OnInit {
   application: Application;
   category: Category;
   comment: Commentary;
-  commentariesArray = [];
-  commentsAndUsersArray = [];
-  usersArray = [];
+  commentariesArray: Commentary[] = [];
+  usersIds: string[] = [];
+  users: User[] = [];
   appId: any;
   categoryId: any;
   userId: any;
-
-  questions: Question[];
+  questions: Question[] = [];
+  question: Question;
 
   half1: string;
   half2: string;
@@ -65,12 +66,12 @@ export class ApplicationComponent implements OnInit {
 
   ngOnInit() {
     this.initCommentObject();
+    this.initQuestionObject();
 
     this.route.params.subscribe(params => {
       if (params['_id']) {
         this.appId = params['_id'];
         this.getApplication(this.appId);
-        console.log(this.application);
       }
     });
 
@@ -86,6 +87,15 @@ export class ApplicationComponent implements OnInit {
     };
   }
 
+  initQuestionObject() {
+    this.question = {
+      question: '',
+      user: '',
+      application: '',
+      responses:[]
+    };
+  }
+
   getApplication(id): void {
     this.applicationService.getApplication(id)
       .subscribe((app: Application) => {
@@ -93,7 +103,16 @@ export class ApplicationComponent implements OnInit {
         this.categoryId = this.application.category;
         this.getCategory(this.categoryId);
         this.getComments(this.application);
+        this.getQuestions(this.appId);
       });
+  }
+
+  getQuestions(id) {
+    this.applicationService.getQuestions(id)
+      .subscribe(questions => {
+        this.questions = questions;
+        console.log(this.questions);
+      }, err => { throw err; });
   }
 
   getCategory(id): void {
@@ -101,6 +120,27 @@ export class ApplicationComponent implements OnInit {
       .subscribe(category => {
         this.category = category;
       });
+  }
+
+  getComments(app: Application) {
+    app.commentaries.forEach(commentId => {
+      this.applicationService.getComment(commentId)
+        .subscribe(comment => {
+          let userId = comment.user;
+          this.commentariesArray.push(comment);
+          this.authService.getUserById(userId)
+            .subscribe(user => {
+              this.users.push(user);
+              this.users.forEach((username, index) => {
+                this.commentariesArray[index].user = username.username;
+              });
+            }, err => {
+              throw err;
+            });
+        }, err => {
+          throw err;
+        });
+    });
   }
 
   getUserId() {
@@ -113,28 +153,12 @@ export class ApplicationComponent implements OnInit {
       commentary: this.comment.commentary,
       rating: this.comment.rating,
     };
-    this.applicationService.postCommentAndRating(this.appId, comment).subscribe(data => {
-      if (!data) console.log('err');
-      return true;
-    });
+    this.applicationService.postCommentAndRating(this.appId, comment)
+      .subscribe(data => {
+        if (!data) console.log('err');
+        return true;
+      });
   }
-
-  getComments(app: Application) {
-    let commentariesSize = app.commentaries.length;
-    for (let i = 0; i < commentariesSize; i++) {
-      let commentId = app.commentaries[i];
-      this.applicationService.getComment(commentId).subscribe(comment => this.commentariesArray.push(comment));
-    }
-    this.commentariesArray;
-    //this.getUsers(this.commentariesArray);
-  }
-
-  //TODO GET USERS
-  /* getUsers() {
-    console.log(this.commentariesArray.length);
-    let userId = "5b9fc81b04c8273d8483320f";
-    this.applicationService.getUser(userId).subscribe(user => console.log(user));
-  } */
 
   onClickAddToUserHistory() {
     let appId = this.appId;
@@ -154,34 +178,23 @@ export class ApplicationComponent implements OnInit {
         });
   }
 
-  loadQuestions(): void {
-    this.questions = [{
-      id: 1,
-      question: this.lorem,
-      date: '10/30/2018',
-      author: 'User123',
-      responses: [
-        {
-          id: 1,
-          response: this.lorem,
-          date: '10/30/2018',
-          author: 'User456'
-        },
-        {
-          id: 2,
-          response: this.lorem,
-          date: '10/30/2018',
-          author: 'User789'
-        },
-        {
-          id: 3,
-          response: this.lorem,
-          date: '10/30/2018',
-          author: 'User789'
-        }
-      ]
-    }];
+  onSubmitQuestion() { 
+    let question = {
+      question: this.question.question,
+      user: this.userId,
+      application: this.appId,
+      responses:[]
+    };
+
+    this.applicationService.postQuestion(question)
+      .subscribe(data => {
+        console.log('Success ' + data);
+        return true;
+      }, err => {
+        throw err;
+      });
   }
+
 
   /* getHalfString(): void {
     let descript = this.application.description;

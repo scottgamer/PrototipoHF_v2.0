@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
 
 //import classes
 import { Event } from '../models/event-model';
-import { EVENTS } from '../components/events/events-mock';
-
-import { Observable } from 'rxjs';
-import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class EventService {

@@ -52,8 +52,10 @@ export class UserComponent implements OnInit {
   getDownloadedApps(user) {
     for (let i = 0; i < user.downloadedApps.length; i++) {
       let appId = user.downloadedApps[i];
-      this.authService.getUserDownloadedApp(appId).subscribe(app => {
+      this.authService.getUserDownloadedApp(appId)
+      .subscribe(app => {
         this.downloadedApps.push(app);
+        console.log(this.downloadedApps);
       });
     }
   }

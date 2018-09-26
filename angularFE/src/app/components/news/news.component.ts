@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { New } from '../../models/new-model';
 
 //services
-import { NewsService } from '../../services/news.service'; 
+import { NewsService } from '../../services/news.service';
 
 @Component({
   selector: 'app-news',
@@ -14,9 +14,9 @@ import { NewsService } from '../../services/news.service';
 })
 export class NewsComponent implements OnInit {
 
-  news:New[];
+  news: New[];
 
-  constructor(private newService:NewsService) {
+  constructor(private newService: NewsService) {
   }
 
   ngOnInit() {
@@ -25,7 +25,11 @@ export class NewsComponent implements OnInit {
 
   getNews(): void {
     this.newService.getNews()
-        .subscribe(news => this.news = news);
+      .subscribe(news => {
+        this.news = news;
+      }, err => {
+        throw err
+      });
   }
 
 

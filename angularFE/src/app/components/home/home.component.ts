@@ -20,46 +20,56 @@ import { CategoryService } from '../../services/category.service';
 export class HomeComponent implements OnInit {
 
   applications: Application[];
-  categories: Category[];
+  categoryIdArray: string[] = [];
+  categories: Category[] = [];
 
-  sections:{section: string, id:string, route:string}[];
+  sections: { section: string, id: string, route: string }[];
 
-  lorem: string = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem adipisci quod nemo ' +
-    'vitae cumque sit, iusto porro! Eligendi nesciunt et amet numquam dolore voluptatem a ' +
-    'maiores deleniti. Ex, cum ipsam.';
+  selectedApplication: Application;
 
-  selectedApplication:Application;
-
-  public constructor(private barRatingModule: BarRatingModule, 
-                    private appService:ApplicationService,
-                    private categoryService:CategoryService) {}
+  public constructor(private barRatingModule: BarRatingModule,
+    private appService: ApplicationService,
+    private categoryService: CategoryService) { }
 
   ngOnInit() {
     this.getApplications();
     this.getSections();
-    
   }
 
   getApplications(): void {
     this.appService.getApplications()
-        .subscribe(applications => this.applications = applications);
+      .subscribe(applications => {
+        this.applications = applications;
+        this.getCategory(this.applications);
+      }, err => {
+        throw err;
+      });
   }
 
-  getSections():void{
-    this.sections = [ {section: 'Aplicaciones más descargadas', id: '4', route: '/applications'},
-                      {section: 'Últimas subidas', id: '2', route: '/applications'},
-                      {section: 'Baja Visión', id: '5ba11e036343f715c0e786bf', route: '/category'},
-                      {section: 'Ceguera', id:'5ba11dee6343f715c0e786be', route: '/category'}];
+  getSections(): void {
+    this.sections = [{ section: 'Aplicaciones más descargadas', id: '4', route: '/applications' },
+    { section: 'Últimas subidas', id: '2', route: '/applications' },
+    { section: 'Baja Visión', id: '5ba11e036343f715c0e786bf', route: '/category' },
+    { section: 'Ceguera', id: '5ba11dee6343f715c0e786be', route: '/category' }];
   }
 
-  getCategories():void{
-    this.categoryService.getCategories().
-          subscribe(categories => this.categories=categories);
+  getCategory(applications): void {
+    for (let i = 0; i < applications.length; i++) {
+      this.categoryIdArray[i] = applications[i].category;
+      this.categoryService.getCategory(this.categoryIdArray[i])
+        .subscribe(category => {
+          this.categories.push(category);
+          applications[i].category = this.categories[i].name;
+        },
+          err => {
+            throw err;
+          });
+    }
   }
 
   onSelect(application: Application): void {
     this.selectedApplication = application;
-    console.log('selected application: ' + this.selectedApplication.name );
+    console.log('selected application: ' + this.selectedApplication.name);
   }
 
 }

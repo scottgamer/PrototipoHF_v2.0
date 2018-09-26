@@ -99,4 +99,11 @@ export class AuthService {
       .map(res => res.json());
 
   }
+
+  getUserById(id){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/users/getone/' + id, {headers:headers})
+    .map(res => res.json());
+  }
 }

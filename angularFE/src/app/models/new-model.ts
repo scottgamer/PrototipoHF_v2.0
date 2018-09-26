@@ -1,5 +1,5 @@
 export class New {
-    id:number;
+    _id:string;
     title: string;
     body: string;
     imgs: string[];

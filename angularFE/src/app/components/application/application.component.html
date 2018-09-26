@@ -85,7 +85,7 @@ TODO Application
         <div class="inner-row-app" id="rate-comment">
           <div class="col-md-12">
             <h4>Califica y comenta</h4>
-            <div class="rate-comment">
+            <div class="rate-comment" *ngIf="userId; else mustLoginFirstToComment">
               <form (submit)='onRateAndComment()'>
                 <div id="rating">
                   Calificación:
@@ -97,17 +97,25 @@ TODO Application
                 </div>
                 <input type="submit" class="btn btn-primary center-block" value="Guardar" (click)="openModal(templateSave)">
               </form>
-
-              <!-- Using modal message -->
-
-              <ng-template #templateSave>
-                <div class="modal-body text-center">
-                  <p>¡Comentario guardado exitosamente!</p>
-                  <button type="button" class="btn btn-default" (click)="confirm()">Ok</button>
-                </div>
-              </ng-template>
-
             </div>
+
+            <!-- Using modal message -->
+
+            <ng-template #templateSave>
+              <div class="modal-body text-center">
+                <p>¡Comentario guardado exitosamente!</p>
+                <button type="button" class="btn btn-default" (click)="confirm()">Ok</button>
+              </div>
+            </ng-template>
+
+            <!-- Must login first to post comment template -->
+            <ng-template #mustLoginFirstToComment>
+              <div class="must-login">
+                <h4>
+                  <a [routerLink]="['/login']">Inicie sesión</a> para comentar y calificar</h4>
+              </div>
+            </ng-template>
+
           </div>
         </div>
 
@@ -171,45 +179,50 @@ TODO Application
         <div class="inner-row-app">
           <div class="col-md-12">
             <h4>FAQ</h4>
+            <div *ngIf="userId; else mustLoginFirst">
+              <form (submit)='onSubmitQuestion()'>
+                <div id="comment">
+                  Tienes alguna pregunta?
+                  <textarea class="form-control" [(ngModel)]="question.question" name="question.question" cols="40" rows="3" placeholder="Ingresa tu pregunta"></textarea>
+                </div>
+                <input type="submit" class="btn btn-primary center-block" value="Preguntar" (click)="openModal(templateConfirmed)">
+              </form>
+            </div>
+            <!-- Must login first to post question template -->
+            <ng-template #mustLoginFirst>
+              <div class="must-login">
+                <h4>
+                  <a [routerLink]="['/login']">Inicie sesión</a> para publicar una pregunta</h4>
+              </div>
+            </ng-template>
+
+            <!-- Show FAQ -->
             <div class="faq">
               <div class="question" *ngFor='let question of questions'>
                 <div class="question-header">
-                  <strong>Pregunta {{question.id}}</strong>
+                  <strong>Pregunta</strong>
                 </div>
                 <div class="question-body">
-                  {{question.question}}
+                  {{question.question}} | Publicada: {{question.date | date}}
                 </div>
-                <div class="response" *ngFor='let resp of question.responses'>
-                  <strong>Respuesta {{resp.id}}</strong>
+                <div class="response" *ngFor='let response of question.responses'>
+                  <strong>Respuesta </strong>
                   <div class="response-body">
-                    {{resp.response}}
+                    {{response}}
                   </div>
                 </div>
-
               </div>
-              <div class="ask-btn">
-                <button type="button" class="btn btn-primary center-block" (click)="openModal(templateAsk)">Preguntar</button>
 
-                <!-- Using modal message -->
+              <!-- Using modal message -->
 
-                <ng-template #templateAsk>
-                  <div class="modal-body text-center">
-                    <div class="modal-header">
-                      <h4 class="modal-title">¿Cuál es su pregunta?</h4>
-                    </div>
-                    <div class="form-group">
-                      <form action="">
-                        <textarea class="form-control" name="pregunta" id="pregunta" cols="30" rows="3" placeholder="Ingrese su pregunta..."></textarea>
-                        <br>
-                        <input type="submit" class="btn btn-primary center-block" (click)="confirmModal()" value="Guardar pregunta">
-                      </form>
-                    </div>
+              <ng-template #templateConfirmed>
+                <div class="modal-body text-center">
+                  <p>¡Pregunta guardada exitosamente!</p>
+                  <button type="button" class="btn btn-default" (click)="confirm()">Ok</button>
+                </div>
+              </ng-template>
 
-                    <!-- <button type="button" class="btn btn-default" (click)="confirm()">Guardar pregunta</button> -->
-                  </div>
-                </ng-template>
-                <!-- <button type="button" class="btn btn-primary center-block">Preguntar</button> -->
-              </div>
+
             </div>
           </div>
         </div>
