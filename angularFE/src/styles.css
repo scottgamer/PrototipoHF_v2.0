@@ -440,6 +440,11 @@ hr{
         margin: 0%;
         float: right;
     }
+    .modal-form-input{
+        margin: 0px; 
+        width: 269px; 
+        height: 106px;
+    }
 }
 /****************************************************************************************************************************/
 @media only screen and (max-width: 768px) {
@@ -710,6 +715,9 @@ hr{
     }
     .must-login{
         text-align: center;
+    }
+    .modal-form-input{      
+        width: 306px;
     }
     
 }

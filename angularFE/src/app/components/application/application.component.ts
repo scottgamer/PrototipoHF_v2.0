@@ -41,7 +41,8 @@ export class ApplicationComponent implements OnInit {
   categoryId: any;
   userId: any;
   questions: Question[] = [];
-  question: Question;
+  question: any;
+  response: string;
 
   half1: string;
   half2: string;
@@ -92,7 +93,7 @@ export class ApplicationComponent implements OnInit {
       question: '',
       user: '',
       application: '',
-      responses:[]
+      responses: []
     };
   }
 
@@ -139,6 +140,7 @@ export class ApplicationComponent implements OnInit {
     this.applicationService.getQuestions(appId)
       .subscribe(questions => {
         this.questions = questions;
+        console.log(this.questions);
       }, err => { throw err; });
   }
 
@@ -164,7 +166,6 @@ export class ApplicationComponent implements OnInit {
     let userId = {
       user: this.userId
     };
-    console.log(userId);
     this.authService.addApplicationToUserHistory(appId, userId)
       .subscribe(
         data => {
@@ -177,23 +178,48 @@ export class ApplicationComponent implements OnInit {
         });
   }
 
-  onSubmitQuestion() { 
+  onSubmitQuestion() {
     let question = {
       question: this.question.question,
       user: this.userId,
       application: this.appId,
-      responses:[]
+      responses: []
     };
-
-    this.applicationService.postQuestion(question)
-      .subscribe(data => {
-        console.log('Success ' + data);
-        return true;
-      }, err => {
-        throw err;
-      });
+    if (this.question.question.length < 4 ||
+      this.question.question === undefined ||
+      this.question === null) {
+      console.log('La pregunta es demasiado corta');
+      return false;
+    } else {
+      this.applicationService.postQuestion(question)
+        .subscribe(data => {
+          return true;
+        }, err => {
+          throw err;
+        });
+    }
   }
 
+  getQuestionsSize(){
+    return this.questions.length;
+  }
+
+  onSubmitResponse() {
+    console.log(this.getQuestionsSize());
+    /* let response = {
+      response: this.response,
+      user: this.userId
+    };
+    console.log(this.questionId,response); */
+
+    /* this.applicationService.postResponse(questionId, response)
+      .subscribe(data => {
+        return true;
+       }, err=>{
+         console.log(err);
+         return false;
+       }); */
+  }
 
   /* getHalfString(): void {
     let descript = this.application.description;
@@ -216,10 +242,10 @@ export class ApplicationComponent implements OnInit {
 
   confirm(template: TemplateRef<any>): void {
     this.modalRef.hide();
+    location.reload();
   }
 
-  confirmModal(): void {
-    alert('Pregunta guardada!');
+  confirmDownload(): void {
     this.modalRef.hide();
   }
 }

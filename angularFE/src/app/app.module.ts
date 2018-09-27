@@ -17,6 +17,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { BarRatingModule } from "ngx-bar-rating";
 import { FlashMessagesModule } from 'angular2-flash-messages';
@@ -80,6 +81,7 @@ const appRoutes: Routes = [
     ModalModule.forRoot(),
     CollapseModule.forRoot(),
     CarouselModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     BarRatingModule,
     FlashMessagesModule.forRoot(),
     RouterModule.forRoot(appRoutes),

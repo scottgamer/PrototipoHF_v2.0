@@ -30,7 +30,7 @@ TODO Application
           <ng-template #templateDownload>
             <div class="modal-body text-center">
               <p>¡Aplicación descargada!</p>
-              <button type="button" class="btn btn-default" (click)="confirm()">Ok</button>
+              <button type="button" class="btn btn-default" (click)="confirmDownload()">Ok</button>
             </div>
           </ng-template>
 
@@ -188,6 +188,7 @@ TODO Application
                 <input type="submit" class="btn btn-primary center-block" value="Preguntar" (click)="openModal(templateConfirmed)">
               </form>
             </div>
+
             <!-- Must login first to post question template -->
             <ng-template #mustLoginFirst>
               <div class="must-login">
@@ -198,20 +199,40 @@ TODO Application
 
             <!-- Show FAQ -->
             <div class="faq">
-              <div class="question" *ngFor='let question of questions'>
+              <div class="question" *ngFor='let question of questions; let i = index'>
                 <div class="question-header">
                   <strong>Pregunta</strong>
                 </div>
                 <div class="question-body">
                   <div class="faq-row">
                     <div class="faq-row-left">
-                      {{question.question}} | Publicada: {{question.date | date}}
+                      {{i}} {{question.question}} {{question._id}} | Publicada: {{question.date | date}}
                     </div>
                     <div class="faq-row-right">
-                      <button role="button" class="btn btn-primary center-block">Responder</button>
+                      <button role="button" class="btn btn-primary center-block" (click)="openModal(responseModal)">Responder</button>
                     </div>
                   </div>
                 </div>
+
+                <!-- Response using modal -->
+                <ng-template #responseModal>
+                  <div class="modal-header">
+                    <h4 class="modal-title pull-left">Ingrese su respuesta</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <form (submit)='onSubmitResponse()'>
+                        <input type="text" [(ngModel)]="question._id" name="question._id">
+                        <textarea class="modal-form-input" [(ngModel)]="response" name="response" cols="30" rows="3" placeholder="Respuesta"></textarea>
+                        <input type="submit" class="btn btn-success center-block" value="Responder">
+                      </form>
+                    </div>
+                  </div>
+                </ng-template>
+
                 <div class="response" *ngFor='let response of question.responses'>
                   <strong>Respuesta </strong>
                   <div class="response-body">

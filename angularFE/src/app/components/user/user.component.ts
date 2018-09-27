@@ -29,6 +29,8 @@ export class UserComponent implements OnInit {
 
   userActions: string[];
 
+  
+
   constructor(private modalService: BsModalService,
     private authService: AuthService,
     private router: Router) {
