@@ -13,6 +13,12 @@ export class ApplicationService {
   constructor(private http: Http) {
   }
 
+  postApplication(application) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/applications/add', application, {headers:headers}).map(res => res.json());
+  }
+
   getApplications(): Observable<Application[]> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

@@ -1,0 +1,94 @@
+<p>
+  TODO Admin Account
+</p>
+
+<div class="user" *ngIf='user'>
+  <div class="user-header">
+    <h3> Información del Administrador</h3>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="user-info">
+        <label for="">Nombre:</label> {{user.fullName}}
+      </div>
+      <div class="user-info">
+        <label for="">Correo:</label> {{user.email}}
+      </div>
+      <div class="user-info">
+        <label for="">Contraseña:</label> *********
+        <!-- {{user.password}} -->
+      </div>
+      <div class="user-info">
+        <label for="">Cumpleanios:</label> {{user.birthday}}
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="user-info">
+        <label for="">Género:</label> {{user.genre}}
+      </div>
+      <div class="user-info">
+        <label for="">Nacionalidad:</label> {{user.nationality}}
+      </div>
+      <div class="user-info">
+        <label for="">Biografía:</label>
+        <br> {{user.bio}}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="user-info">
+        <button role="button" class="btn btn-info center-block" tooltip="Editar información" (click)="editInfo(templateEdit)">
+          Editar
+          <span>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Using modal message -->
+
+  <ng-template #templateEdit>
+    <div class="modal-body text-center">
+      <p>Editar información</p>
+      <form (submit)='saveUserData()'>
+        <input type="hidden" [(ngModel)]="user._id" name="user._id">
+        <div class="form-group">
+          <label for="fullName">Nombre </label>
+          <input type="text" class="form-control" placeholder="Ingrese" [(ngModel)]="user.fullName" name="user.fullName">
+        </div>
+        <!-- <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" class="form-control" placeholder="Ingrese" [(ngModel)]="user.password" name="user.password">
+                      </div> -->
+        <div class="form-group">
+          <label for="birthday">Cumpleaños</label>
+          <input type="text" class="form-control" placeholder="dd/mm/aaaa" [(ngModel)]="user.birthday" name="user.birthday">
+        </div>
+        <div class="form-group">
+          <label for="genre">Género</label>
+          <select class="form-control" [(ngModel)]="user.genre" name="user.genre" required>
+            <option *ngFor="let genre of genres" [value]="genre">{{genre}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="nationality">Nacionalidad</label>
+          <input type="text" class="form-control" placeholder="Ingrese" [(ngModel)]="user.nationality" name="user.nationality">
+        </div>
+        <div class="form-group">
+          <label for="bio">Biografía</label>
+          <textarea class="form-control" [(ngModel)]="user.bio" name="user.bio" cols="30" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Guardar" class="btn btn-success center-block" (click)='modalRef.hide()'>
+        </div>
+      </form>
+      <!-- <button type="button" class="btn btn-default" (click)="confirm()">Guardar</button> -->
+    </div>
+  </ng-template>
+
+</div>

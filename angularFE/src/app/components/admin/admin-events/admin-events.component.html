@@ -1,0 +1,98 @@
+<p>
+  TODO admin events!
+</p>
+<div *ngIf='events'>
+  <div class="user-header">
+    <h3> Eventos publicados en el sistema</h3>
+  </div>
+  <button role="button" class="btn btn-success center-block" (click)='addNewEvent(templateAdd)'>Añadir evento</button>
+  <div class="row">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Organizado por</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Poster</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let event of events; let i = index'>
+          <td>{{i + 1}}</td>
+          <td>{{event.name}}</td>
+          <td>{{event.date | date}}</td>
+          <td>{{event.organizedBy}}</td>
+          <td>{{event.description}}</td>
+          <td>
+            <img class="event-thumbnail" [src]="event.img" alt=""> </td>
+          <td>
+            <button role="button" class="btn btn-info">Editar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #templateAdd>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Ingrese los datos del evento</h4>
+  </div>
+  <div class="modal-body text-center">
+    <div class="form-group">
+      <form (submit)='onSubmitEvent()'>
+        <div class="row-input">
+          <div class="col-md-6">
+            <label for="name">Nombre </label>
+            <input type="text" class="form-control" placeholder="Nombre evento" [(ngModel)]="event.name" name="event.name" id="name">
+
+            <label for="date">Fecha</label>
+            <input type="text" class="form-control" placeholder="Fecha del evento (dd/mm/aaaa)" [(ngModel)]="event.date" name="event.date"
+              id="date">
+
+            <label for="img">Poster</label>
+            <input type="file" name="" id="">
+
+            <!-- <input type="text" class="form-control" placeholder="Seleccione imagen del logo" [(ngModel)]="application.logo" name="application.logo"
+                id="logo"> -->
+
+            <label for="organizedBy">Organizado por</label>
+            <input type="text" class="form-control" placeholder="Indique nombre del organizador" [(ngModel)]="event.organizedBy" name="event.organizedBy"
+              id="organizedBy">
+
+          </div>
+          <div class="col-md-6">
+            <label for="description">Descripción</label>
+            <textarea class="form-control" placeholder="Ingrese una descripción" [(ngModel)]="event.description" name="event.description"
+              id="description" cols="30" rows="6"></textarea>
+
+            <label for="organizerImg">Imagen Organizador</label>
+            <input type="text" class="form-control" placeholder="Seleccione imagen del organizador" [(ngModel)]="event.organizerImg"
+              name="event.organizerImg" id="organizerImg">
+
+          </div>
+        </div>
+        <div class="row-input">
+          <input type="submit" value="Guardar" class="btn btn-success center-block" id="btn-modal-save" (click)='modalConfirm(templateConfirm)'>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #templateConfirm>
+  <div class="modal-body text-center">
+    <p>
+      Evento guardado exitosamente!
+    </p>
+    <p>
+      <button role="button" class="btn btn-success center-block" (click)='closeAllModals()'>Cerrar</button>
+    </p>
+  </div>
+</ng-template>

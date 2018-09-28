@@ -14,7 +14,7 @@ router.post('/add', (req, res, next) => {
         imgs: req.body.imgs,
         category: req.body.category,
         description: req.body.description,
-        rating: req.body.rating,
+        rating: 0,
         country: req.body.country,
         developedBy: req.body.developedBy,
         version: req.body.version,
@@ -23,7 +23,7 @@ router.post('/add', (req, res, next) => {
         androidMin: req.body.androidMin,
         appWebPage: req.body.appWebPage,
         commentaries: [],
-        downloadedTimes: req.body.downloadedTimes,
+        downloadedTimes: 0,
     });
 
     Application.addApplication(newApplication, (err, app) => {

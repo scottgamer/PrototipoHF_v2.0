@@ -4,7 +4,6 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
-//load user model
 const User = require('../models/user');
 const Application = require('../models/application');
 const Events = require('../models/events');

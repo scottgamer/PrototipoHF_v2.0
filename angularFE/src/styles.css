@@ -445,6 +445,9 @@ hr{
         width: 269px; 
         height: 106px;
     }
+    .event-thumbnail{
+        width: 250px;
+    }
 }
 /****************************************************************************************************************************/
 @media only screen and (max-width: 768px) {
@@ -718,6 +721,9 @@ hr{
     }
     .modal-form-input{      
         width: 306px;
+    }
+    .event-thumbnail{
+        width: 150px;
     }
     
 }

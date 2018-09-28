@@ -1,0 +1,128 @@
+<p>
+  TODO admin applications!
+</p>
+<div class="user-header">
+  <h3> Aplicaciones existentes en el sistema</h3>
+</div>
+<button role="button" class="btn btn-success center-block" (click)='addNewApplication(templateAdd)'>Añadir aplicación</button>
+<div class="row">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">País</th>
+        <th scope="col">Empresa</th>
+        <th scope="col">Web</th>
+        <th scope="col">Fecha de subida</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let application of applications; let i = index'>
+        <td>{{i + 1}}</td>
+        <td>{{application.name}}</td>
+        <td>{{application.category}}</td>
+        <td>{{application.country}}</td>
+        <td>{{application.developedBy}}</td>
+        <td>{{application.appWebPage}}</td>
+        <td>{{application.create_date | date}}</td>
+        <td>
+          <button role="button" class="btn btn-info">Editar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #templateAdd>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Ingrese los datos de la aplicación</h4>
+  </div>
+  <div class="modal-body text-center">
+    <div class="form-group">
+      <form (submit)='onSubmitApplication()'>
+        <div class="row-input">
+          <div class="col-md-6">
+            <label for="name">Nombre </label>
+            <input type="text" class="form-control" placeholder="Nombre aplicación" [(ngModel)]="application.name" name="application.name"
+              id="name">
+
+            <label for="category">Categoría</label>
+            <div *ngIf="allCategories">
+              <select class="form-control" [(ngModel)]="application.category" name="application.category" id="category" required>
+                <option *ngFor="let category of allCategories" [value]="category._id">{{category.name}}</option>
+              </select>
+            </div>
+
+            <label for="logo">Logo</label>
+
+            <input type="file" name="" id="">
+
+            <!-- <input type="text" class="form-control" placeholder="Seleccione imagen del logo" [(ngModel)]="application.logo" name="application.logo"
+              id="logo"> -->
+
+            <label for="imgs">Imágenes</label>
+            <input type="text" class="form-control" placeholder="Seleccione imagenes de la aplicacion" [(ngModel)]="application.imgs"
+              name="application.imgs" id="imgs">
+
+            <label for="country">País de origen</label>
+            <input type="text" class="form-control" placeholder="País de origen" [(ngModel)]="application.country" name="application.country"
+              id="country">
+
+            <label for="developedBy">Desarrollado por</label>
+            <input type="text" class="form-control" placeholder="Desarrollado por" [(ngModel)]="application.developedBy" name="application.developedBy"
+              id="developedBy">
+
+            <label for="version">Versión</label>
+            <input type="text" class="form-control" placeholder="Versión (1.0)" [(ngModel)]="application.version" name="application.version"
+              id="version">
+          </div>
+          <div class="col-md-6">
+            <label for="description">Descripción</label>
+            <textarea class="form-control" placeholder="Ingrese una descripción" [(ngModel)]="application.description" name="application.description"
+              id="description" cols="30" rows="7"></textarea>
+
+            <label for="releaseDate">Fecha de liberación</label>
+            <input type="text" class="form-control" placeholder="Fecha de liberación (dd/mm/aaaa)" [(ngModel)]="application.releaseDate"
+              name="application.releaseDate" id="releaseDate">
+
+            <label for="platform">Plataforma</label>
+
+            <select class="form-control" [(ngModel)]="application.platform" name="applicatio.platform" id="platform">
+              <option *ngFor="let platform of platforms" [value]="platform">{{platform}}</option>
+            </select>
+
+            <label for="androidMin">Versión recomendada de android</label>
+
+            <select class="form-control" [(ngModel)]="application.androidMin" name="applicatio.androidMin" id="androidMin">
+              <option *ngFor="let android of androidVersions" [value]="android">{{android}}</option>
+            </select>
+
+            <label for="appWebPage">Web de la aplicación</label>
+            <input type="text" class="form-control" placeholder="Dirección web" [(ngModel)]="application.appWebPage" name="application.appWebPage"
+              id="appWebPage">
+          </div>
+        </div>
+        <div class="row-input">
+          <input type="submit" value="Guardar" class="btn btn-success center-block" id="btn-modal-save" (click)='modalConfirm(templateConfirm)'>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #templateConfirm>
+  <div class="modal-body text-center">
+    <p>
+      Aplicación guardada exitosamente!
+    </p>
+    <p>
+      <button role="button" class="btn btn-success center-block" (click)='closeAllModals()'>Cerrar</button>
+    </p>
+  </div>
+</ng-template>

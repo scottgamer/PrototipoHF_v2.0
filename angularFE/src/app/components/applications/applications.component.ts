@@ -22,8 +22,7 @@ export class ApplicationsComponent implements OnInit {
   categories: Category[] = [];
 
   constructor(private appService: ApplicationService,
-    private categoryService: CategoryService,
-    private barRatingModule: BarRatingModule) {
+    private categoryService: CategoryService) {
   }
 
   ngOnInit() {
@@ -35,7 +34,7 @@ export class ApplicationsComponent implements OnInit {
       .subscribe(applications => {
         this.applications = applications;
         this.getCategory(this.applications);
-      }, err=>{
+      }, err => {
         throw err;
       });
   }

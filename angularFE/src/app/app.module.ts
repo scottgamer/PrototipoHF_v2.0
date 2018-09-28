@@ -17,7 +17,6 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { BarRatingModule } from "ngx-bar-rating";
 import { FlashMessagesModule } from 'angular2-flash-messages';
@@ -36,21 +35,31 @@ import { EventComponent } from './components/event/event.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { CategoryComponent } from './components/category/category.component';
 import { HelpComponent } from './components/help/help.component';
+import { AdminAccountComponent } from './components/admin/admin-account/admin-account.component';
+import { AdminApplicationsComponent } from './components/admin/admin-applications/admin-applications.component';
+import { AdminEventsComponent } from './components/admin/admin-events/admin-events.component';
+import { AdminNewsComponent } from './components/admin/admin-news/admin-news.component';
 
 const appRoutes: Routes = [
-  {path:'', component:HomeComponent},
-  {path:'home', component:HomeComponent},
-  {path:'applications', component:ApplicationsComponent},
-  {path:'news', component:NewsComponent},
-  {path:'new/:_id', component:NewComponent},
-  {path:'events', component:EventsComponent},
-  {path:'event/:_id', component:EventComponent},
-  {path:'application/:_id', component:ApplicationComponent},
-  {path:'login', component:LoginComponent},
-  {path:'register', component:RegisterComponent},
-  {path:'user', component:UserComponent},
-  {path:'category/:_id', component:CategoryComponent},
-  {path:'help', component:HelpComponent},
+  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'applications', component: ApplicationsComponent },
+  { path: 'news', component: NewsComponent },
+  { path: 'new/:_id', component: NewComponent },
+  { path: 'events', component: EventsComponent },
+  { path: 'event/:_id', component: EventComponent },
+  { path: 'application/:_id', component: ApplicationComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  {
+    path: 'user', component: UserComponent, children: [
+      { path: 'account', component: AdminAccountComponent },
+      { path: 'applications', component: AdminApplicationsComponent },
+      { path: 'events', component: AdminEventsComponent },
+      { path: 'news', component: AdminNewsComponent }]
+  },
+  { path: 'category/:_id', component: CategoryComponent },
+  { path: 'help', component: HelpComponent },
   { path: '**', component: PageNotFoundComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
@@ -71,6 +80,10 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     CategoryComponent,
     HelpComponent,
+    AdminAccountComponent,
+    AdminApplicationsComponent,
+    AdminEventsComponent,
+    AdminNewsComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,7 +94,6 @@ const appRoutes: Routes = [
     ModalModule.forRoot(),
     CollapseModule.forRoot(),
     CarouselModule.forRoot(),
-    BsDatepickerModule.forRoot(),
     BarRatingModule,
     FlashMessagesModule.forRoot(),
     RouterModule.forRoot(appRoutes),

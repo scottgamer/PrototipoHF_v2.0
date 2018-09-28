@@ -8,10 +8,12 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { User } from '../../models/user-model';
 import { Application } from '../../models/application-model';
 import { Event } from '../../models/event-model';
+import { Question } from '../../models/questions-model';
 
 //services
 import { AuthService } from '../../services/auth.service';
-import { Question } from '../../models/questions-model';
+import { CategoryService } from '../../services/category.service';
+import { Category } from '../../models/category-model';
 
 @Component({
   selector: 'app-user',
@@ -24,21 +26,24 @@ export class UserComponent implements OnInit {
   downloadedApps: Application[] = [];
   savedEvents: Event[] = [];
   questionsMade: Question[] = [];
+  genres: string[] = [];
+  categoryIdArray: string[] = [];
+  categories: Category[] = [];
 
   modalRef: BsModalRef;
 
   userActions: string[];
 
-  
-
   constructor(private modalService: BsModalService,
     private authService: AuthService,
+    private categoryService: CategoryService,
     private router: Router) {
   }
 
   ngOnInit() {
     this.getProfile();
     this.getUserActions();
+    this.getGenres();
   }
 
   getProfile() {
@@ -60,6 +65,7 @@ export class UserComponent implements OnInit {
       this.authService.getUserDownloadedApp(appId)
         .subscribe(app => {
           this.downloadedApps.push(app);
+          this.getCategory(this.downloadedApps);
         });
     }
   }
@@ -89,6 +95,24 @@ export class UserComponent implements OnInit {
       'Preguntas realizadas',
       'Eventos guardados'
     ];
+  }
+
+  getGenres(): void {
+    this.genres = ['Masculino', 'Femenino', 'Otro'];
+  }
+
+  getCategory(downloadedApps): void {
+    for (let i = 0; i < downloadedApps.length; i++) {
+      this.categoryIdArray[i] = downloadedApps[i].category;
+      this.categoryService.getCategory(this.categoryIdArray[i])
+        .subscribe(category => {
+          this.categories.push(category);
+          downloadedApps[i].category = this.categories[i].name;
+        },
+          err => {
+            throw err;
+          });
+    }
   }
 
   saveUserData() {

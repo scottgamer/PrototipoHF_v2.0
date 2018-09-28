@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 const NewsSchema = mongoose.Schema({
     title: String,
     body: String,
-    imgs: [String]
+    imgs: [String],
+    date: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 const News = module.exports = mongoose.model('New', NewsSchema);
