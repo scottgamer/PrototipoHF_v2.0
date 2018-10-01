@@ -32,6 +32,8 @@ export class AdminApplicationsComponent implements OnInit {
 
   modalRef: BsModalRef;
 
+  filesToUpload: Array<File> = [];
+
   //appsComponent = new ApplicationsComponent(this.appService, this.categoryService);
 
   constructor(private appService: ApplicationService,
@@ -114,8 +116,26 @@ export class AdminApplicationsComponent implements OnInit {
     ];
   }
 
+  upload() {
+    const formData: any = new FormData();
+    const files: Array<File> = this.filesToUpload;
+    console.log(files);
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append("uploads[]", files[i], files[i]['name']);
+    }
+    console.log('form data variable :   ' + formData.toString());
+    this.appService.postLogo(formData)
+      .subscribe(files => console.log('files', files))
+  }
+
+  fileChangeEvent(fileInput: any) {
+    this.filesToUpload = <Array<File>>fileInput.target.files;
+  }
+
   onSubmitApplication() {
-    let application = {
+
+    /* let application = {
       name: this.application.name,
       logo: this.application.logo,
       imgs: this.application.imgs,
@@ -129,8 +149,8 @@ export class AdminApplicationsComponent implements OnInit {
       androidMin: this.application.androidMin,
       appWebPage: this.application.appWebPage
     };
-
-    console.log(application);
+ */
+    // console.log(application);
 
     /* this.appService.postApplication(application)
       .subscribe(data => {

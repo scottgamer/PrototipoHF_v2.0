@@ -2,7 +2,8 @@
   TODO User
 </p>
 <div *ngIf='user'>
-  <div *ngIf="user._id=='5bad30e2c1c6394cb4645222'; else normalUser">
+  <!-- <div *ngIf="user._id=='5bad30e2c1c6394cb4645222'; else normalUser"> -->
+  <div *ngIf="user.isAdmin==true; else normalUser">
     Pagina del administrador
 
     <nav class="navbar navbar-inverse">
@@ -35,7 +36,7 @@
     <router-outlet></router-outlet>
 
   </div>
-  
+
   <ng-template #normalUser>
     <div class="user">
       <div class="user-header">

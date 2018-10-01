@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map';
 
 //import classes
 import { Application } from '../models/application-model';
-import { map } from '../../../node_modules/rxjs/operator/map';
 
 @Injectable()
 export class ApplicationService {
@@ -13,6 +12,19 @@ export class ApplicationService {
   constructor(private http: Http) {
   }
 
+  postLogo(formData){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/upload', formData)
+    .map(files => files.json());
+  }
+
+  /* postLogo(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/upload', {headers:headers}).map(res => res.json());
+  }
+ */
   postApplication(application) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -22,7 +34,7 @@ export class ApplicationService {
   getApplications(): Observable<Application[]> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://192.168.100.107:3000/applications/getapps', { headers: headers }).map(res => res.json());
+    return this.http.get('http://localhost:3000/applications/getapps', { headers: headers }).map(res => res.json());
   }
 
   getApplication(id) {

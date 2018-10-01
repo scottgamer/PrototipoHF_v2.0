@@ -9,6 +9,7 @@ const ApplicationSchema = mongoose.Schema({
         required: true
     },
     logo: String,
+    logoAlt:String,
     imgs: [String],
     category: {
         type: mongoose.Schema.Types.String,

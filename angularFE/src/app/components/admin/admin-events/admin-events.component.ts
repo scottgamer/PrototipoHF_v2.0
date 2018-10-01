@@ -40,7 +40,7 @@ export class AdminEventsComponent implements OnInit {
         return true;
       }, err => {
         throw err;
-        return false;
+        //return false;
       });
   }
 

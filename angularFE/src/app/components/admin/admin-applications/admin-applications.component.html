@@ -43,10 +43,12 @@
   </div>
   <div class="modal-body text-center">
     <div class="form-group">
-      <form (submit)='onSubmitApplication()'>
+      <!-- <form (submit)='onSubmitApplication()'> -->
+      <form (submit)='upload()' enctype="multipart/form-data">
         <div class="row-input">
           <div class="col-md-6">
-            <label for="name">Nombre </label>
+
+            <!-- <label for="name">Nombre </label>
             <input type="text" class="form-control" placeholder="Nombre aplicación" [(ngModel)]="application.name" name="application.name"
               id="name">
 
@@ -56,15 +58,18 @@
                 <option *ngFor="let category of allCategories" [value]="category._id">{{category.name}}</option>
               </select>
             </div>
-
+ -->
             <label for="logo">Logo</label>
+            <br>
 
-            <input type="file" name="" id="">
+            <input type="file" class="form-control" name="file" id="logo" (change)="fileChangeEvent($event)" placeholder="Upload a file..." multiple>
+
+            <!-- TODO Logo Alt Input -->
 
             <!-- <input type="text" class="form-control" placeholder="Seleccione imagen del logo" [(ngModel)]="application.logo" name="application.logo"
               id="logo"> -->
 
-            <label for="imgs">Imágenes</label>
+            <!-- <label for="imgs">Imágenes</label>
             <input type="text" class="form-control" placeholder="Seleccione imagenes de la aplicacion" [(ngModel)]="application.imgs"
               name="application.imgs" id="imgs">
 
@@ -78,9 +83,12 @@
 
             <label for="version">Versión</label>
             <input type="text" class="form-control" placeholder="Versión (1.0)" [(ngModel)]="application.version" name="application.version"
-              id="version">
+              id="version"> -->
+
           </div>
-          <div class="col-md-6">
+
+          <!-- <div class="col-md-6">
+
             <label for="description">Descripción</label>
             <textarea class="form-control" placeholder="Ingrese una descripción" [(ngModel)]="application.description" name="application.description"
               id="description" cols="30" rows="7"></textarea>
@@ -104,7 +112,7 @@
             <label for="appWebPage">Web de la aplicación</label>
             <input type="text" class="form-control" placeholder="Dirección web" [(ngModel)]="application.appWebPage" name="application.appWebPage"
               id="appWebPage">
-          </div>
+          </div> -->
         </div>
         <div class="row-input">
           <input type="submit" value="Guardar" class="btn btn-success center-block" id="btn-modal-save" (click)='modalConfirm(templateConfirm)'>
