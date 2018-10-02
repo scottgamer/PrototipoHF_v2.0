@@ -3,6 +3,7 @@ import { Commentary } from "./commentaries-model";
 export class Application {
     _id:string;
     name:string;
+    altName:string;
     logo:string;
     imgs:string[];
     category:string;

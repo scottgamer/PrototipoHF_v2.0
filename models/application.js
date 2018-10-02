@@ -19,7 +19,7 @@ const ApplicationSchema = mongoose.Schema({
     rating: Number,
     country: String,
     developedBy: String,
-    version: Number,
+    version: String,
     releaseDate: String,
     platform: String,
     androidMin: String,

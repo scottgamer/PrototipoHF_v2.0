@@ -12,23 +12,24 @@ export class ApplicationService {
   constructor(private http: Http) {
   }
 
-  postLogo(formData){
+  postLogo(formData) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('http://localhost:3000/upload', formData)
-    .map(files => files.json());
+      .map(files => files.json());
   }
 
-  /* postLogo(){
+  postImages(formData) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/upload', {headers:headers}).map(res => res.json());
+    return this.http.post('http://localhost:3000/applications/upload', formData)
+      .map(res => res.json());
   }
- */
+
   postApplication(application) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/applications/add', application, {headers:headers}).map(res => res.json());
+    return this.http.post('http://localhost:3000/applications/add', application, { headers: headers }).map(res => res.json());
   }
 
   getApplications(): Observable<Application[]> {

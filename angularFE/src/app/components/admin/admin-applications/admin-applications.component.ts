@@ -33,6 +33,9 @@ export class AdminApplicationsComponent implements OnInit {
   modalRef: BsModalRef;
 
   filesToUpload: Array<File> = [];
+  logoToUpload: File;
+
+  filesPath: string[] = [];
 
   //appsComponent = new ApplicationsComponent(this.appService, this.categoryService);
 
@@ -119,67 +122,67 @@ export class AdminApplicationsComponent implements OnInit {
   upload() {
     const formData: any = new FormData();
     const files: Array<File> = this.filesToUpload;
+    const logo: File = this.logoToUpload;
     console.log(files);
+    console.log(logo);
+
+    formData.append("uploads[]", logo[0]);
 
     for (let i = 0; i < files.length; i++) {
       formData.append("uploads[]", files[i], files[i]['name']);
     }
-    console.log('form data variable :   ' + formData.toString());
-    this.appService.postLogo(formData)
-      .subscribe(files => console.log('files', files))
+
+    console.log('form data variable : ' + formData.getAll('uploads[]'));
+    this.appService.postImages(formData)
+      .subscribe(files => {
+        files.forEach((file, index) => {
+          console.log('Ruta: ' + file.path + ' indice ' + index);
+          this.filesPath.push(file.path);
+          console.log('Logo Path ' + this.filesPath[0]);
+        });
+
+        let application = {
+          imgs: this.filesPath,
+          altName: this.application.altName,
+          name: this.application.name,
+          logo: this.filesPath[0],
+          category: this.application.category,
+          description: this.application.description,
+          country: this.application.country,
+          developedBy: this.application.developedBy,
+          version: this.application.version,
+          releaseDate: this.application.releaseDate,
+          platform: this.application.platform,
+          androidMin: this.application.androidMin,
+          appWebPage: this.application.appWebPage
+        };
+
+        console.log(application);
+
+        this.appService.postApplication(application)
+          .subscribe(data => {
+            console.log(data);
+            return true;
+          }, err => {
+            throw err;
+          });
+
+          console.log('Files Paths ' + this.filesPath);
+          console.log('Files Paths size ' + this.filesPath.length);
+        // console.log('Application: ' + application);
+
+        console.log('files', files);
+      })
   }
 
   fileChangeEvent(fileInput: any) {
     this.filesToUpload = <Array<File>>fileInput.target.files;
   }
 
-  onSubmitApplication() {
-
-    /* let application = {
-      name: this.application.name,
-      logo: this.application.logo,
-      imgs: this.application.imgs,
-      category: this.application.category,
-      description: this.application.description,
-      country: this.application.country,
-      developedBy: this.application.developedBy,
-      version: this.application.version,
-      releaseDate: this.application.releaseDate,
-      platform: this.application.platform,
-      androidMin: this.application.androidMin,
-      appWebPage: this.application.appWebPage
-    };
- */
-    // console.log(application);
-
-    /* this.appService.postApplication(application)
-      .subscribe(data => {
-        console.log(data);
-        return true;
-      }, err => {
-        throw err;
-      }); */
-
+  logoChangeEvent(fileInput: any) {
+    this.logoToUpload = <File>fileInput.target.files;
   }
 
-  /* onFileChange(event) {
-    let reader = new FileReader();
-   
-    if(event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-    
-      reader.onload = () => {
-        this.formGroup.patchValue({
-          file: reader.result
-        });
-        
-        // need to run CD since file load runs outside of zone
-        // this.cd.markForCheck();
-      };
-    }
-  }
- */
   addNewApplication(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
   }

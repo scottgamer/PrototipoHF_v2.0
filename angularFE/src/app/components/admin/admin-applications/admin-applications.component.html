@@ -48,7 +48,7 @@
         <div class="row-input">
           <div class="col-md-6">
 
-            <!-- <label for="name">Nombre </label>
+            <label for="name">Nombre </label>
             <input type="text" class="form-control" placeholder="Nombre aplicación" [(ngModel)]="application.name" name="application.name"
               id="name">
 
@@ -58,20 +58,17 @@
                 <option *ngFor="let category of allCategories" [value]="category._id">{{category.name}}</option>
               </select>
             </div>
- -->
+
             <label for="logo">Logo</label>
-            <br>
+            <input type="file" class="form-control" name="logo" id="logo" (change)="logoChangeEvent($event)" placeholder="Seleccione logo de la aplicación">
 
-            <input type="file" class="form-control" name="file" id="logo" (change)="fileChangeEvent($event)" placeholder="Upload a file..." multiple>
+            <label for="logoAlt">Descripción del logo</label>
+            <input type="text" class="form-control" placeholder="Descripción de logo" [(ngModel)]="application.altName" name="application.altName"
+              id="logoAlt">
 
-            <!-- TODO Logo Alt Input -->
-
-            <!-- <input type="text" class="form-control" placeholder="Seleccione imagen del logo" [(ngModel)]="application.logo" name="application.logo"
-              id="logo"> -->
-
-            <!-- <label for="imgs">Imágenes</label>
-            <input type="text" class="form-control" placeholder="Seleccione imagenes de la aplicacion" [(ngModel)]="application.imgs"
-              name="application.imgs" id="imgs">
+            <label for="imgs">Imagenes</label>
+            <input type="file" class="form-control" name="file" id="imgs" (change)="fileChangeEvent($event)" placeholder="Seleccione imágenes de la aplicación"
+              multiple>
 
             <label for="country">País de origen</label>
             <input type="text" class="form-control" placeholder="País de origen" [(ngModel)]="application.country" name="application.country"
@@ -81,13 +78,13 @@
             <input type="text" class="form-control" placeholder="Desarrollado por" [(ngModel)]="application.developedBy" name="application.developedBy"
               id="developedBy">
 
-            <label for="version">Versión</label>
-            <input type="text" class="form-control" placeholder="Versión (1.0)" [(ngModel)]="application.version" name="application.version"
-              id="version"> -->
-
           </div>
 
-          <!-- <div class="col-md-6">
+          <div class="col-md-6">
+
+            <label for="version">Versión</label>
+            <input type="text" class="form-control" placeholder="Versión (1.0)" [(ngModel)]="application.version" name="application.version"
+              id="version">
 
             <label for="description">Descripción</label>
             <textarea class="form-control" placeholder="Ingrese una descripción" [(ngModel)]="application.description" name="application.description"
@@ -112,7 +109,7 @@
             <label for="appWebPage">Web de la aplicación</label>
             <input type="text" class="form-control" placeholder="Dirección web" [(ngModel)]="application.appWebPage" name="application.appWebPage"
               id="appWebPage">
-          </div> -->
+          </div>
         </div>
         <div class="row-input">
           <input type="submit" value="Guardar" class="btn btn-success center-block" id="btn-modal-save" (click)='modalConfirm(templateConfirm)'>

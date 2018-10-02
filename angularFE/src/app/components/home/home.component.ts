@@ -39,8 +39,35 @@ export class HomeComponent implements OnInit {
   getApplications(): void {
     this.appService.getApplications()
       .subscribe(applications => {
+
+        let pathToImage;
+        let pathToLogo;
+        applications.forEach((app, index) => {
+          for (let i = 0; i < app.imgs.length; i++) {
+            pathToImage = app.imgs[i].substring(14, app.imgs[i].length);
+            app.imgs[i] = pathToImage;
+          }
+          pathToLogo = app.logo.substring(14, app.logo.length);
+          app.logo = pathToLogo;
+        });
         this.applications = applications;
+        console.log(this.applications)
         this.getCategory(this.applications);
+        /* this.applications = applications;
+        console.log(this.applications);
+        this.getCategory(this.applications);
+        let pathToImage;
+        this.applications.forEach((app, index) => {
+          if (index === 1) {
+            for(let i=0; i<app.imgs.length; i++){
+              pathToImage = app.imgs[i].substring(14, app.imgs[i].length);
+              console.log(app.imgs);
+              console.log(pathToImage);
+              app.imgs[i] = pathToImage;
+              console.log(app);
+            }
+          }
+        }); */
       }, err => {
         throw err;
       });

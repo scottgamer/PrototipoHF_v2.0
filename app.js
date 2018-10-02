@@ -24,7 +24,7 @@ mongoose.connection.on('error', (err) => {
   console.log('Connection error ' + err);
 });
 
-// specify the folder
+// specify the folder for storing multer
 app.use(express.static(path.join(__dirname, 'uploads')));
 
 // headers and content type

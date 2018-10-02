@@ -40,17 +40,16 @@ TODO Application
 
         <div class="inner-row-app" id="screenshots">
           <h4>Screenshots</h4>
-          <div class="col-md-12">
-            <div class="col-md-4" *ngFor='let img of application.imgs'>
-              <img src="{{img}}" alt="">
-            </div>
+          <div class="col-md-4" *ngFor='let img of application.imgs | slice:1'>
+            <img src="{{img}}" alt="">
           </div>
+
         </div>
 
         <div class="inner-row-app" id="screenshots-carousel">
           <h4>Screenshots</h4>
           <carousel>
-            <slide *ngFor='let img of application.imgs'>
+            <slide *ngFor='let img of application.imgs | slice:1'>
               <img src="{{img}}" alt="first slide" style="display: block; width: 100%;">
             </slide>
           </carousel>
@@ -167,7 +166,7 @@ TODO Application
                 &nbsp;
                 <br> Versión: {{application.version}}
                 <br> Plataforma: {{application.platform}}
-                <br> Web aplicación: {{application.appWebPage}}
+                <br> Web aplicación: <a href="{{application.appWebPage}}">{{application.appWebPage}}</a>
                 <br>
               </div>
             </div>

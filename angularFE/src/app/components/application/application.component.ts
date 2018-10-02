@@ -100,7 +100,25 @@ export class ApplicationComponent implements OnInit {
   getApplication(id): void {
     this.applicationService.getApplication(id)
       .subscribe((app: Application) => {
+
+        let pathToImage;
+        let pathToLogo;
+
+        for (let i = 0; i < app.imgs.length; i++) {
+          pathToImage = app.imgs[i].substring(14, app.imgs[i].length);
+          console.log(app.imgs);
+          console.log(pathToImage);
+          app.imgs[i] = pathToImage;
+          console.log(app);
+        }
+        pathToLogo = app.logo.substring(14, app.logo.length);
+        app.logo = pathToLogo;
+
+
+
+
         this.application = app;
+        console.log(this.application)
         this.categoryId = this.application.category;
         this.getCategory(this.categoryId);
         this.getComments(this.application);
@@ -200,7 +218,7 @@ export class ApplicationComponent implements OnInit {
     }
   }
 
-  getQuestionsSize(){
+  getQuestionsSize() {
     return this.questions.length;
   }
 
