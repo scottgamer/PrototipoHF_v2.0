@@ -1,10 +1,8 @@
 import { Component, OnInit, TemplateRef, Input } from '@angular/core';
-import { Observable } from "rxjs/Rx"
 
 //modules
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { BarRatingModule } from "ngx-bar-rating";
 
 //dynamic routing using ids in url
 import { ActivatedRoute } from '@angular/router';
@@ -44,6 +42,13 @@ export class ApplicationComponent implements OnInit {
   question: any;
   response: string;
 
+  //rating properties
+  max: number;
+  isReadonly: boolean;
+  overStar: number;
+
+  userRating: number;
+
   half1: string;
   half2: string;
   lorem: string = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem adipisci quod nemo ' +
@@ -57,7 +62,6 @@ export class ApplicationComponent implements OnInit {
   message: string;
 
   constructor(private modalService: BsModalService,
-    private barRatingModule: BarRatingModule,
     private route: ActivatedRoute,
     private applicationService: ApplicationService,
     private categoryService: CategoryService,
@@ -66,6 +70,10 @@ export class ApplicationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.max = 5;
+    this.isReadonly = true;
+    this.userRating = 0;
+
     this.initCommentObject();
     this.initQuestionObject();
 
@@ -106,19 +114,12 @@ export class ApplicationComponent implements OnInit {
 
         for (let i = 0; i < app.imgs.length; i++) {
           pathToImage = app.imgs[i].substring(14, app.imgs[i].length);
-          console.log(app.imgs);
-          console.log(pathToImage);
           app.imgs[i] = pathToImage;
-          console.log(app);
         }
         pathToLogo = app.logo.substring(14, app.logo.length);
         app.logo = pathToLogo;
 
-
-
-
         this.application = app;
-        console.log(this.application)
         this.categoryId = this.application.category;
         this.getCategory(this.categoryId);
         this.getComments(this.application);
@@ -166,16 +167,41 @@ export class ApplicationComponent implements OnInit {
     this.userId = this.authService.getUserId();
   }
 
+  hoveringOver(value: number): void {
+    this.overStar = value;
+  }
+
+  resetStar(): void {
+    this.overStar = void 0;
+  }
+
   onRateAndComment() {
     const comment = {
       user: this.userId,
       commentary: this.comment.commentary,
-      rating: this.comment.rating,
+      rating: this.userRating,
     };
-    this.applicationService.postCommentAndRating(this.appId, comment)
+
+    const rating = {
+      rating: this.userRating
+    }
+
+    console.log(comment, rating);
+
+    this.applicationService.postComment(this.appId, comment)
       .subscribe(data => {
-        if (!data) console.log('err');
+        console.log(data);
         return true;
+      }, err => {
+        throw err;
+      });
+
+    this.applicationService.postRating(this.appId, rating)
+      .subscribe(data => {
+        console.log(data);
+        return true;
+      }, err => {
+        throw err;
       });
   }
 

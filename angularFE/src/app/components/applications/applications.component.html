@@ -28,7 +28,7 @@
             <br>
             <div class="info-rating">
               <small>Valoración:
-                <bar-rating [(rate)]="application.rating" [max]="5" [theme]="'default'"></bar-rating>
+                <rating [(ngModel)]="application.rating" [max]="max" [readonly]="isReadonly"></rating>
               </small>
             </div>
             <br>

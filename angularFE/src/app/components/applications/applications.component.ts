@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-//modules
-import { BarRatingModule } from "ngx-bar-rating";
 //classes
 import { Application } from '../../models/application-model';
 import { Category } from '../../models/category-model';
@@ -21,18 +19,36 @@ export class ApplicationsComponent implements OnInit {
   categoryIdArray: string[] = [];
   categories: Category[] = [];
 
+  max: number;
+  isReadonly: boolean;
+
   constructor(private appService: ApplicationService,
     private categoryService: CategoryService) {
   }
 
   ngOnInit() {
+    this.max = 5;
+    this.isReadonly = true;
+
     this.getApplications();
   }
 
   getApplications(): void {
     this.appService.getApplications()
-      .subscribe(applications => {
-        this.applications = applications;
+      .subscribe(apps => {
+
+        let pathToImage;
+        let pathToLogo;
+
+        apps.forEach((app) => {
+          for (let i = 0; i < app.imgs.length; i++) {
+            pathToImage = app.imgs[i].substring(14, app.imgs[i].length);
+            app.imgs[i] = pathToImage;
+          }
+          pathToLogo = app.logo.substring(14, app.logo.length);
+          app.logo = pathToLogo;
+        });
+        this.applications = apps;
         this.getCategory(this.applications);
       }, err => {
         throw err;
@@ -40,17 +56,15 @@ export class ApplicationsComponent implements OnInit {
   }
 
   getCategory(applications): void {
-    for (let i = 0; i < applications.length; i++) {
-      this.categoryIdArray[i] = applications[i].category;
-      this.categoryService.getCategory(this.categoryIdArray[i])
+    applications.forEach((app, index) => {
+      this.categoryIdArray[index] = app.category;
+      this.categoryService.getCategory(this.categoryIdArray[index])
         .subscribe(category => {
           this.categories.push(category);
-          applications[i].category = this.categories[i].name;
-        },
-          err => {
-            throw err;
-          });
-    }
+          app.category = this.categories[index].name;
+        }, err=>{
+          throw err;
+        });
+    });
   }
-
 }

@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const router = express.Router();
+const path = require('path');
 
 const Application = require('../models/application');
 const Commentary = require('../models/commentary');
@@ -13,7 +14,8 @@ const storage = multer.diskStorage({
     cb(null, './angularFE/src/assets/images/applications');
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    //cb(null, file.originalname);
+    cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
 const upload = multer({ storage });
@@ -107,7 +109,35 @@ router.post('/newcommentary/:_id', (req, res, next) => {
       });
     }
   });
+});
 
+//post new rating to app
+router.post('/newrating/:_id', (req, res, next) => {
+  let appId = req.params._id;
+  let userRating = req.body.rating;
+  Application.getActualRating(appId, (err, rating) => {
+    if (err) res.json({ success: false, msg: '0 ' + err });
+    else {
+      Application.getActualRatingCount(appId, (err, ratingCount) => {
+        if (err) res.json({ success: false, msg: '1 ' + err });
+        else {
+          let actualRating = rating.rating;
+          let count = ratingCount.ratingCount;
+          let newRating = (userRating + actualRating) / count;
+
+          Application.postNewRating(appId, newRating, (err, data) => {
+            if (err) res.json({success:false, msg: '2' + err});
+            else{
+              Application.incrementRatingCount(appId, (err, data) => {
+                if (err) res.json({success:false, msg: '3' + err});
+                res.json({success:true, msg: 'New rating added'})
+              });
+            }
+          });
+        }
+      });
+    }
+  });
 });
 
 //get commentaries by id

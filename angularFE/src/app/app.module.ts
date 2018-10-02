@@ -3,22 +3,20 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-// import { HttpClientModule } from '@angular/common/http';
 
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
 import { CategoryService } from './services/category.service';
 import { ApplicationService } from './services/application.service';
 
-//import { AppBootstrapModule } from './app-bootstrap/app-bootstrap.module';
 //Bootstrap components using ngx-bootstrap
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { RatingModule } from 'ngx-bootstrap/rating';
 
-import { BarRatingModule } from "ngx-bar-rating";
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { AppComponent } from './app.component';
@@ -94,7 +92,7 @@ const appRoutes: Routes = [
     ModalModule.forRoot(),
     CollapseModule.forRoot(),
     CarouselModule.forRoot(),
-    BarRatingModule,
+    RatingModule.forRoot(),
     FlashMessagesModule.forRoot(),
     RouterModule.forRoot(appRoutes),
   ],

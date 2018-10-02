@@ -10,17 +10,12 @@ import { Category } from '../../../models/category-model';
 import { ApplicationService } from '../../../services/application.service';
 import { CategoryService } from '../../../services/category.service';
 
-import { ApplicationsComponent } from '../../applications/applications.component';
-
 @Component({
   selector: 'app-admin-applications',
   templateUrl: './admin-applications.component.html',
   styleUrls: ['./admin-applications.component.css']
 })
 export class AdminApplicationsComponent implements OnInit {
-
-  /* appService:ApplicationService;
-  categoryService:CategoryService; */
 
   application: Application;
   applications: Application[];
@@ -36,8 +31,6 @@ export class AdminApplicationsComponent implements OnInit {
   logoToUpload: File;
 
   filesPath: string[] = [];
-
-  //appsComponent = new ApplicationsComponent(this.appService, this.categoryService);
 
   constructor(private appService: ApplicationService,
     private categoryService: CategoryService,
@@ -123,8 +116,6 @@ export class AdminApplicationsComponent implements OnInit {
     const formData: any = new FormData();
     const files: Array<File> = this.filesToUpload;
     const logo: File = this.logoToUpload;
-    console.log(files);
-    console.log(logo);
 
     formData.append("uploads[]", logo[0]);
 
@@ -132,13 +123,11 @@ export class AdminApplicationsComponent implements OnInit {
       formData.append("uploads[]", files[i], files[i]['name']);
     }
 
-    console.log('form data variable : ' + formData.getAll('uploads[]'));
+    // console.log('form data variable : ' + formData.getAll('uploads[]'));
     this.appService.postImages(formData)
       .subscribe(files => {
         files.forEach((file, index) => {
-          console.log('Ruta: ' + file.path + ' indice ' + index);
           this.filesPath.push(file.path);
-          console.log('Logo Path ' + this.filesPath[0]);
         });
 
         let application = {
@@ -157,8 +146,6 @@ export class AdminApplicationsComponent implements OnInit {
           appWebPage: this.application.appWebPage
         };
 
-        console.log(application);
-
         this.appService.postApplication(application)
           .subscribe(data => {
             console.log(data);
@@ -166,12 +153,6 @@ export class AdminApplicationsComponent implements OnInit {
           }, err => {
             throw err;
           });
-
-          console.log('Files Paths ' + this.filesPath);
-          console.log('Files Paths size ' + this.filesPath.length);
-        // console.log('Application: ' + application);
-
-        console.log('files', files);
       })
   }
 
@@ -191,6 +172,7 @@ export class AdminApplicationsComponent implements OnInit {
     for (let i = 1; i <= this.modalService.getModalsCount(); i++) {
       this.modalService.hide(i);
     }
+    location.reload();
   }
 
   modalConfirm(template: TemplateRef<any>) {

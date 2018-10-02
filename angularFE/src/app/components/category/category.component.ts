@@ -21,16 +21,24 @@ export class CategoryComponent implements OnInit {
 
   category: Category;
   applications: Application[];
-  categoryId:any;
+  categoryId: any;
+
+  //rating properties
+  max: number;
+  isReadonly: boolean;
+  overStar: number;
 
   constructor(private categoryService: CategoryService,
-    private appService:ApplicationService,
+    private appService: ApplicationService,
     private activatedRoute: ActivatedRoute,
     private location: Location) {
 
   }
 
   ngOnInit() {
+    this.max = 5;
+    this.isReadonly = true;
+
     this.activatedRoute.params.subscribe(params => {
       if (params['_id']) {
         this.categoryId = params['_id'];
@@ -48,11 +56,24 @@ export class CategoryComponent implements OnInit {
   }
 
 
-  getAppsByCategory(id): void{
+  getAppsByCategory(id): void {
     this.appService.getAppsByCategory(id)
-      .subscribe(application => {
-        this.applications = application;
+      .subscribe(apps => {
+        let pathToImage;
+        let pathToLogo;
+
+        apps.forEach((app) => {
+          for (let i = 0; i < app.imgs.length; i++) {
+            pathToImage = app.imgs[i].substring(14, app.imgs[i].length);
+            app.imgs[i] = pathToImage;
+          }
+          pathToLogo = app.logo.substring(14, app.logo.length);
+          app.logo = pathToLogo;
+        });
+        this.applications = apps;
+      }, err=>{
+        throw err;
       });
-  } 
+  }
 
 }

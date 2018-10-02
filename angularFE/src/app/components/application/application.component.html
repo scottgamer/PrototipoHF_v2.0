@@ -13,11 +13,10 @@ TODO Application
             <div class="info-app">
               Nombre: {{application.name}}
               <br> Categoría: {{category.name}}
-              <br>
-              <div class="info-rating">
-                Valoración:
-                <bar-rating [(rate)]="application.rating" [max]="5" [theme]="'default'"></bar-rating>
-              </div>
+              <br> Valoración:
+              <rating [(ngModel)]="application.rating" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()"
+                [titles]="['one','two','three']"></rating>
+
             </div>
           </div>
           <div class="col-md-4" id="btn-download">
@@ -88,7 +87,8 @@ TODO Application
               <form (submit)='onRateAndComment()'>
                 <div id="rating">
                   Calificación:
-                  <bar-rating [(rate)]="application.rating" [max]="5" [theme]="'default'" name="application.rating"></bar-rating>
+                  <rating [(ngModel)]="userRating" name="userRating" [max]="max" [readonly]="!isReadonly" (onHover)="hoveringOver($event)"
+                    (onLeave)="resetStar()"></rating>
                 </div>
                 <div id="comment">
                   Comentario:
@@ -131,11 +131,11 @@ TODO Application
               <div class="user-name-rate">
                 <div>{{commentary.user}}</div>
                 <div>Calificación:
-                  <bar-rating [(rate)]="commentary.rating" [max]="5" [theme]="'default'"></bar-rating>
+                  <rating [(ngModel)]="commentary.rating" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()"></rating>
                 </div>
               </div>
               <div class="date">
-                Fecha: {{commentary.date | date}}
+                Fecha: {{commentary.date | date:'dd/MM/yyyy'}}
               </div>
               <br>
               <div class="comment center-block">
@@ -166,7 +166,8 @@ TODO Application
                 &nbsp;
                 <br> Versión: {{application.version}}
                 <br> Plataforma: {{application.platform}}
-                <br> Web aplicación: <a href="{{application.appWebPage}}">{{application.appWebPage}}</a>
+                <br> Web aplicación:
+                <a href="{{application.appWebPage}}">{{application.appWebPage}}</a>
                 <br>
               </div>
             </div>

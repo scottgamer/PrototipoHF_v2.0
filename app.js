@@ -77,7 +77,7 @@ app.get('*', (req, res) => {
 
 
 //Multer storage
-const storage = multer.diskStorage({
+/* const storage = multer.diskStorage({
   // destination
   destination: (req, file, cb) => {
     cb(null, './uploads/')
@@ -92,7 +92,7 @@ app.post("/upload", upload.array("uploads[]", 12), (req, res) => {
   console.log('files', req.files);
   res.send(req.files);
 });
-
+ */
 //Start server
 app.listen(port, () => {
   console.log('Server started on port ' + port);
