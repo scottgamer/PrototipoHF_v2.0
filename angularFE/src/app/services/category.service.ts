@@ -3,21 +3,47 @@ import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
+import { Config } from '../components/global-config/config';
+
 @Injectable()
 export class CategoryService {
 
-  constructor(private http:Http) { }
+  config: Config;
+  localhost: string;
+  headers: Headers;
 
-  getCategories(){
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/categories/getall', { headers: headers }).map(res => res.json());
+
+  constructor(private http: Http) {
+    this.config = new Config();
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+    this.localhost = this.config.getLocalhostURI();
   }
 
-  getCategory(id){
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/categories/getone/' + id, { headers: headers }).map(res => res.json());
+  getUri() {
+    console.log(this.localhost);
   }
+
+  /**Post Methods */
+  /************************************************************************************************************** */
+
+  /**Get Methods */
+
+  getCategories() {
+    return this.http.get(this.localhost + 'categories/getall', { headers: this.headers })
+      .map(res => res.json());
+  }
+
+  getCategory(id) {
+    return this.http.get(this.localhost + 'categories/getone/' + id, { headers: this.headers })
+      .map(res => res.json());
+  }
+
+  /************************************************************************************************************** */
+
+  /**Other Methods */
+  /************************************************************************************************************** */
+
+
 
 }

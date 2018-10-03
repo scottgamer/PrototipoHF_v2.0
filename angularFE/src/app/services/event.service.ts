@@ -5,22 +5,31 @@ import { Observable } from 'rxjs';
 
 //import classes
 import { Event } from '../models/event-model';
+import { Config } from '../components/global-config/config';
 
 @Injectable()
 export class EventService {
 
-  constructor(private http: Http) { }
+  config: Config;
+  localhost: string;
+  headers: Headers;
 
+  constructor(private http: Http) { 
+    this.config = new Config();
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+    this.localhost = this.config.getLocalhostURI();
+  }
+
+
+  /**Get Methods */
   getEvents(): Observable<Event[]> {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/events/getall', { headers: headers }).map(res => res.json());
+    return this.http.get(this.localhost + 'events/getall', { headers: this.headers }).map(res => res.json());
 
   }
 
   getEvent(id): Observable<Event> {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/events/getone/' + id, { headers: headers }).map(res => res.json());
+    return this.http.get(this.localhost + 'events/getone/' + id, { headers: this.headers }).map(res => res.json());
   }
+  /******************************************************************************************************************* */
 }

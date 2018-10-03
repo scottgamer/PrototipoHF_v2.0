@@ -64,6 +64,17 @@ export class UserComponent implements OnInit {
       let appId = user.downloadedApps[i];
       this.authService.getUserDownloadedApp(appId)
         .subscribe(app => {
+          let pathToImage;
+          let pathToLogo;
+
+          for (let i = 0; i < app.imgs.length; i++) {
+            pathToImage = app.imgs[i].substring(14, app.imgs[i].length);
+            app.imgs[i] = pathToImage;
+          }
+
+          pathToLogo = app.logo.substring(14, app.logo.length);
+          app.logo = pathToLogo;
+          
           this.downloadedApps.push(app);
           this.getCategory(this.downloadedApps);
         });

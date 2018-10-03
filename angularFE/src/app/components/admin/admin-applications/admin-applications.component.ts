@@ -132,7 +132,7 @@ export class AdminApplicationsComponent implements OnInit {
 
         let application = {
           imgs: this.filesPath,
-          altName: this.application.altName,
+          logoAlt: this.application.altName,
           name: this.application.name,
           logo: this.filesPath[0],
           category: this.application.category,
@@ -145,6 +145,8 @@ export class AdminApplicationsComponent implements OnInit {
           androidMin: this.application.androidMin,
           appWebPage: this.application.appWebPage
         };
+
+        console.log(application);
 
         this.appService.postApplication(application)
           .subscribe(data => {

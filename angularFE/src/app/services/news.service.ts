@@ -1,27 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 //import classes
 import { New } from '../models/new-model';
+import { Config } from '../components/global-config/config';
 
 
 @Injectable()
 export class NewsService {
 
-  constructor(private http:Http) { }
+  config: Config;
+  localhost: string;
+  headers: Headers;
 
+  constructor(private http: Http) {
+    this.config = new Config();
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+    this.localhost = this.config.getLocalhostURI();
+   }
+
+   /**Get Methods */
   getNews(): Observable<New[]> {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/news/getall', { headers: headers }).map(res => res.json());
+    return this.http.get(this.localhost + 'news/getall', { headers: this.headers }).map(res => res.json());
 
   }
 
   getNew(id): Observable<New> {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/news/getone/' + id, { headers: headers }).map(res => res.json());
+    return this.http.get(this.localhost + 'news/getone/' + id, { headers: this.headers }).map(res => res.json());
   }
 
+  /**************************************************************************************************************** */
 }

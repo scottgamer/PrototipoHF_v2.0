@@ -12,9 +12,12 @@ export class ApplicationService {
 
   config: Config;
   localhost: string;
+  headers: Headers;
 
   constructor(private http: Http) {
-    this.config = new Config('http://192.168.100.107:3000/');
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+    this.config = new Config();
     this.localhost = this.config.getLocalhostURI();
   }
 
@@ -22,111 +25,83 @@ export class ApplicationService {
     console.log(this.localhost);
   }
 
-  postLogo(formData) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(this.localhost + 'upload', formData)
-      .map(files => files.json());
-  }
+  /* Post Methods */
 
   postImages(formData) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
     return this.http.post(this.localhost + 'applications/upload', formData)
       .map(res => res.json());
   }
 
   postApplication(application) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(this.localhost + 'applications/add', application, { headers: headers }).map(res => res.json());
-  }
-
-  getApplications(): Observable<Application[]> {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.get(this.localhost + 'applications/getapps', { headers: headers }).map(res => res.json());
-  }
-
-  getBestRated() {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.get(this.localhost + 'applications/getbestrated', { headers: headers }).map(res => res.json());
-  }
-
-  getLatest(){
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json')
-    return this.http.get(this.localhost + 'applications/getlatestapps').map(res=>res.json());
-  }
-
-  getApplication(id) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.get(this.localhost + 'applications/getone/' + id, { headers: headers }).map(res => res.json());
-  }
-
-  getAppsByCategory(id): Observable<Application[]> {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.get(this.localhost + 'applications/getappsbycategory/' + id, { headers: headers }).map(res => res.json());
+    return this.http.post(this.localhost + 'applications/add', application, { headers: this.headers })
+      .map(res => res.json());
   }
 
   postComment(appId, comment) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
     return this.http
-      .post(this.localhost + 'applications/newcommentary/' + appId, comment, { headers: headers })
+      .post(this.localhost + 'applications/newcommentary/' + appId, comment, { headers: this.headers })
       .map(res => res.json());
   }
 
   postRating(appId, rating) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
     return this.http
-      .post(this.localhost + 'applications/newrating/' + appId, rating, { headers: headers })
+      .post(this.localhost + 'applications/newrating/' + appId, rating, { headers: this.headers })
+      .map(res => res.json());
+  }
+
+  postQuestion(question) {
+    return this.http.post(this.localhost + 'questions/add', question, { headers: this.headers })
       .map(res => res.json());
   }
 
   updateUser(user) {
     let userId = user.id;
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.put(this.localhost + 'users/update/' + userId, user, { headers: headers })
-      .map(res => res.json());
-  }
-
-  getComment(commentId) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.get(this.localhost + 'applications/getcomment/' + commentId, { headers: headers }).map(res => res.json());
-  }
-
-  getUser(userId) {
-    let headers = new Headers();
-    headers.append('Content-type', 'application/json');
-    return this.http.get(this.localhost + 'applications/getuser/' + userId).map(res => res.json());
-  }
-
-  postQuestion(question) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(this.localhost + 'questions/add', question, { headers: headers })
-      .map(res => res.json());
-  }
-
-  getQuestions(appId) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.get(this.localhost + 'questions/getquestions/byappid/' + appId, { headers: headers })
+    return this.http.put(this.localhost + 'users/update/' + userId, user, { headers: this.headers })
       .map(res => res.json());
   }
 
   postResponse(questionId, response) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
     return this.http
       .put(this.localhost + 'questions/putresponsetoquestionbyid/' + questionId, response)
+      .map(res => res.json());
+  }
+  /*******************************************************************************************************************************/
+  /* Get Methods */
+
+  getApplications(): Observable<Application[]> {
+
+    return this.http.get(this.localhost + 'applications/getapps', { headers: this.headers }).map(res => res.json());
+  }
+
+  getBestRated() {
+
+    return this.http.get(this.localhost + 'applications/getbestrated', { headers: this.headers }).map(res => res.json());
+  }
+
+  getLatest() {
+    return this.http.get(this.localhost + 'applications/getlatestapps').map(res => res.json());
+  }
+
+  getApplication(id) {
+
+    return this.http.get(this.localhost + 'applications/getone/' + id, { headers: this.headers }).map(res => res.json());
+  }
+
+  getAppsByCategory(id): Observable<Application[]> {
+
+    return this.http.get(this.localhost + 'applications/getappsbycategory/' + id, { headers: this.headers }).map(res => res.json());
+  }
+
+  getComment(commentId) {
+    return this.http.get(this.localhost + 'applications/getcomment/' + commentId, { headers: this.headers }).map(res => res.json());
+  }
+
+  getUser(userId) {
+    return this.http.get(this.localhost + 'applications/getuser/' + userId).map(res => res.json());
+  }
+
+  getQuestions(appId) {
+    return this.http.get(this.localhost + 'questions/getquestions/byappid/' + appId, { headers: this.headers })
       .map(res => res.json());
   }
 

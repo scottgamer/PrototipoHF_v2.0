@@ -132,7 +132,7 @@ router.post('/newrating/:_id', (req, res, next) => {
         else {
           let actualRating = rating.rating;
           let count = ratingCount.ratingCount;
-          let newRating = (userRating + actualRating) / count;
+          let newRating = (userRating + actualRating) / 2;
 
           Application.postNewRating(appId, newRating, (err, data) => {
             if (err) res.json({success:false, msg: '2' + err});

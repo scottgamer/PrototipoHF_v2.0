@@ -38,7 +38,7 @@ TODO Application
         <!-- Screenshots & carousel -->
 
         <div class="inner-row-app" id="screenshots">
-          <h4>Screenshots</h4>
+          <h4>Capturas de pantalla</h4>
           <div class="col-md-4" *ngFor='let img of application.imgs | slice:1'>
             <img src="{{img}}" alt="">
           </div>
@@ -46,7 +46,7 @@ TODO Application
         </div>
 
         <div class="inner-row-app" id="screenshots-carousel">
-          <h4>Screenshots</h4>
+          <h4>Capturas de pantalla</h4>
           <carousel>
             <slide *ngFor='let img of application.imgs | slice:1'>
               <img src="{{img}}" alt="first slide" style="display: block; width: 100%;">
@@ -206,11 +206,12 @@ TODO Application
                 <div class="question-body">
                   <div class="faq-row">
                     <div class="faq-row-left">
-                      {{i}} {{question.question}} {{question._id}} | Publicada: {{question.date | date}}
+                      <!-- {{i}} {{question.question}} {{question._id}} | Publicada: {{question.date | date}} -->
+                      {{question.question}} | Publicada: {{question.date | date:'dd/MM/yyyy'}}
                     </div>
-                    <div class="faq-row-right">
+                    <!-- <div class="faq-row-right">
                       <button role="button" class="btn btn-primary center-block" (click)="openModal(responseModal)">Responder</button>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
 
