@@ -35,6 +35,7 @@ router.post('/add', (req, res, next) => {
     category: req.body.category,
     description: req.body.description,
     rating: 0,
+    ratingCount:1,
     country: req.body.country,
     developedBy: req.body.developedBy,
     version: req.body.version,
@@ -79,8 +80,16 @@ router.get('/getone/:_id', (req, res, next) => {
   });
 });
 
-//get latest applications
+//get latest application
 router.get('/getlatest', (req, res, next) => {
+  Application.getLatestApplication((err, apps) => {
+    if (err) res.json({ success: false, msg: '0 ' + err });
+    res.json(apps);
+  });
+});
+
+//get latest applications
+router.get('/getlatestapps', (req, res, next) => {
   Application.getLatestApplications((err, apps) => {
     if (err) res.json({ success: false, msg: '0 ' + err });
     res.json(apps);
@@ -137,6 +146,14 @@ router.post('/newrating/:_id', (req, res, next) => {
         }
       });
     }
+  });
+});
+
+//get best rated apps
+router.get('/getbestrated', (req, res, next)=>{
+  Application.getBestRated((err, data)=>{
+    if (err) res.json({success:false, msg: '0 ' + err});
+    res.json(data);
   });
 });
 

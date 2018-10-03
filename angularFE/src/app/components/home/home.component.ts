@@ -17,9 +17,16 @@ import { CategoryService } from '../../services/category.service';
 })
 export class HomeComponent implements OnInit {
 
-  applications: Application[];
+  bestRatedApps: Application[];
+  latestApps: Application[];
+  lowVisionApps: Application[];
+  blindnessApps: Application[];
+
   categoryIdArray: string[] = [];
   categories: Category[] = [];
+
+  blindnessId: string;
+  lowVisionId: string;
 
   sections: { section: string, id: string, route: string }[];
 
@@ -33,15 +40,23 @@ export class HomeComponent implements OnInit {
     private categoryService: CategoryService) { }
 
   ngOnInit() {
+
     this.max = 5;
     this.isReadonly = true;
     this.appService.getUri();
-    this.getApplications();
+
+    this.blindnessId = '5ba11dee6343f715c0e786be';
+    this.lowVisionId = '5ba11e036343f715c0e786bf';
+
+    this.getBestRatedApplications();
+    this.getLatestApplications();
+    this.getAppsByBlindness(this.blindnessId);
+    this.getAppsByLowVision(this.lowVisionId);
     this.getSections();
   }
 
-  getApplications(): void {
-    this.appService.getApplications()
+  getBestRatedApplications() {
+    this.appService.getBestRated()
       .subscribe(applications => {
 
         let pathToImage;
@@ -54,9 +69,69 @@ export class HomeComponent implements OnInit {
           pathToLogo = app.logo.substring(14, app.logo.length);
           app.logo = pathToLogo;
         });
-        this.applications = applications;
-        console.log(this.applications)
-        this.getCategory(this.applications);
+        this.bestRatedApps = applications;
+        this.getCategory(this.bestRatedApps);
+      }, err => {
+        throw err;
+      });
+  }
+
+  getAppsByLowVision(categoryId) {
+    this.appService.getAppsByCategory(categoryId)
+      .subscribe(applications => {
+        let pathToImage;
+        let pathToLogo;
+        applications.forEach(app => {
+          for (let i = 0; i < app.imgs.length; i++) {
+            pathToImage = app.imgs[i].substring(14, app.imgs[i].length);
+            app.imgs[i] = pathToImage;
+          }
+          pathToLogo = app.logo.substring(14, app.logo.length);
+          app.logo = pathToLogo;
+        });
+        this.lowVisionApps = applications;
+        this.getCategory(this.lowVisionApps);
+      }, err => {
+        throw err;
+      });
+  }
+
+  getAppsByBlindness(categoryId) {
+    this.appService.getAppsByCategory(categoryId)
+      .subscribe(applications => {
+        let pathToImage;
+        let pathToLogo;
+        applications.forEach(app => {
+          for (let i = 0; i < app.imgs.length; i++) {
+            pathToImage = app.imgs[i].substring(14, app.imgs[i].length);
+            app.imgs[i] = pathToImage;
+          }
+          pathToLogo = app.logo.substring(14, app.logo.length);
+          app.logo = pathToLogo;
+        });
+        this.blindnessApps = applications;
+        this.getCategory(this.blindnessApps);
+      }, err => {
+        throw err;
+      });
+  }
+
+  getLatestApplications() {
+    this.appService.getLatest()
+      .subscribe(applications => {
+
+        let pathToImage;
+        let pathToLogo;
+        applications.forEach(app => {
+          for (let i = 0; i < app.imgs.length; i++) {
+            pathToImage = app.imgs[i].substring(14, app.imgs[i].length);
+            app.imgs[i] = pathToImage;
+          }
+          pathToLogo = app.logo.substring(14, app.logo.length);
+          app.logo = pathToLogo;
+        });
+        this.latestApps = applications;
+        this.getCategory(this.latestApps);
       }, err => {
         throw err;
       });
@@ -69,14 +144,15 @@ export class HomeComponent implements OnInit {
     { section: 'Ceguera', id: '5ba11dee6343f715c0e786be', route: '/category' }];
   }
 
+  //TODO fix category overwritting
   getCategory(applications): void {
     applications.forEach((app, index) => {
       this.categoryIdArray[index] = app.category;
       this.categoryService.getCategory(this.categoryIdArray[index])
-        .subscribe(category =>{
+        .subscribe(category => {
           this.categories.push(category);
           app.category = this.categories[index].name;
-        }, err =>{
+        }, err => {
           throw err;
         });
     });

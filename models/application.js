@@ -63,8 +63,12 @@ module.exports.getApplicationById = (appId, callback) => {
   const query = { _id: appId };
   Application.findOne(query, callback);
 }
-module.exports.getLatestApplications = (callback) => {
+module.exports.getLatestApplication = (callback) => {
   Application.findOne().sort({ create_date: -1 }).exec(callback);
+}
+
+module.exports.getLatestApplications = (callback) => {
+  Application.find().sort({ create_date: -1 }).exec(callback);
 }
 
 module.exports.postNewCommentaryById = (appId, commentId, callback) => {
@@ -100,6 +104,10 @@ module.exports.getActualRating = (appId, callback) => {
 module.exports.getActualRatingCount = (appId, callback) => {
   Application.findById(appId, 'ratingCount', callback);
 }
+
+module.exports.getBestRated = (callback) => {
+  Application.find().sort({ rating: -1 }).exec(callback);
+};
 
 /* db.students.update(
     { _id: 1 },

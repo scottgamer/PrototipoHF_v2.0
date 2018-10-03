@@ -48,6 +48,18 @@ export class ApplicationService {
     return this.http.get(this.localhost + 'applications/getapps', { headers: headers }).map(res => res.json());
   }
 
+  getBestRated() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.localhost + 'applications/getbestrated', { headers: headers }).map(res => res.json());
+  }
+
+  getLatest(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json')
+    return this.http.get(this.localhost + 'applications/getlatestapps').map(res=>res.json());
+  }
+
   getApplication(id) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
