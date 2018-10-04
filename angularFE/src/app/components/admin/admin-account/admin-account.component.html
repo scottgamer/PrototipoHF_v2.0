@@ -55,7 +55,7 @@
   <ng-template #templateEdit>
     <div class="modal-body text-center">
       <p>Editar información</p>
-      <form (submit)='saveUserData()'>
+      <form (submit)='saveUserData()'> 
         <input type="hidden" [(ngModel)]="user._id" name="user._id">
         <div class="form-group">
           <label for="fullName">Nombre </label>

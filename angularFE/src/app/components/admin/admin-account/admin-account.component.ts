@@ -37,6 +37,27 @@ export class AdminAccountComponent implements OnInit {
       });
   }
 
+  saveUserData() {
+    const user = {
+      id: this.user._id,
+      fullName: this.user.fullName,
+      password: this.user.password,
+      birthday: this.user.birthday,
+      genre: this.user.genre,
+      nationality: this.user.nationality,
+      bio: this.user.bio
+    };
+
+    this.authService.updateUser(user).subscribe(data => {
+      if (data) {
+        console.log('Data sent');
+        return true;
+      }
+    }, err => {
+      throw err;
+    });
+  }
+
   getGenres(): void {
     this.genres = ['Masculino', 'Femenino', 'Otro'];
   }
