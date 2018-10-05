@@ -10,6 +10,7 @@ const ApplicationSchema = mongoose.Schema({
   },
   logo: String,
   logoAlt: String,
+  downloadLink: String,
   imgs: [String],
   category: {
     type: mongoose.Schema.Types.String,
@@ -107,7 +108,11 @@ module.exports.getActualRatingCount = (appId, callback) => {
 
 module.exports.getBestRated = (callback) => {
   Application.find().sort({ rating: -1 }).exec(callback);
-};
+}
+
+module.exports.getApplicationsByTerm = (term, callback) => {
+  Application.find({ $or: [{ "name": /`$term`/i }, { "description": /`$term`/i }] }, callback)
+}
 
 /* db.students.update(
     { _id: 1 },

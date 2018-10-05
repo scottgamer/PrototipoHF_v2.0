@@ -44,7 +44,7 @@
   </div>
   <div class="modal-body text-center">
     <div class="form-group">
-      <form (submit)='onSubmitEvent()'>
+      <form (submit)='onSubmitEvent()' enctype="multipart/form-data">
         <div class="row-input">
           <div class="col-md-6">
             <label for="name">Nombre </label>
@@ -54,11 +54,8 @@
             <input type="text" class="form-control" placeholder="Fecha del evento (dd/mm/aaaa)" [(ngModel)]="event.date" name="event.date"
               id="date">
 
-            <label for="img">Poster</label>
-            <input type="file" name="" id="">
-
-            <!-- <input type="text" class="form-control" placeholder="Seleccione imagen del logo" [(ngModel)]="application.logo" name="application.logo"
-                id="logo"> -->
+            <label for="poster">Poster</label>
+            <input type="file" class="form-control" name="poster" id="poster" (change)="posterChangeEvent($event)" placeholder="Seleccione poster del evento">
 
             <label for="organizedBy">Organizado por</label>
             <input type="text" class="form-control" placeholder="Indique nombre del organizador" [(ngModel)]="event.organizedBy" name="event.organizedBy"
@@ -71,8 +68,7 @@
               id="description" cols="30" rows="6"></textarea>
 
             <label for="organizerImg">Imagen Organizador</label>
-            <input type="text" class="form-control" placeholder="Seleccione imagen del organizador" [(ngModel)]="event.organizerImg"
-              name="event.organizerImg" id="organizerImg">
+            <input type="file" class="form-control" name="organizerImg" id="organizerImg" (change)="logoChangeEvent($event)" placeholder="Seleccione imagen del organizador">
 
           </div>
         </div>

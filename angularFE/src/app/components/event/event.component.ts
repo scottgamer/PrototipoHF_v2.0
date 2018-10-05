@@ -22,19 +22,19 @@ import { AuthService } from '../../services/auth.service';
 })
 export class EventComponent implements OnInit {
 
-  @Input() event:Event;
-  eventId:string;
-  userId:string;
+  @Input() event: Event;
+  eventId: string;
+  userId: string;
 
   modalRef: BsModalRef;
   message: string;
 
-  constructor(private modalService: BsModalService, 
-              private eventService:EventService,
-              private authService:AuthService,
-              private route: ActivatedRoute,
-              private location: Location
-            ) { }
+  constructor(private modalService: BsModalService,
+    private eventService: EventService,
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private location: Location
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -48,12 +48,28 @@ export class EventComponent implements OnInit {
 
   getEvent(id): void {
     this.eventService.getEvent(id)
-      .subscribe(event => {this.event = event; console.log(this.event)});
+      .subscribe(event => {
+        this.event = this.getActualPath(event);
+      }, err => {
+        throw err;
+      });
+  }
+
+  getActualPath(event) {
+    let pathToPoster;
+    let pathToLogo;
+
+    pathToPoster = event.img.substring(14, event.img.length);
+    event.img = pathToPoster;
+
+    pathToLogo = event.organizerImg.substring(14, event.organizerImg.length);
+    event.organizerImg = pathToLogo;
+
+    return event;
   }
 
   getUserId() {
     this.userId = this.authService.getUserId();
-    console.log(this.userId);
   }
 
   onClickAddToUserHistory() {
@@ -61,7 +77,6 @@ export class EventComponent implements OnInit {
     let userId = {
       user: this.userId
     };
-    console.log(userId);
     this.authService.addEventToUserHistory(eventId, userId)
       .subscribe(
         data => {
@@ -69,16 +84,15 @@ export class EventComponent implements OnInit {
           return true;
         },
         err => {
-          console.log(err);
-          return false;
+          throw err;
         });
   }
 
   saveEventModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
-  
-  confirm(){
+
+  confirm() {
     this.modalRef.hide();
   }
 

@@ -4,6 +4,7 @@ export class Application {
     _id:string;
     name:string;
     altName:string;
+    downloadLink:string;
     logo:string;
     imgs:string[];
     category:string;

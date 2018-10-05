@@ -13,9 +13,9 @@ import { EventService } from '../../services/event.service';
 })
 export class EventsComponent implements OnInit {
 
-  events:Event[];
+  events: Event[];
 
-  constructor(private eventService:EventService) { }
+  constructor(private eventService: EventService) { }
 
   ngOnInit() {
     this.getEvents();
@@ -23,9 +23,25 @@ export class EventsComponent implements OnInit {
 
   getEvents(): void {
     this.eventService.getEvents()
-        .subscribe(events => {this.events = events; console.log(this.events);});
+      .subscribe(events => {
+        this.events = this.getActualPath(events);
+      }, err => {
+        throw err;
+      });
   }
 
+  getActualPath(events) {
+    let pathToPoster;
+    let pathToLogo;
 
+    events.forEach((event) => {
+      pathToPoster = event.img.substring(14, event.img.length);
+      event.img = pathToPoster;
+      pathToLogo = event.organizerImg.substring(14, event.organizerImg.length);
+      event.organizerImg = pathToLogo;
+    });
+
+    return events;
+  }
 
 }

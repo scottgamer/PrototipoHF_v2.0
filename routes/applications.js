@@ -20,6 +20,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+//test upload endpoint
 router.post("/upload", upload.array("uploads[]", 12), (req, res) => {
   console.log('files', req.files);
   res.send(req.files);
@@ -32,10 +33,11 @@ router.post('/add', (req, res, next) => {
     logo: req.body.logo,
     logoAlt: req.body.logoAlt,
     imgs: req.body.imgs,
+    downloadLink: req.body.downloadLink,
     category: req.body.category,
     description: req.body.description,
     rating: 0,
-    ratingCount:1,
+    ratingCount: 1,
     country: req.body.country,
     developedBy: req.body.developedBy,
     version: req.body.version,
@@ -135,11 +137,11 @@ router.post('/newrating/:_id', (req, res, next) => {
           let newRating = (userRating + actualRating) / 2;
 
           Application.postNewRating(appId, newRating, (err, data) => {
-            if (err) res.json({success:false, msg: '2' + err});
-            else{
+            if (err) res.json({ success: false, msg: '2' + err });
+            else {
               Application.incrementRatingCount(appId, (err, data) => {
-                if (err) res.json({success:false, msg: '3' + err});
-                res.json({success:true, msg: 'New rating added'})
+                if (err) res.json({ success: false, msg: '3' + err });
+                res.json({ success: true, msg: 'New rating added' })
               });
             }
           });
@@ -150,9 +152,9 @@ router.post('/newrating/:_id', (req, res, next) => {
 });
 
 //get best rated apps
-router.get('/getbestrated', (req, res, next)=>{
-  Application.getBestRated((err, data)=>{
-    if (err) res.json({success:false, msg: '0 ' + err});
+router.get('/getbestrated', (req, res, next) => {
+  Application.getBestRated((err, data) => {
+    if (err) res.json({ success: false, msg: '0 ' + err });
     res.json(data);
   });
 });

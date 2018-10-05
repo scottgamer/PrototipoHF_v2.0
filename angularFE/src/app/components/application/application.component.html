@@ -20,8 +20,10 @@ TODO Application
             </div>
           </div>
           <div class="col-md-4" id="btn-download">
-            <button type="button" class="btn btn-success center-block" tooltip="Descargar aplicación." (click)='onClickAddToUserHistory()'
-              (click)='openModal(templateDownload)'>Descargar</button>
+            <a href="{{application.downloadLink}}">
+              <button type="button" class="btn btn-success center-block" tooltip="Descargar aplicación." (click)='onClickAddToUserHistory()'
+                (click)='openModal(templateDownload)'>Descargar</button>
+            </a>
           </div>
 
           <!-- Using modal message -->
@@ -68,9 +70,9 @@ TODO Application
                   {{half2}}
                 </div>
               </div>
-              <button id="read-more" type="button" class="btn btn-primary center-block" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+              <!-- <button id="read-more" type="button" class="btn btn-primary center-block" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
                 aria-controls="read-more" (collapsed)="collapsed()" (expanded)="expanded()">{{messageBtn}}
-              </button>
+              </button> -->
 
               <div id="collapseEvent" class="card card-block card-header" (collapsed)="collapsed()" (expanded)="expanded()" [collapse]="isCollapsed">
               </div>
@@ -119,35 +121,37 @@ TODO Application
         </div>
 
         <!-- Comments -->
-
-        <div class="inner-row-app">
-          <div class="col-md-12">
-            <h4>Comentarios</h4>
-            <!-- Commentary 1 -->
-            <div class="user-comment" *ngFor='let commentary of commentariesArray'>
-              <div class="user-image">
-                <i class="fa fa-user-circle fa-2x"></i>
-              </div>
-              <div class="user-name-rate">
-                <div>{{commentary.user}}</div>
-                <div>Calificación:
-                  <rating [(ngModel)]="commentary.rating" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()"></rating>
+        <div *ngIf="commentariesArray.length>0">
+          <div class="inner-row-app">
+            <div class="col-md-12">
+              <h4>Comentarios</h4>
+              <!-- Commentary 1 -->
+              <div class="user-comment" *ngFor='let commentary of commentariesArray'>
+                <div class="user-image">
+                  <i class="fa fa-user-circle fa-2x"></i>
+                </div>
+                <div class="user-name-rate">
+                  <div>{{commentary.user}}</div>
+                  <div>Calificación:
+                    <rating [(ngModel)]="commentary.rating" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()"></rating>
+                  </div>
+                </div>
+                <div class="date">
+                  Fecha: {{commentary.date | date:'dd/MM/yyyy'}}
+                </div>
+                <br>
+                <div class="comment center-block">
+                  {{commentary.commentary}}
                 </div>
               </div>
-              <div class="date">
-                Fecha: {{commentary.date | date:'dd/MM/yyyy'}}
-              </div>
-              <br>
-              <div class="comment center-block">
-                {{commentary.commentary}}
-              </div>
-            </div>
 
-            <!-- <div class="more-comments">
-              <button type="button" class="btn btn-primary center-block">Ver más comentarios</button>
-            </div> -->
+              <!-- <div class="more-comments">
+                <button type="button" class="btn btn-primary center-block">Ver más comentarios</button>
+              </div> -->
+            </div>
           </div>
         </div>
+
 
         <!-- Additional info -->
 

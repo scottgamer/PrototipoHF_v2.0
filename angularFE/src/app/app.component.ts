@@ -28,6 +28,8 @@ export class AppComponent {
   //menu component
   isCollapsed = true;
 
+  searchTerm: string;
+
   public constructor(private titleService: Title,
     private collapse: CollapseModule,
     private categoryService: CategoryService,
@@ -49,6 +51,14 @@ export class AppComponent {
     let logged = false;
     logged = this.authService.loggedIn();
     return logged;
+  }
+
+  onSearch() {
+    let term = {
+      term: this.searchTerm
+    };
+
+    console.log(term);
   }
 
   onLogout() {

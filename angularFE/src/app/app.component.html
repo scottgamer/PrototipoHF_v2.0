@@ -13,17 +13,17 @@
     </div>
 
     <!-- Collapsible button -->
-    <button id="collapsible-btn" type="button" tooltip="Mostrar/ocultar menú" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" (click)="isCollapsed = !isCollapsed"
-      aria-expanded="false">
+    <button id="collapsible-btn" type="button" tooltip="Mostrar/ocultar menú" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"
+      (click)="isCollapsed = !isCollapsed" aria-expanded="false">
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
 
     <!--Search bar-->
-    <form id="search-bar" class="navbar-form navbar-left" action="#">
+    <form id="search-bar" class="navbar-form navbar-left" (submit)="onSearch()">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Buscar aplicaciones..." name="search" size="40px">
+        <input type="text" class="form-control" placeholder="Buscar aplicaciones..." [(ngModel)]="searchTerm" name="searchTerm" size="40px">
         <div class="input-group-btn">
           <button class="btn btn-default" type="submit">
             <i class="glyphicon glyphicon-search"></i>
@@ -36,7 +36,7 @@
 
     <div class="collapse navbar-collapse" id="myNavbar" [collapse]="isCollapsed">
       <ul class="nav navbar-nav navbar-right">
-        <li  [routerLinkActive]="['active']" *ngIf="!logged()">
+        <li [routerLinkActive]="['active']" *ngIf="!logged()">
           <a routerLink="/register">
             <span class="fa fa-user-plus"></span> Regístrate</a>
         </li>

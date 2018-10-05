@@ -14,13 +14,24 @@ export class EventService {
   localhost: string;
   headers: Headers;
 
-  constructor(private http: Http) { 
+  constructor(private http: Http) {
     this.config = new Config();
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.localhost = this.config.getLocalhostURI();
   }
 
+  /**Post Methods */
+  postImages(formData) {
+    return this.http.post(this.localhost + 'events/upload', formData)
+      .map(res => res.json());
+  }
+
+  postEvent(event) {
+    return this.http.post(this.localhost + 'events/add', event)
+      .map(res => res.json());
+  }
+  /********************************************************************************************************** */
 
   /**Get Methods */
   getEvents(): Observable<Event[]> {

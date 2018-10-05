@@ -74,6 +74,8 @@ export class ApplicationComponent implements OnInit {
     this.isReadonly = true;
     this.userRating = 0;
 
+    console.log(this.commentariesArray);
+
     this.initCommentObject();
     this.initQuestionObject();
 
@@ -116,7 +118,7 @@ export class ApplicationComponent implements OnInit {
           pathToImage = app.imgs[i].substring(14, app.imgs[i].length);
           app.imgs[i] = pathToImage;
         }
-        
+
         pathToLogo = app.logo.substring(14, app.logo.length);
         app.logo = pathToLogo;
 

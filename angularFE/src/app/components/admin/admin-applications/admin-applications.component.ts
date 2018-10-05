@@ -134,6 +134,7 @@ export class AdminApplicationsComponent implements OnInit {
           imgs: this.filesPath,
           logoAlt: this.application.altName,
           name: this.application.name,
+          downloadLink: this.application.downloadLink,
           logo: this.filesPath[0],
           category: this.application.category,
           description: this.application.description,

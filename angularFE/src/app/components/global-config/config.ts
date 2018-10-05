@@ -7,7 +7,7 @@ export class Config {
   } */
 
   constructor(){
-    this.localhost = 'http://192.168.100.107:3000/';
+    this.localhost = 'http://192.168.100.106:3000/';
   }
 
   getLocalhostURI() {
