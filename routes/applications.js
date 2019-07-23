@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 //test upload endpoint
-router.post("/upload", upload.array("uploads[]", 12), (req, res) => {
+router.post('/upload', upload.array('uploads[]', 12), (req, res) => {
   console.log('files', req.files);
   res.send(req.files);
 });
@@ -51,7 +51,7 @@ router.post('/add', (req, res, next) => {
 
   Application.addApplication(newApplication, (err, app) => {
     if (err) res.json({ success: false, msg: 'Failed to add new application ' + err });
-    else res.json({ success: true, msg: 'Application added' });
+    else res.json({ success: true, msg: 'Application added', app });
   });
 
 });
@@ -176,7 +176,5 @@ router.get('/getuser/:_id', (req, res, next) => {
     res.json(user);
   });
 });
-
-//this is a commentary
 
 module.exports = router;

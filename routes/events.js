@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 //test upload end-point
-router.post("/upload", upload.array("uploads[]", 12), (req, res) => {
+router.post('/upload', upload.array('uploads[]', 12), (req, res) => {
   console.log('files', req.files);
   res.send(req.files);
 });
@@ -35,9 +35,9 @@ router.post('/add', (req, res, next) => {
     img: req.body.img,
   });
 
-  Events.addEvent(newEvent, (err, eve) => {
+  Events.addEvent(newEvent, (err, event) => {
     if (err) res.json({ success: false, msg: 'Failed to add new event' + err });
-    else res.json({ success: true, msg: 'Event added' });
+    else res.json({ success: true, msg: 'Event added', event });
   });
 
 });

@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 
-const multer = require('multer');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
@@ -29,8 +28,8 @@ app.use(express.static(path.join(__dirname, 'uploads')));
 
 // headers and content type
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
@@ -75,24 +74,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-
-//Multer storage
-/* const storage = multer.diskStorage({
-  // destination
-  destination: (req, file, cb) => {
-    cb(null, './uploads/')
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  }
-});
-const upload = multer({ storage });
-
-app.post("/upload", upload.array("uploads[]", 12), (req, res) => {
-  console.log('files', req.files);
-  res.send(req.files);
-});
- */
 //Start server
 app.listen(port, () => {
   console.log('Server started on port ' + port);
