@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 
-//classes
+// Classes
 import { Category } from '../app/models/category-model';
 
-//services
+// Services
 import { CategoryService } from '../app/services/category.service';
 
 import { ValidateService } from '../app/services/validate.service';
@@ -25,7 +25,7 @@ export class AppComponent {
   categories: Category;
   options: Object[];
 
-  //menu component
+  // menu component
   isCollapsed = true;
 
   searchTerm: string;
@@ -48,13 +48,11 @@ export class AppComponent {
   }
 
   logged() {
-    let logged = false;
-    logged = this.authService.loggedIn();
-    return logged;
+    return this.authService.loggedIn();
   }
 
   onSearch() {
-    let term = {
+    const term = {
       term: this.searchTerm
     };
 
@@ -74,11 +72,11 @@ export class AppComponent {
     { name: 'Eventos', route: '/events' }];
   }
 
-  //no longer necessary
-  //until evaluation
+  // no longer necessary
+  // until evaluation
   reloadRoute = function () {
     this.location.reload();
-  }
+  };
 
   getCategories(): void {
     this.categoryService.getCategories()

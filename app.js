@@ -10,10 +10,10 @@ const config = require('./config/database');
 const app = express();
 const port = 3000;
 
-//Mongoose connection
+// Mongoose connection
 mongoose.connect(config.database, { useNewUrlParser: true });
 
-//on connection
+// on connection
 mongoose.connection.on('connected', () => {
   console.log('Connected to database ' + config.database);
 });
