@@ -1,21 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const categoryController = require('../controllers/categoryController');
 
-//load category model
-const Category = require('../models/category');
+router.get('/getall', categoryController.getCategories);
+router.get('/getone/:_id', categoryController.getCategoryById);
 
-//get all categoriess
-router.get('/getall', (req, res, next) => {
-  Category.getCategories((err, categories) => {
-    if (err) throw err;
-    res.json(categories);
-  });
-});
-
-router.get('/getone/:_id', (req, res) => {
-  Category.getCategoryById(req.params._id, (err, category) => {
-    if (err) res.json({ success: false, msg: '0 ' + err });
-    res.json(category);
-  });
-});
 module.exports = router;

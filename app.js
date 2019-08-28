@@ -7,8 +7,10 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 
+require('dotenv').config();
+
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Mongoose connection
 mongoose.connect(config.database, { useNewUrlParser: true });

@@ -9,14 +9,15 @@ const CategorySchema = mongoose.Schema({
   }]
 });
 
-const Category = module.exports = mongoose.model('Category', CategorySchema);
+const Category = mongoose.model('Category', CategorySchema);
 
-//functions
-module.exports.getCategories = (callback, limit) => {
+exports.getCategories = (callback, limit) => {
   Category.find(callback).limit(limit);
 };
 
-module.exports.getCategoryById = (categoryId, callback) => {
+exports.getCategoryById = (categoryId, callback) => {
   Category.findById(categoryId, callback);
 };
+
+module.exports = Category;
 
